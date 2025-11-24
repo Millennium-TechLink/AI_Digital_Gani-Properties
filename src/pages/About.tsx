@@ -13,8 +13,7 @@ import {
   Heart,
   Target,
   Award,
-  CheckCircle,
-  Sparkles
+  CheckCircle
 } from 'lucide-react';
 import Image from '@/components/Image';
 

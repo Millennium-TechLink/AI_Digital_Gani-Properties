@@ -2,8 +2,8 @@ import { motion, useScroll, useTransform, useInView } from 'framer-motion';
 import { useRef, useState, useEffect } from 'react';
 import SEOHead from '@/components/SEOHead';
 import { 
-  TrendingUp, Handshake, Award, Target, Zap, Clock, 
-  IndianRupee, MapPin, Users, BarChart3, FileText, 
+  TrendingUp, Award, Target, Zap, Clock, 
+  IndianRupee, MapPin, Users, BarChart3, 
   CheckCircle2, ArrowRight, Building2, Globe, Shield,
   Sparkles, Star, ArrowDown
 } from 'lucide-react';
@@ -176,7 +176,6 @@ export default function FranchisePage() {
   });
 
   const heroY = useTransform(scrollYProgress, [0, 1], ['0%', '50%']);
-  const heroOpacity = useTransform(scrollYProgress, [0, 0.5], [1, 0]);
   const [selectedModel, setSelectedModel] = useState<string | null>(null);
   const [imageLoaded, setImageLoaded] = useState(false);
 

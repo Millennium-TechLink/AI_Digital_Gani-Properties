@@ -1,5 +1,4 @@
 import { useEffect, useState } from 'react';
-import { motion } from 'framer-motion';
 import SEOHead from '@/components/SEOHead';
 import ImmersiveHero from '@/components/ImmersiveHero';
 import ImmersiveCategories from '@/components/ImmersiveCategories';
@@ -14,7 +13,6 @@ import { Property } from '@/types/property';
 
 export default function HomePage() {
   const [featuredProperties, setFeaturedProperties] = useState<Property[]>([]);
-  const [loading, setLoading] = useState(true);
 
   useEffect(() => {
     loadProperties();
@@ -26,8 +24,6 @@ export default function HomePage() {
       setFeaturedProperties(properties.slice(0, 6));
     } catch (error) {
       console.error('Error loading properties:', error);
-    } finally {
-      setLoading(false);
     }
   };
 

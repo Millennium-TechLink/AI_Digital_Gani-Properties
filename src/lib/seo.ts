@@ -89,7 +89,6 @@ export function generateLocalBusinessSchema() {
     '@id': `${siteConfig.url}#localbusiness`,
     name: siteConfig.name,
     image: `${siteConfig.url}${siteConfig.ogImage}`,
-    '@id': `${siteConfig.url}#localbusiness`,
     url: siteConfig.url,
     telephone: siteConfig.phone,
     priceRange: '₹₹',
