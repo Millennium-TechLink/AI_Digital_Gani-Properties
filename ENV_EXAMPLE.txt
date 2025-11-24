@@ -1,0 +1,16 @@
+# Form Service Configuration (REQUIRED)
+GP_FORM_ENDPOINT=https://your-form-endpoint.com/submit
+GP_FORM_METHOD=POST
+
+# Form Secret (if your provider requires it)
+GP_FORM_SECRET=your-access-key-or-token
+
+# CAPTCHA (Optional - for spam protection)
+GP_HCAPTCHA_SITEKEY=your-hcaptcha-site-key
+GP_HCAPTCHA_SECRET=your-hcaptcha-secret
+GP_TURNSTILE_SITEKEY=your-turnstile-site-key
+GP_TURNSTILE_SECRET=your-turnstile-secret
+
+# Site URL (for sitemap and SEO)
+VITE_SITE_URL=https://ourganiproperties.com
+
