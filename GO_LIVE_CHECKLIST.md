@@ -44,7 +44,35 @@ You've completed:
 
 ---
 
-### **STEP 2: Setup Email Service (Resend)** (10 minutes)
+### **STEP 2: Setup Contact Form (Google Sheets)** (5 minutes)
+
+#### 2.1 Google Sheets Web App URL
+Your Google Apps Script is already deployed! ✅
+
+**Your Web App URL:**
+```
+https://script.google.com/macros/s/AKfycbwqbD70-b7Pcy-CruhGsWDsNNOmdI6aAgWV2KXEDvQYD70YDg9P2srkO5ghdFxjX6J83w/exec
+```
+
+#### 2.2 Add to Vercel Environment Variables
+1. Go to Vercel Dashboard → Your **Website Project** → **Settings** → **Environment Variables**
+2. Add new variable:
+   - **Name**: `VITE_GOOGLE_SHEETS_WEB_APP_URL`
+   - **Value**: `https://script.google.com/macros/s/AKfycbwqbD70-b7Pcy-CruhGsWDsNNOmdI6aAgWV2KXEDvQYD70YDg9P2srkO5ghdFxjX6J83w/exec`
+   - **Environments**: Select all (Production, Preview, Development)
+3. Click **Save**
+4. **Redeploy** your website (Deployments → 3 dots → Redeploy)
+
+#### 2.3 Verify Setup
+- ✅ Web App URL is working (tested)
+- ✅ Environment variable added to Vercel
+- ✅ Website redeployed
+
+**Note:** Contact form now saves to Google Sheets and sends email to `info@ganiproperties.com` automatically.
+
+---
+
+### **STEP 2 (OLD): Setup Email Service (Resend)** (10 minutes) - ⚠️ SKIP THIS
 
 #### 2.1 Create Resend Account
 1. Go to https://resend.com
@@ -145,36 +173,50 @@ git push -u origin main
 
 ---
 
-### **STEP 6: Deploy to Vercel** (15 minutes)
+### **STEP 6: Deploy to Vercel** (30 minutes)
+
+You need to create **2 separate Vercel projects** from the same GitHub repository:
+1. **Website Project** (main site - root directory)
+2. **Dashboard Project** (admin dashboard - `pipeline/dashboard` directory)
+
+---
 
 #### 6.1 Create Vercel Account
 1. Go to https://vercel.com
 2. Sign up with GitHub (easiest)
 3. Authorize Vercel to access your GitHub
 
-#### 6.2 Import Project
-1. In Vercel Dashboard → Click **Add New** → **Project**
-2. Import your GitHub repository
-3. Select the repository you just created
+---
 
-#### 6.3 Configure Project Settings
-- **Framework Preset**: Vite
-- **Root Directory**: `./` (leave as is)
+#### 6.2 Create PROJECT 1: Website (Main Site)
+
+##### 6.2.1 Import Repository
+1. In Vercel Dashboard → Click **Add New** → **Project**
+2. Click **Import Git Repository**
+3. Select: `aidigitalteam25/gani-properties` (or your repository name)
+4. Click **Import**
+
+##### 6.2.2 Configure Project Settings
+**Before clicking Deploy, click "Configure Project":**
+
+- **Project Name**: `gani-properties` (or `gani-properties-website`)
+- **Framework Preset**: `Vite` (should auto-detect)
+- **Root Directory**: `./` (leave as default - this is the root)
 - **Build Command**: `npm run build` (auto-detected)
 - **Output Directory**: `dist` (auto-detected)
 - **Install Command**: `npm install` (auto-detected)
 
-#### 6.4 Add Environment Variables
-Click **Environment Variables** and add:
+##### 6.2.3 Add Environment Variables (Website)
+Click **Environment Variables** and add these:
 
-**For Frontend (VITE_ prefix):**
+**Frontend Variables (VITE_ prefix):**
 ```
 VITE_SUPABASE_URL = https://oacpemdmeemulfkgxhui.supabase.co
 VITE_SUPABASE_ANON_KEY = eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpc3MiOiJzdXBhYmFzZSIsInJlZiI6Im9hY3BlbWRtZWVtdWxma2d4aHVpIiwicm9sZSI6ImFub24iLCJpYXQiOjE3NjM5Nzg1MjcsImV4cCI6MjA3OTU1NDUyN30.h40KGiN7-F0plx3eCWdMsUY5bBl7fjB4B-x8KNk7NKU
 VITE_SITE_URL = https://ourganiproperties.com
 ```
 
-**For Serverless Functions (no VITE_ prefix):**
+**Serverless Functions Variables (no VITE_ prefix):**
 ```
 SUPABASE_URL = https://oacpemdmeemulfkgxhui.supabase.co
 SUPABASE_SERVICE_KEY = eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpc3MiOiJzdXBhYmFzZSIsInJlZiI6Im9hY3BlbWRtZWVtdWxma2d4aHVpIiwicm9sZSI6InNlcnZpY2Vfcm9sZSIsImlhdCI6MTc2Mzk3ODUyNywiZXhwIjoyMDc5NTU0NTI3fQ.HQUpUfMCcCExztNDnTqHsDfUqBZOS3PRovKRvzGyEMU
@@ -196,16 +238,68 @@ SITE_URL = https://ourganiproperties.com
 - Replace `[GENERATE_A_RANDOM_32_CHAR_STRING]` with a random 32+ character string (you can use: `openssl rand -hex 32` or an online generator)
 - Replace `[YOUR_RESEND_API_KEY_FROM_STEP_2]` with your Resend API key
 
-#### 6.5 Deploy
+##### 6.2.4 Deploy Website
 1. Click **Deploy**
 2. Wait 2-3 minutes for build to complete
-3. You'll get a URL like: `https://gani-properties.vercel.app`
+3. **Note the deployment URL** (e.g., `https://gani-properties.vercel.app`)
 
-#### 6.6 Get Your Deployment URL
-After deployment, note your Vercel URL. You'll need to:
+##### 6.2.5 Add API URL (After First Deployment)
+After the website deploys, you need to add the API URL:
 1. Go to **Settings** → **Environment Variables**
-2. Add: `VITE_API_URL = https://your-app.vercel.app/api`
-3. **Redeploy** (this triggers a new build with the API URL)
+2. Add: `VITE_API_URL = https://gani-properties.vercel.app/api` (use your actual URL)
+3. Click **Save**
+4. Go to **Deployments** tab → Click the **3 dots** on latest deployment → **Redeploy**
+
+---
+
+#### 6.3 Create PROJECT 2: Dashboard (Admin Panel)
+
+##### 6.3.1 Import Same Repository Again
+1. In Vercel Dashboard → Click **Add New** → **Project** (again)
+2. Click **Import Git Repository**
+3. Select: `aidigitalteam25/gani-properties` (same repository!)
+4. Click **Import**
+
+##### 6.3.2 Configure Project Settings (IMPORTANT!)
+**Before clicking Deploy, click "Configure Project":**
+
+- **Project Name**: `gani-properties-dashboard`
+- **Framework Preset**: `Vite` (should auto-detect)
+- **Root Directory**: `pipeline/dashboard` ⚠️ **CHANGE THIS!** (Click "Edit" and type: `pipeline/dashboard`)
+- **Build Command**: `npm run build` (auto-detected)
+- **Output Directory**: `dist` (auto-detected)
+- **Install Command**: `npm install` (auto-detected)
+
+**⚠️ CRITICAL:** Make sure the Root Directory is set to `pipeline/dashboard` - this tells Vercel to build from the dashboard folder, not the root!
+
+##### 6.3.3 Add Environment Variables (Dashboard)
+Click **Environment Variables** and add:
+
+```
+VITE_API_URL = https://gani-properties.vercel.app/api
+VITE_SUPABASE_URL = https://oacpemdmeemulfkgxhui.supabase.co
+VITE_SUPABASE_ANON_KEY = eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpc3MiOiJzdXBhYmFzZSIsInJlZiI6Im9hY3BlbWRtZWVtdWxma2d4aHVpIiwicm9sZSI6ImFub24iLCJpYXQiOjE3NjM5Nzg1MjcsImV4cCI6MjA3OTU1NDUyN30.h40KGiN7-F0plx3eCWdMsUY5bBl7fjB4B-x8KNk7NKU
+VITE_SUPABASE_SERVICE_KEY = eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpc3MiOiJzdXBhYmFzZSIsInJlZiI6Im9hY3BlbWRtZWVtdWxma2d4aHVpIiwicm9sZSI6InNlcnZpY2Vfcm9sZSIsImlhdCI6MTc2Mzk3ODUyNywiZXhwIjoyMDc5NTU0NTI3fQ.HQUpUfMCcCExztNDnTqHsDfUqBZOS3PRovKRvzGyEMU
+```
+
+**Note:** Replace `https://gani-properties.vercel.app` with your actual website URL from Step 6.2.4
+
+##### 6.3.4 Deploy Dashboard
+1. Click **Deploy**
+2. Wait 2-3 minutes for build to complete
+3. **Note the dashboard URL** (e.g., `https://gani-properties-dashboard.vercel.app`)
+
+---
+
+#### 6.4 Verify Both Deployments
+
+You should now have:
+- ✅ **Website**: `https://gani-properties.vercel.app` (or similar)
+- ✅ **Dashboard**: `https://gani-properties-dashboard.vercel.app` (or similar)
+
+**Test:**
+- Visit the website URL - should show your main site
+- Visit the dashboard URL - should show the admin login page
 
 ---
 
