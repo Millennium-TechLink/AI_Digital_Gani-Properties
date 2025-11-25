@@ -5,12 +5,6 @@
 ### Root images/
 - `og-image.jpg` - Open Graph/Twitter social sharing image (1200x630px)
 
-### demo/
-- `hero-bg.jpg` - Homepage hero background (1200x630px recommended)
-- `category-farm.jpg` - Farm land category tile (800x600px)
-- `category-agricultural.jpg` - Agricultural lands category tile (800x600px)
-- `category-residential.jpg` - Residential plots category tile (800x600px)
-
 ### Property images
 For each property, add images named:
 - `{property-id}-1.jpg` - Main/cover image

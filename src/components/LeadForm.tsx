@@ -8,7 +8,13 @@ import { Button } from '@/components/ui/button';
 import { Input } from '@/components/ui/input';
 import { Textarea } from '@/components/ui/textarea';
 import { Select } from '@/components/ui/select';
-import { LeadPayload, collectUTM, submitLead } from '@/lib/forms';
+import { 
+  submitToGoogleSheets, 
+  collectUTMParameters, 
+  getCurrentPagePath,
+  validateFormData,
+  type FormSubmissionData 
+} from '@/lib/googleSheetsForm';
 import { cn } from '@/lib/utils';
 
 const leadFormSchema = z.object({
@@ -47,32 +53,47 @@ export default function LeadForm({ context = 'contact', propertyTitle, className
     setError(null);
 
     try {
-      const utm = collectUTM();
-      const page = typeof window !== 'undefined' ? window.location.pathname : context;
+      // Collect UTM parameters and page info
+      const utm = collectUTMParameters();
+      const page = context || getCurrentPagePath();
       
-      const payload: LeadPayload = {
+      // Get honeypot field value from form (should be empty for real users)
+      const formElement = document.querySelector('form') as HTMLFormElement;
+      const honeypotValue = formElement ? (new FormData(formElement).get('hp') as string || '') : '';
+      
+      // Prepare form submission data
+      const formData: FormSubmissionData = {
         name: data.name,
         phone: data.phone,
         email: data.email || undefined,
         interest: data.interest,
         message: data.message,
         page,
-        timestamp: Date.now(),
-        hp: '',
+        hp: honeypotValue, // Honeypot field (should be empty for real users)
         ...utm,
       };
 
-      const result = await submitLead(payload);
+      // Validate form data
+      const validation = validateFormData(formData);
+      if (!validation.valid) {
+        setError(validation.error || 'Please check your form data');
+        setLoading(false);
+        return;
+      }
 
-      if (result.ok) {
+      // Submit to Google Sheets (standalone, no backend required)
+      const result = await submitToGoogleSheets(formData);
+
+      if (result.success) {
         setSuccess(true);
         reset();
         setTimeout(() => setSuccess(false), 5000);
       } else {
-        setError(result.error || 'Failed to send message');
+        setError(result.error || 'Failed to send message. Please try again.');
       }
     } catch (err) {
-      setError('An unexpected error occurred');
+      console.error('Form submission error:', err);
+      setError('An unexpected error occurred. Please try again later.');
     } finally {
       setLoading(false);
     }

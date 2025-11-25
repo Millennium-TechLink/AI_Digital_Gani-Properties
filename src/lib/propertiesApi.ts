@@ -48,8 +48,12 @@ export const propertiesApi = {
         return loadStaticProperties();
       }
     } catch (error) {
-      // Silently fall back to static data in development
+      // Silently fall back to static data in development (suppress connection errors)
       if (import.meta.env.DEV) {
+        // Only log if it's not a connection refused error (backend not running is expected)
+        if (axios.isAxiosError(error) && error.code !== 'ECONNREFUSED') {
+          console.warn('Pipeline API error, using static data:', error.message);
+        }
         return loadStaticProperties();
       }
       console.warn('Pipeline API unavailable, falling back to static data:', error);
@@ -66,7 +70,12 @@ export const propertiesApi = {
       const response = await api.get<Property>(`/properties/${id}`);
       return response.data;
     } catch (error) {
-      console.warn('Pipeline API unavailable, searching static data:', error);
+      // Suppress connection errors in development
+      if (import.meta.env.DEV && axios.isAxiosError(error) && error.code === 'ECONNREFUSED') {
+        // Backend not running, use static data silently
+      } else {
+        console.warn('Pipeline API unavailable, searching static data:', error);
+      }
       const staticProps = await loadStaticProperties();
       return staticProps.find(p => p.id === id) || null;
     }

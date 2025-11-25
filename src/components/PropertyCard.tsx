@@ -35,7 +35,7 @@ export default function PropertyCard({ property, variant = 'grid' }: PropertyCar
               transition={{ duration: 0.4 }}
             >
               <Image
-                src={property.images[0] || '/images/demo/placeholder.jpg'}
+                src={property.images[0] || '/images/Land.webp'}
                 alt={property.title}
                 fill
                 className="object-cover transition-transform duration-700 group-hover:scale-110"

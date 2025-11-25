@@ -413,3 +413,4 @@ Your Supabase is now ready for:
 
 **You're all set! 🎉**
 
+

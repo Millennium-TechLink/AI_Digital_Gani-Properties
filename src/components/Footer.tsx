@@ -5,7 +5,12 @@ import { MapPin, Phone, Mail, Facebook, Instagram, Linkedin } from 'lucide-react
 import { Button } from '@/components/ui/button';
 import { Input } from '@/components/ui/input';
 import Image from '@/components/Image';
-import { collectUTM, submitLead } from '@/lib/forms';
+import { 
+  submitToGoogleSheets, 
+  collectUTMParameters, 
+  getCurrentPagePath,
+  type FormSubmissionData 
+} from '@/lib/googleSheetsForm';
 
 export default function Footer() {
   const [email, setEmail] = useState('');
@@ -16,25 +21,33 @@ export default function Footer() {
     if (!email) return;
 
     setNewsletterLoading(true);
-    const utm = collectUTM();
-    const result = await submitLead({
-      name: 'Newsletter',
-      phone: '0000000000',
-      email,
-      interest: 'Newsletter',
-      message: 'Newsletter subscription',
-      page: '/',
-      timestamp: Date.now(),
-      hp: '',
-      ...utm,
-    });
+    
+    try {
+      const utm = collectUTMParameters();
+      const formData: FormSubmissionData = {
+        name: 'Newsletter',
+        phone: '0000000000',
+        email,
+        interest: 'Newsletter',
+        message: 'Newsletter subscription',
+        page: getCurrentPagePath(),
+        hp: '',
+        ...utm,
+      };
 
-    setNewsletterLoading(false);
-    if (result.ok) {
-      alert('Thank you for subscribing!');
-      setEmail('');
-    } else {
+      const result = await submitToGoogleSheets(formData);
+
+      if (result.success) {
+        alert('Thank you for subscribing!');
+        setEmail('');
+      } else {
+        alert(result.error || 'Something went wrong. Please try again.');
+      }
+    } catch (error) {
+      console.error('Newsletter subscription error:', error);
       alert('Something went wrong. Please try again.');
+    } finally {
+      setNewsletterLoading(false);
     }
   };
 
