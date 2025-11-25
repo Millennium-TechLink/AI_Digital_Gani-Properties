@@ -45,6 +45,14 @@ export async function submitLead(payload: LeadPayload): Promise<SubmitResponse> 
     const googleSheetsWebAppUrl = import.meta.env.VITE_GOOGLE_SHEETS_WEB_APP_URL;
     
     if (!googleSheetsWebAppUrl) {
+      // In development, show a helpful message instead of error
+      if (import.meta.env.DEV) {
+        console.warn('VITE_GOOGLE_SHEETS_WEB_APP_URL not configured. Form will not submit in development.');
+        return { 
+          ok: false, 
+          error: 'Form service not configured. Please add VITE_GOOGLE_SHEETS_WEB_APP_URL to your .env file.' 
+        };
+      }
       console.error('VITE_GOOGLE_SHEETS_WEB_APP_URL not configured');
       return { ok: false, error: 'Form service not configured. Please contact support.' };
     }

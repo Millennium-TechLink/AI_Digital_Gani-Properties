@@ -38,7 +38,8 @@ export const propertiesApi = {
    */
   getAll: async (): Promise<Property[]> => {
     try {
-      const response = await api.get<Property[]>('/api/properties');
+      // Remove /api prefix since baseURL already includes it
+      const response = await api.get<Property[]>('/properties');
       // If API returns data, use it; otherwise fall back to static data
       if (response.data && response.data.length > 0) {
         return response.data;
@@ -47,6 +48,10 @@ export const propertiesApi = {
         return loadStaticProperties();
       }
     } catch (error) {
+      // Silently fall back to static data in development
+      if (import.meta.env.DEV) {
+        return loadStaticProperties();
+      }
       console.warn('Pipeline API unavailable, falling back to static data:', error);
       return loadStaticProperties();
     }
@@ -57,7 +62,8 @@ export const propertiesApi = {
    */
   getById: async (id: string): Promise<Property | null> => {
     try {
-      const response = await api.get<Property>(`/api/properties/${id}`);
+      // Remove /api prefix since baseURL already includes it
+      const response = await api.get<Property>(`/properties/${id}`);
       return response.data;
     } catch (error) {
       console.warn('Pipeline API unavailable, searching static data:', error);
