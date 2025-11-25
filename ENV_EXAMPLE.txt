@@ -1,8 +1,10 @@
-# Form Service Configuration (REQUIRED)
+# Google Sheets Contact Form (RECOMMENDED - Free)
+# Get this URL from Google Apps Script deployment
+VITE_GOOGLE_SHEETS_WEB_APP_URL=https://script.google.com/macros/s/YOUR_SCRIPT_ID/exec
+
+# Alternative: Form Service Configuration (if not using Google Sheets)
 GP_FORM_ENDPOINT=https://your-form-endpoint.com/submit
 GP_FORM_METHOD=POST
-
-# Form Secret (if your provider requires it)
 GP_FORM_SECRET=your-access-key-or-token
 
 # CAPTCHA (Optional - for spam protection)

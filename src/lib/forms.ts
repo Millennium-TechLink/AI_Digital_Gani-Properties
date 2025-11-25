@@ -36,36 +36,31 @@ export function collectUTM(): Partial<LeadPayload> {
 }
 
 /**
- * Submit lead form to serverless API
- * Stores in Supabase database and sends email via Resend
+ * Submit lead form to Google Sheets via Apps Script Web App
+ * Stores data in Google Sheets and sends email notification via Apps Script
  */
 export async function submitLead(payload: LeadPayload): Promise<SubmitResponse> {
   try {
-    // Use serverless function endpoint
-    const apiUrl = import.meta.env.VITE_API_URL || '';
-    const endpoint = `${apiUrl}/contact`;
+    // Get Google Sheets Web App URL from environment variable
+    const googleSheetsWebAppUrl = import.meta.env.VITE_GOOGLE_SHEETS_WEB_APP_URL;
     
-    // Fallback to old endpoint if API_URL not set (backward compatibility)
-    const fallbackEndpoint = import.meta.env.VITE_FORM_ENDPOINT;
-    const finalEndpoint = endpoint.includes('/contact') && apiUrl ? endpoint : (fallbackEndpoint || endpoint);
-    
-    if (!finalEndpoint || finalEndpoint === '/contact') {
-      console.error('VITE_API_URL or VITE_FORM_ENDPOINT not configured');
-      return { ok: false, error: 'Form service not configured' };
+    if (!googleSheetsWebAppUrl) {
+      console.error('VITE_GOOGLE_SHEETS_WEB_APP_URL not configured');
+      return { ok: false, error: 'Form service not configured. Please contact support.' };
     }
 
-    // Prepare payload for serverless function
+    // Prepare payload for Google Apps Script
     const finalPayload = {
       name: payload.name,
       phone: payload.phone,
-      email: payload.email,
-      interest: payload.interest,
-      message: payload.message,
-      page: payload.page,
-      utm_source: payload.utm_source,
-      utm_medium: payload.utm_medium,
-      utm_campaign: payload.utm_campaign,
-      hp: payload.hp || '', // Honeypot field
+      email: payload.email || '',
+      interest: payload.interest || '',
+      message: payload.message || '',
+      page: payload.page || '',
+      utm_source: payload.utm_source || '',
+      utm_medium: payload.utm_medium || '',
+      utm_campaign: payload.utm_campaign || '',
+      hp: payload.hp || '', // Honeypot field for spam protection
     };
 
     // Set headers
@@ -75,23 +70,32 @@ export async function submitLead(payload: LeadPayload): Promise<SubmitResponse> 
 
     const response = await axios({
       method: 'POST',
-      url: finalEndpoint,
+      url: googleSheetsWebAppUrl,
       data: finalPayload,
       headers,
-      timeout: 10000,
+      timeout: 15000, // Increased timeout for Google Apps Script
     });
 
     if (response.status >= 200 && response.status < 300) {
-      return { ok: true };
+      const responseData = response.data;
+      if (responseData && responseData.ok) {
+        return { ok: true };
+      } else {
+        return { 
+          ok: false, 
+          error: responseData?.error || 'Failed to submit form' 
+        };
+      }
     } else {
       return { ok: false, error: 'Failed to submit form' };
     }
   } catch (error) {
     console.error('Form submission error:', error);
     if (axios.isAxiosError(error)) {
+      const errorMessage = error.response?.data?.error || error.message || 'Network error';
       return { 
         ok: false, 
-        error: error.response?.data?.error || error.message || 'Network error' 
+        error: errorMessage
       };
     }
     return { 
