@@ -9,19 +9,9 @@ interface TeamMember {
 
 const teamMembers: TeamMember[] = [
   {
-    name: 'Mr. Krishnakumar Goyal',
-    title: 'Chairman & Managing Director',
-    image: 'https://i.pravatar.cc/400?img=12',
-  },
-  {
-    name: 'Mr. Vineet Goyal',
-    title: 'Joint Managing Director',
-    image: 'https://i.pravatar.cc/400?img=47',
-  },
-  {
-    name: 'Mr. Rajesh Goyal',
-    title: 'Joint Managing Director',
-    image: 'https://i.pravatar.cc/400?img=68',
+    name: 'Ashok Chauhan',
+    title: 'Managing Director',
+    image: '/images/Ashok.webp',
   },
 ];
 
@@ -41,7 +31,7 @@ export default function ManagementTeam() {
             }}
           >
             <span className="text-sm font-medium text-gp-accent uppercase tracking-wider">
-              MANAGEMENT TEAM
+              LEADERSHIP
             </span>
           </motion.div>
           <motion.h2
@@ -55,11 +45,11 @@ export default function ManagementTeam() {
               transform: 'translate3d(0, 0, 0)',
             }}
           >
-            Strategic Minds Behind Our Mission
+            The Vision Behind Our Mission
           </motion.h2>
         </div>
 
-        <div className="grid grid-cols-1 md:grid-cols-3 gap-8 lg:gap-12 max-w-6xl mx-auto">
+        <div className="grid grid-cols-1 md:grid-cols-1 gap-8 lg:gap-12 max-w-lg mx-auto">
           {teamMembers.map((member, index) => (
             <motion.div
               key={member.name}
@@ -75,12 +65,12 @@ export default function ManagementTeam() {
             >
               <div className="bg-white rounded-3xl overflow-hidden shadow-lg hover:shadow-xl transition-shadow duration-300 border border-gp-ink/10">
                 {/* Photo */}
-                <div className="relative h-[400px] md:h-[450px] bg-gradient-to-br from-gp-surface to-gp-bg overflow-hidden">
+                <div className="relative h-[450px] md:h-[500px] bg-gradient-to-br from-gp-surface to-gp-bg overflow-hidden px-4 pb-4 pt-0">
                   <Image
                     src={member.image}
                     alt={member.name}
                     fill
-                    className="object-cover group-hover:scale-105 transition-transform duration-300"
+                    className="object-contain object-top group-hover:scale-105 transition-transform duration-300"
                   />
                 </div>
                 

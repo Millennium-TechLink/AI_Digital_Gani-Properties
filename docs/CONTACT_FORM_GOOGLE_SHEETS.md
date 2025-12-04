@@ -139,3 +139,6 @@ If you were using the old Resend/Supabase setup:
 
 **Setup complete! Contact form now uses Google Sheets.** 🎉
 
+
+
+

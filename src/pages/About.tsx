@@ -410,10 +410,10 @@ export default function AboutPage() {
               className="text-center mb-16"
             >
               <span className="text-sm font-medium text-gp-accent uppercase tracking-wider">
-                CHAIRMAN&apos;S DESK
+                FROM THE DESK
               </span>
               <h2 className="text-4xl md:text-5xl font-display font-bold text-gp-ink mt-4 mb-4">
-                A Message from Our Chairman
+                A Message from Our Managing Director
               </h2>
             </motion.div>
 
@@ -428,8 +428,8 @@ export default function AboutPage() {
               >
                                   <div className="relative h-[400px] lg:h-[500px] rounded-3xl overflow-hidden bg-gradient-to-br from-gp-surface to-gp-bg shadow-xl">
                     <Image
-                      src="https://i.pravatar.cc/400?img=12"
-                      alt="Mr. Krishnakumar Goyal - Chairman & Managing Director"
+                      src="/images/Ashok.webp"
+                      alt="Ashok Chauhan - Managing Director"
                       fill
                       className="object-cover"
                       priority
@@ -437,10 +437,10 @@ export default function AboutPage() {
                   </div>
                 <div className="mt-6 text-center">
                   <h3 className="text-2xl font-display font-bold text-gp-ink mb-2">
-                    Mr. Krishnakumar Goyal
+                    Ashok Chauhan
                   </h3>
                   <p className="text-lg text-gp-ink-muted font-medium">
-                    Chairman & Managing Director
+                    Managing Director
                   </p>
                 </div>
               </motion.div>
@@ -481,7 +481,7 @@ export default function AboutPage() {
                       for your real estate needs.
                     </p>
                     <p className="font-semibold text-gp-ink pt-4">
-                      — Mr. Krishnakumar Goyal
+                      — Ashok Chauhan
                     </p>
                   </div>
                 </div>

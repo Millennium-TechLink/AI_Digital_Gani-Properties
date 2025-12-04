@@ -377,3 +377,6 @@ function escapeHtml(text) {
   return String(text).replace(/[&<>"']/g, function(m) { return map[m]; });
 }
 
+
+
+
