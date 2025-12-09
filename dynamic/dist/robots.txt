@@ -1,0 +1,41 @@
+# Robots.txt for Gani Properties
+# Optimized for search engines and AI crawlers
+
+# Allow all search engines
+User-agent: *
+Allow: /
+Disallow: /api/
+Disallow: /admin/
+Disallow: /dashboard/
+Disallow: /login
+Disallow: /properties/new
+Disallow: /properties/edit/
+
+# Allow AI crawlers (ChatGPT, Google AI, etc.)
+User-agent: GPTBot
+Allow: /
+
+User-agent: ChatGPT-User
+Allow: /
+
+User-agent: CCBot
+Allow: /
+
+User-agent: anthropic-ai
+Allow: /
+
+User-agent: Claude-Web
+Allow: /
+
+User-agent: Google-Extended
+Allow: /
+
+# Crawl-delay for respectful crawling
+Crawl-delay: 1
+
+# Host
+Host: https://ourganiproperties.com
+
+# Sitemaps
+Sitemap: https://ourganiproperties.com/sitemap.xml
+Sitemap: https://ourganiproperties.com/sitemap-properties.xml

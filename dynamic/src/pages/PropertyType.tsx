@@ -1,4 +1,4 @@
-import { useEffect, useState, useMemo } from 'react';
+import { useEffect, useState } from 'react';
 import { useParams, useNavigate } from 'react-router-dom';
 import { motion } from 'framer-motion';
 import SEOHead from '@/components/SEOHead';
@@ -8,7 +8,7 @@ import MapToggle from '@/components/MapToggle';
 import { LayoutGrid, Map as MapIcon, ArrowLeft } from 'lucide-react';
 import { Button } from '@/components/ui/button';
 import { propertiesApi } from '@/lib/propertiesApi';
-import { Property, PropertyType } from '@/types/property';
+import { Property } from '@/types/property';
 import { generateBreadcrumbSchema } from '@/lib/seo';
 
 export default function PropertyTypePage() {

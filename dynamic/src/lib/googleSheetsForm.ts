@@ -147,7 +147,7 @@ export async function submitToGoogleSheets(
     };
 
     // Submit to Google Apps Script using native fetch (no axios dependency)
-    const response = await fetch(webAppUrl, {
+    await fetch(webAppUrl, {
       method: 'POST',
       mode: 'no-cors', // Google Apps Script doesn't support CORS, use no-cors mode
       headers: {
