@@ -9,6 +9,11 @@ interface TeamMember {
 
 const teamMembers: TeamMember[] = [
   {
+    name: 'Dr. Ananth Krishna',
+    title: 'Director',
+    image: '/images/Ananth Sir.webp',
+  },
+  {
     name: 'Ashok Chauhan',
     title: 'Managing Director',
     image: '/images/Ashok.webp',
@@ -49,7 +54,7 @@ export default function ManagementTeam() {
           </motion.h2>
         </div>
 
-        <div className="grid grid-cols-1 md:grid-cols-1 gap-8 lg:gap-12 max-w-lg mx-auto">
+        <div className="grid grid-cols-1 md:grid-cols-2 gap-8 lg:gap-12 max-w-4xl mx-auto">
           {teamMembers.map((member, index) => (
             <motion.div
               key={member.name}
