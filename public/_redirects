@@ -1,0 +1,5 @@
+# Netlify redirects - SPA fallback
+# Netlify automatically serves static files (assets, images, etc.) before checking redirects
+# So this only applies to non-file routes
+/*    /index.html   200
+
