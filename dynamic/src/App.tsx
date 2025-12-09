@@ -1,0 +1,52 @@
+import { Routes, Route } from 'react-router-dom';
+import SEOHead from './components/SEOHead';
+import Navbar from './components/Navbar';
+import Footer from './components/Footer';
+import BackToTop from './components/BackToTop';
+import PageTransition from './components/PageTransition';
+import { ErrorBoundary } from './components/ErrorBoundary';
+import HomePage from './pages/Home';
+import PropertiesPage from './pages/Properties';
+import PropertyPage from './pages/Property';
+import CataloguePage from './pages/Catalogue';
+import PropertyTypePage from './pages/PropertyType';
+import AboutPage from './pages/About';
+import ContactPage from './pages/Contact';
+import FranchisePage from './pages/Franchise';
+import PrivacyPage from './pages/Privacy';
+import TermsPage from './pages/Terms';
+import NotFoundPage from './pages/NotFound';
+
+function App() {
+  return (
+    <ErrorBoundary>
+      <SEOHead
+        title="Gani Properties - Premium Property Providers in Bangalore"
+        description="Leading property providers in Bangalore offering verified residential plots, farmland, and agricultural lands. Trusted real estate dealer with transparent pricing in Kattigenahalli, Yelahanka, Hunasamaranahalli, and Chikkaballapur."
+      />
+      
+      <div className="min-h-screen flex flex-col">
+        <Navbar />
+        <main className="flex-grow">
+          <Routes>
+            <Route path="/" element={<PageTransition><HomePage /></PageTransition>} />
+            <Route path="/properties" element={<PageTransition><PropertiesPage /></PageTransition>} />
+            <Route path="/property/:slug" element={<PageTransition><PropertyPage /></PageTransition>} />
+            <Route path="/catalogue" element={<PageTransition><CataloguePage /></PageTransition>} />
+            <Route path="/property-type/:type" element={<PageTransition><PropertyTypePage /></PageTransition>} />
+            <Route path="/about" element={<PageTransition><AboutPage /></PageTransition>} />
+            <Route path="/contact" element={<PageTransition><ContactPage /></PageTransition>} />
+            <Route path="/franchise" element={<PageTransition><FranchisePage /></PageTransition>} />
+            <Route path="/privacy" element={<PageTransition><PrivacyPage /></PageTransition>} />
+            <Route path="/terms" element={<PageTransition><TermsPage /></PageTransition>} />
+            <Route path="*" element={<PageTransition><NotFoundPage /></PageTransition>} />
+          </Routes>
+        </main>
+        <Footer />
+        <BackToTop />
+      </div>
+    </ErrorBoundary>
+  );
+}
+
+export default App;
