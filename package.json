@@ -10,8 +10,11 @@
     "dev": "vite",
     "build": "tsc && vite build",
     "preview": "vite preview",
-    "lint": "eslint . --ext ts,tsx --report-unused-disable-directives --max-warnings 0",
-    "generate-sitemap": "node scripts/generate-sitemap.js"
+    "lint": "eslint . --ext ts,tsx --report-unused-disable-directories --max-warnings 0",
+    "generate-sitemap": "node scripts/generate-sitemap.js",
+    "generate-jwt-secret": "node scripts/generate-jwt-secret.js",
+    "netlify:env:set": "node scripts/set-netlify-env.js",
+    "netlify:env:set:dry": "node scripts/set-netlify-env.js --dry-run"
   },
   "dependencies": {
     "@hookform/resolvers": "^5.2.2",
