@@ -1,32 +1,23 @@
 import jwt from 'jsonwebtoken';
-import type { VercelRequest, VercelResponse } from '@vercel/node';
+import type { Handler } from '@netlify/functions';
+import { parseRequest, handleOptions, createResponse } from '../lib/netlify';
 
-function setCorsHeaders(res: VercelResponse) {
-  res.setHeader('Access-Control-Allow-Credentials', 'true');
-  res.setHeader('Access-Control-Allow-Origin', '*');
-  res.setHeader('Access-Control-Allow-Methods', 'GET,OPTIONS');
-  res.setHeader('Access-Control-Allow-Headers', 'Content-Type, Authorization');
-}
-
-export default async function handler(
-  req: VercelRequest,
-  res: VercelResponse
-) {
-  setCorsHeaders(res);
-  
-  if (req.method === 'OPTIONS') {
-    return res.status(200).end();
+export const handler: Handler = async (event, context) => {
+  // Handle CORS preflight
+  if (event.httpMethod === 'OPTIONS') {
+    return handleOptions();
   }
 
-  if (req.method !== 'GET') {
-    return res.status(405).json({ error: 'Method not allowed' });
+  if (event.httpMethod !== 'GET') {
+    return createResponse(405, { error: 'Method not allowed' });
   }
 
   try {
-    const authHeader = req.headers.authorization;
+    const req = parseRequest(event);
+    const authHeader = req.headers.authorization || req.headers.Authorization;
     
     if (!authHeader || !authHeader.startsWith('Bearer ')) {
-      return res.status(401).json({
+      return createResponse(401, {
         success: false,
         message: 'No token provided',
       });
@@ -37,24 +28,31 @@ export default async function handler(
     
     try {
       const decoded = jwt.verify(token, JWT_SECRET);
-      return res.json({
+      return createResponse(200, {
         success: true,
         user: decoded,
       });
     } catch (error) {
-      return res.status(401).json({
+      return createResponse(401, {
         success: false,
         message: 'Invalid or expired token',
       });
     }
   } catch (error: any) {
     console.error('Verify error:', error);
-    return res.status(500).json({
+    return createResponse(500, {
       success: false,
       message: 'Internal server error',
     });
   }
-}
+};
+
+
+
+
+
+
+
 
 
 

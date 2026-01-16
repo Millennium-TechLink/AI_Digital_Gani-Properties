@@ -1,11 +1,18 @@
 [build]
   command = "npm run build"
   publish = "dist"
+  functions = "api"
 
 [build.environment]
   NODE_VERSION = "22"
 
-# SPA redirect - only redirect non-file requests
+# API proxy - route API calls to Netlify Functions
+[[redirects]]
+  from = "/api/*"
+  to = "/.netlify/functions/:splat"
+  status = 200
+
+# SPA redirect - only redirect non-file requests (must be last)
 [[redirects]]
   from = "/*"
   to = "/index.html"

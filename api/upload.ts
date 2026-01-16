@@ -1,66 +1,59 @@
 import { supabase } from './lib/supabase';
 import { authenticateToken } from './lib/auth';
-import type { VercelRequest, VercelResponse } from '@vercel/node';
+import type { Handler } from '@netlify/functions';
+import { parseRequest, handleOptions, createResponse, extractPathParam } from './lib/netlify';
 
-function setCorsHeaders(res: VercelResponse) {
-  res.setHeader('Access-Control-Allow-Credentials', 'true');
-  res.setHeader('Access-Control-Allow-Origin', '*');
-  res.setHeader('Access-Control-Allow-Methods', 'POST,DELETE,OPTIONS');
-  res.setHeader('Access-Control-Allow-Headers', 'Content-Type, Authorization');
-}
-
-export default async function handler(
-  req: VercelRequest,
-  res: VercelResponse
-) {
-  setCorsHeaders(res);
-  
-  if (req.method === 'OPTIONS') {
-    return res.status(200).end();
+export const handler: Handler = async (event, context) => {
+  // Handle CORS preflight
+  if (event.httpMethod === 'OPTIONS') {
+    return handleOptions();
   }
 
+  const req = parseRequest(event);
+
   // POST /api/upload - Upload images (protected)
-  if (req.method === 'POST') {
+  if (event.httpMethod === 'POST') {
     try {
       const authResult = await authenticateToken(req);
       if (authResult.error) {
-        return res.status(401).json({ error: authResult.error });
+        return createResponse(401, { error: authResult.error });
       }
 
-      // Note: Vercel serverless functions have a 4.5MB body limit
+      // Note: Netlify Functions have a 6MB body limit
       // For larger files, use Supabase Storage directly from frontend
       // This endpoint can be used for smaller images or as a proxy
       
       const formData = req.body;
       
       if (!formData || !formData.files) {
-        return res.status(400).json({ error: 'No files uploaded' });
+        return createResponse(400, { error: 'No files uploaded' });
       }
 
       // For now, return instructions to use Supabase Storage directly
       // In production, you might want to handle uploads here or use Supabase Storage
-      return res.status(501).json({ 
+      return createResponse(501, { 
         error: 'Use Supabase Storage directly from frontend for image uploads',
         instructions: 'Upload images directly to Supabase Storage bucket from the dashboard'
       });
     } catch (error: any) {
       console.error('Error uploading files:', error);
-      return res.status(500).json({ error: 'Failed to upload files' });
+      return createResponse(500, { error: 'Failed to upload files' });
     }
   }
 
   // DELETE /api/upload/images/:filename - Delete image (protected)
-  if (req.method === 'DELETE') {
+  if (event.httpMethod === 'DELETE') {
     try {
       const authResult = await authenticateToken(req);
       if (authResult.error) {
-        return res.status(401).json({ error: authResult.error });
+        return createResponse(401, { error: authResult.error });
       }
 
-      const { filename } = req.query;
+      // Extract filename from path or query
+      const filename = extractPathParam(event, 'filename') || req.query.filename;
       
       if (!filename || typeof filename !== 'string') {
-        return res.status(400).json({ error: 'Filename required' });
+        return createResponse(400, { error: 'Filename required' });
       }
 
       // Delete from Supabase Storage
@@ -70,18 +63,25 @@ export default async function handler(
       
       if (error) {
         console.error('Error deleting file:', error);
-        return res.status(500).json({ error: 'Failed to delete file' });
+        return createResponse(500, { error: 'Failed to delete file' });
       }
 
-      return res.json({ success: true });
+      return createResponse(200, { success: true });
     } catch (error: any) {
       console.error('Error deleting file:', error);
-      return res.status(500).json({ error: 'Failed to delete file' });
+      return createResponse(500, { error: 'Failed to delete file' });
     }
   }
 
-  return res.status(405).json({ error: 'Method not allowed' });
-}
+  return createResponse(405, { error: 'Method not allowed' });
+};
+
+
+
+
+
+
+
 
 
 

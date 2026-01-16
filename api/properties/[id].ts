@@ -1,29 +1,25 @@
 import { supabase } from '../lib/supabase';
 import { authenticateToken } from '../lib/auth';
-import type { VercelRequest, VercelResponse } from '@vercel/node';
+import type { Handler } from '@netlify/functions';
 import { extractCoordinatesFromGoogleMaps } from '../lib/googleMaps';
+import { parseRequest, handleOptions, createResponse, extractPathParam } from '../lib/netlify';
 
-function setCorsHeaders(res: VercelResponse) {
-  res.setHeader('Access-Control-Allow-Credentials', 'true');
-  res.setHeader('Access-Control-Allow-Origin', '*');
-  res.setHeader('Access-Control-Allow-Methods', 'GET,PUT,DELETE,OPTIONS');
-  res.setHeader('Access-Control-Allow-Headers', 'Content-Type, Authorization');
-}
-
-export default async function handler(
-  req: VercelRequest,
-  res: VercelResponse
-) {
-  setCorsHeaders(res);
-  
-  if (req.method === 'OPTIONS') {
-    return res.status(200).end();
+export const handler: Handler = async (event, context) => {
+  // Handle CORS preflight
+  if (event.httpMethod === 'OPTIONS') {
+    return handleOptions();
   }
 
-  const { id } = req.query;
+  const req = parseRequest(event);
+  // Extract ID from path: /api/properties/:id
+  const id = extractPathParam(event, 'id') || req.query.id;
+
+  if (!id) {
+    return createResponse(400, { error: 'Property ID is required' });
+  }
 
   // GET /api/properties/:id - Get single property (public)
-  if (req.method === 'GET') {
+  if (event.httpMethod === 'GET') {
     try {
       const { data, error } = await supabase
         .from('properties')
@@ -32,7 +28,7 @@ export default async function handler(
         .single();
       
       if (error || !data) {
-        return res.status(404).json({ error: 'Property not found' });
+        return createResponse(404, { error: 'Property not found' });
       }
       
       // Transform data
@@ -43,19 +39,19 @@ export default async function handler(
         highlights: Array.isArray(data.highlights) ? data.highlights : JSON.parse(data.highlights || '[]'),
       };
       
-      return res.json(property);
+      return createResponse(200, property);
     } catch (error: any) {
       console.error('Error fetching property:', error);
-      return res.status(500).json({ error: 'Failed to fetch property' });
+      return createResponse(500, { error: 'Failed to fetch property' });
     }
   }
 
   // PUT /api/properties/:id - Update property (protected)
-  if (req.method === 'PUT') {
+  if (event.httpMethod === 'PUT') {
     try {
       const authResult = await authenticateToken(req);
       if (authResult.error) {
-        return res.status(401).json({ error: authResult.error });
+        return createResponse(401, { error: authResult.error });
       }
 
       const updates = { ...req.body };
@@ -103,7 +99,7 @@ export default async function handler(
         .single();
       
       if (error || !data) {
-        return res.status(404).json({ error: 'Property not found' });
+        return createResponse(404, { error: 'Property not found' });
       }
       
       // Transform response
@@ -114,19 +110,19 @@ export default async function handler(
         highlights: Array.isArray(data.highlights) ? data.highlights : JSON.parse(data.highlights || '[]'),
       };
       
-      return res.json(property);
+      return createResponse(200, property);
     } catch (error: any) {
       console.error('Error updating property:', error);
-      return res.status(500).json({ error: 'Failed to update property' });
+      return createResponse(500, { error: 'Failed to update property' });
     }
   }
 
   // DELETE /api/properties/:id - Delete property (protected)
-  if (req.method === 'DELETE') {
+  if (event.httpMethod === 'DELETE') {
     try {
       const authResult = await authenticateToken(req);
       if (authResult.error) {
-        return res.status(401).json({ error: authResult.error });
+        return createResponse(401, { error: authResult.error });
       }
 
       const { error } = await supabase
@@ -135,18 +131,25 @@ export default async function handler(
         .eq('id', id);
       
       if (error) {
-        return res.status(404).json({ error: 'Property not found' });
+        return createResponse(404, { error: 'Property not found' });
       }
       
-      return res.status(204).send();
+      return createResponse(204, {});
     } catch (error: any) {
       console.error('Error deleting property:', error);
-      return res.status(500).json({ error: 'Failed to delete property' });
+      return createResponse(500, { error: 'Failed to delete property' });
     }
   }
 
-  return res.status(405).json({ error: 'Method not allowed' });
-}
+  return createResponse(405, { error: 'Method not allowed' });
+};
+
+
+
+
+
+
+
 
 
 

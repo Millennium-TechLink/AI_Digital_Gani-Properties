@@ -1,4 +1,5 @@
 import jwt from 'jsonwebtoken';
+import type { NetlifyRequest } from './netlify';
 
 const JWT_SECRET = process.env.JWT_SECRET || 'your-secret-key-change-in-production';
 
@@ -7,8 +8,8 @@ export interface AuthUser {
   type: string;
 }
 
-export async function authenticateToken(req: { headers: { authorization?: string } }): Promise<{ error?: string; user?: AuthUser }> {
-  const authHeader = req.headers.authorization;
+export async function authenticateToken(req: NetlifyRequest): Promise<{ error?: string; user?: AuthUser }> {
+  const authHeader = req.headers.authorization || req.headers.Authorization;
   
   if (!authHeader || !authHeader.startsWith('Bearer ')) {
     return { error: 'Authentication required. Please log in.' };
@@ -29,6 +30,13 @@ export async function authenticateToken(req: { headers: { authorization?: string
     }
   }
 }
+
+
+
+
+
+
+
 
 
 
