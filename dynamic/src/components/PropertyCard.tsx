@@ -1,5 +1,5 @@
 import { Link } from 'react-router-dom';
-import { MapPin, Badge } from 'lucide-react';
+import { MapPin, Star } from 'lucide-react';
 import { motion } from 'framer-motion';
 import { Property } from '@/types/property';
 import { cn } from '@/lib/utils';
@@ -17,6 +17,12 @@ export default function PropertyCard({ property, variant = 'grid' }: PropertyCar
     new: 'bg-blue-100 text-blue-800 border-blue-200',
   };
 
+  const Badge = ({ children, className }: { children: React.ReactNode; className?: string }) => (
+    <div className={cn("px-2.5 py-0.5 rounded-full text-xs font-medium border", className)}>
+      {children}
+    </div>
+  );
+
   if (variant === 'list') {
     return (
       <motion.div
@@ -28,9 +34,15 @@ export default function PropertyCard({ property, variant = 'grid' }: PropertyCar
         className="h-full"
       >
         <Link to={`/property/${property.slug}`}>
-          <div className="group flex gap-6 p-6 bg-white rounded-3xl border border-gp-ink/10 hover:border-gp-accent/30 transition-all duration-500 hover:shadow-2xl cursor-pointer h-full">
+          <div className="group flex flex-col md:flex-row gap-6 p-6 bg-white rounded-3xl border border-gp-ink/10 hover:border-gp-accent/30 transition-all duration-500 hover:shadow-2xl cursor-pointer h-full relative">
+            {property.featured && (
+              <div className="absolute -top-3 -right-3 z-10 bg-gradient-to-br from-amber-400 to-gp-gold text-white px-4 py-1.5 rounded-full shadow-lg flex items-center gap-1.5 font-bold text-xs border-2 border-white animate-pulse">
+                <Star className="h-3 w-3 fill-current" />
+                FEATURED
+              </div>
+            )}
             <motion.div
-              className="relative w-64 h-48 rounded-2xl overflow-hidden flex-shrink-0"
+              className="relative w-full md:w-64 h-48 rounded-2xl overflow-hidden flex-shrink-0"
               whileHover={{ scale: 1.02 }}
               transition={{ duration: 0.4 }}
             >
@@ -47,7 +59,7 @@ export default function PropertyCard({ property, variant = 'grid' }: PropertyCar
                 <h3 className="text-2xl font-display font-semibold text-gp-ink group-hover:text-gp-accent transition-colors line-clamp-2">
                   {property.title}
                 </h3>
-                <Badge className={cn('text-xs font-medium border ml-4 flex-shrink-0', statusColors[property.status])}>
+                <Badge className={cn('ml-4 flex-shrink-0', statusColors[property.status])}>
                   {property.status}
                 </Badge>
               </div>
@@ -85,12 +97,18 @@ export default function PropertyCard({ property, variant = 'grid' }: PropertyCar
       viewport={{ once: true, margin: '-50px' }}
       transition={{ duration: 0.4, ease: [0.16, 1, 0.3, 1] }}
       whileHover={{ y: -4 }}
-      className="h-full"
+      className="h-full relative"
       style={{
         willChange: 'transform, opacity',
         transform: 'translate3d(0, 0, 0)',
       }}
     >
+      {property.featured && (
+        <div className="absolute -top-3 -right-3 z-10 bg-gradient-to-br from-amber-400 to-gp-gold text-white px-4 py-1.5 rounded-full shadow-lg flex items-center gap-1.5 font-bold text-xs border-2 border-white animate-pulse">
+          <Star className="h-3 w-3 fill-current" />
+          FEATURED
+        </div>
+      )}
       <Link to={`/property/${property.slug}`}>
         <div className="group bg-white rounded-3xl overflow-hidden border border-gp-ink/10 hover:border-gp-accent/30 transition-all duration-500 hover:shadow-2xl cursor-pointer h-full flex flex-col">
           <motion.div
@@ -105,7 +123,7 @@ export default function PropertyCard({ property, variant = 'grid' }: PropertyCar
               className="object-cover transition-transform duration-700 group-hover:scale-110"
             />
           <div className="absolute top-4 left-4">
-            <Badge className={cn('text-xs font-medium border', statusColors[property.status])}>
+            <Badge className={cn('', statusColors[property.status])}>
               {property.status}
             </Badge>
           </div>

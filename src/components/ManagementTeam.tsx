@@ -9,11 +9,6 @@ interface TeamMember {
 
 const teamMembers: TeamMember[] = [
   {
-    name: 'Dr. Ananth Krishna',
-    title: 'Director',
-    image: '/images/Ananth Sir.webp',
-  },
-  {
     name: 'Ashok Chauhan',
     title: 'Managing Director',
     image: '/images/Ashok.webp',
@@ -78,7 +73,7 @@ export default function ManagementTeam() {
                     className="object-contain object-top group-hover:scale-105 transition-transform duration-300"
                   />
                 </div>
-                
+
                 {/* Info */}
                 <div className="p-6 text-center">
                   <h3 className="text-xl font-display font-bold text-gp-ink mb-2">

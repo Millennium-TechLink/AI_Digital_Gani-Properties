@@ -31,14 +31,14 @@ export default function FiltersBar() {
   const updateFilters = (newFilters: Partial<PropertyFilters>) => {
     const updated = { ...filters, ...newFilters };
     setFilters(updated);
-    
+
     const params = new URLSearchParams();
     if (updated.search) params.set('search', updated.search);
     if (updated.type) params.set('type', updated.type);
     if (updated.price) params.set('price', updated.price);
     if (updated.size) params.set('size', updated.size);
     if (updated.sort && updated.sort !== 'newest') params.set('sort', updated.sort);
-    
+
     navigate(`/properties?${params.toString()}`);
   };
 
@@ -56,15 +56,15 @@ export default function FiltersBar() {
             initial={{ opacity: 0, x: -20 }}
             animate={{ opacity: 1, x: 0 }}
             transition={{ duration: 0.4, delay: 0.1 }}
-            className="relative flex-1"
+            className="relative flex-[2] min-w-[200px]"
           >
-            <Search className="absolute left-4 top-1/2 -translate-y-1/2 h-5 w-5 text-gp-ink-muted transition-colors duration-300" />
+            <Search className="absolute left-4 top-1/2 -translate-y-1/2 h-5 w-5 text-gp-ink-muted z-10 transition-colors duration-300" />
             <Input
               type="text"
               placeholder="Search by area or city..."
               value={filters.search}
               onChange={(e) => updateFilters({ search: e.target.value })}
-              className="pl-12 transition-all duration-300 focus:border-gp-accent focus:ring-2 focus:ring-gp-accent/20"
+              className="pl-12 transition-all duration-300 focus:border-gp-accent focus:ring-2 focus:ring-gp-accent/20 w-full"
             />
           </motion.div>
 
@@ -79,7 +79,8 @@ export default function FiltersBar() {
             <option value="retail">Retail</option>
             <option value="hospitality">Hospitality</option>
             <option value="industrial">Industrial</option>
-            <option value="farm-plots">Land</option>
+            <option value="farm-plots">Farm Land</option>
+            <option value="agricultural-lands">Agricultural Lands</option>
           </Select>
 
           {/* Price Filter */}

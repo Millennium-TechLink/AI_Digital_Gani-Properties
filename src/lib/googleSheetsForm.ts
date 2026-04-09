@@ -147,51 +147,26 @@ export async function submitToGoogleSheets(
     };
 
     // Submit to Google Apps Script using native fetch (no axios dependency)
-    await fetch(webAppUrl, {
-      method: 'POST',
-      mode: 'no-cors', // Google Apps Script doesn't support CORS, use no-cors mode
-      headers: {
-        'Content-Type': 'application/json',
-      },
-      body: JSON.stringify(payload),
+    console.log('>>> Standard Form Submission Active (URL-Encoded) <<<');
+    // We use URLSearchParams and application/x-www-form-urlencoded to 
+    // guarantee this is a "simple request", avoiding CORS preflight (OPTIONS).
+    const formData = new URLSearchParams();
+    Object.entries(payload).forEach(([key, value]) => {
+      formData.append(key, String(value));
     });
 
-    // With no-cors mode, we can't read the response, so we assume success
-    // The Google Apps Script will handle the submission and return success
-    // In production, the script will return proper JSON, but no-cors prevents reading it
-    
-    // For better error handling, we can try with cors mode first (if script supports it)
-    try {
-      const corsResponse = await fetch(webAppUrl, {
-        method: 'POST',
-        mode: 'cors',
-        headers: {
-          'Content-Type': 'application/json',
-        },
-        body: JSON.stringify(payload),
-      });
+    await fetch(webAppUrl, {
+      method: 'POST',
+      mode: 'no-cors',
+      cache: 'no-cache',
+      headers: {
+        'Content-Type': 'application/x-www-form-urlencoded',
+      },
+      body: formData.toString(),
+    });
 
-      if (corsResponse.ok) {
-        const responseData = await corsResponse.json();
-        if (responseData && responseData.ok) {
-          return {
-            success: true,
-            message: responseData.message || 'Thank you! We will contact you soon.',
-          };
-        } else {
-          return {
-            success: false,
-            error: responseData?.error || 'Failed to submit form. Please try again.',
-          };
-        }
-      }
-    } catch (corsError) {
-      // CORS failed, fall back to no-cors mode (assume success)
-      console.log('CORS mode not available, using no-cors mode');
-    }
-
-    // If we reach here, we used no-cors mode and assume success
-    // The Google Apps Script will process the submission
+    // In no-cors mode, the request is "fire and forget". 
+    // We assume success if the fetch doesn't throw a network error.
     return {
       success: true,
       message: 'Thank you! We will contact you soon.',

@@ -3,6 +3,7 @@ import SEOHead from './components/SEOHead';
 import Navbar from './components/Navbar';
 import Footer from './components/Footer';
 import BackToTop from './components/BackToTop';
+import ScrollToTop from './components/ScrollToTop';
 import PageTransition from './components/PageTransition';
 import HomePage from './pages/Home';
 import PropertiesPage from './pages/Properties';
@@ -20,6 +21,7 @@ import PropertyDashboard from './pages/PropertyDashboard';
 function App() {
   return (
     <>
+      <ScrollToTop />
       <SEOHead
         title="Gani Properties - Premium Property Providers in Bangalore"
         description="Leading property providers in Bangalore offering verified residential plots, farmland, and agricultural lands. Trusted real estate dealer with transparent pricing in Kattigenahalli, Yelahanka, Hunasamaranahalli, and Chikkaballapur."

@@ -119,22 +119,15 @@
   }
   
   /* Performance optimizations for scrolling */
-  * {
-    /* Use GPU for smoother scrolling */
+  .smooth-scroll-container {
     -webkit-overflow-scrolling: touch;
     overscroll-behavior: contain;
-  }
-  
-  /* Smooth scroll snap */
-  html {
-    scroll-snap-type: y proximity;
   }
   
   /* Smooth container scrolling */
   .smooth-container {
     scroll-behavior: smooth;
     -webkit-overflow-scrolling: touch;
-    overscroll-behavior: contain;
   }
   
   /* Optimize images */
@@ -183,20 +176,19 @@
   }
   
   /* Performance optimizations with smooth rendering */
-  * {
-    /* Enable GPU acceleration for transforms */
+  .optimize-gpu {
+    /* Enable GPU acceleration for specific elements only */
     transform: translateZ(0);
+    will-change: transform, opacity;
+    backface-visibility: hidden;
+    perspective: 1000px;
+  }
+
+  body {
     -webkit-font-smoothing: antialiased;
     -moz-osx-font-smoothing: grayscale;
     text-rendering: optimizeLegibility;
     -webkit-tap-highlight-color: transparent;
-  }
-  
-  /* Smooth rendering for animated elements */
-  [class*="motion-"], [data-framer-component] {
-    will-change: transform, opacity;
-    backface-visibility: hidden;
-    perspective: 1000px;
   }
   
   /* Smooth container transitions */

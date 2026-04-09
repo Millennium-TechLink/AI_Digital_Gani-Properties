@@ -97,21 +97,21 @@ export default function Footer() {
             <ul className="space-y-2">
               {[
                 { to: '/properties', label: 'Browse Properties' },
-                { to: '/property-type/residential-plots', label: 'Residential Plots' },
-                { to: '/property-type/farm-plots', label: 'Farm Land' },
-                { to: '/property-type/agricultural-lands', label: 'Agricultural Lands' },
+                { to: '/properties?type=residential-plots', label: 'Residential Plots' },
+                { to: '/properties?type=farm-plots', label: 'Farm Land' },
                 { to: '/about', label: 'About Us' },
               ].map((link, index) => (
                 <motion.li
                   key={link.to}
-                  initial={{ opacity: 0, x: -10 }}
+                  initial={{ opacity: 0, x: 0 }}
                   whileInView={{ opacity: 1, x: 0 }}
                   viewport={{ once: true }}
                   transition={{ duration: 0.3, delay: 0.1 + index * 0.05 }}
+                  className="list-none m-0 p-0"
                 >
                   <Link
                     to={link.to}
-                    className="text-white/80 hover:text-gp-accent transition-all duration-300 hover:pl-2 inline-block"
+                    className="text-white/80 hover:text-gp-accent transition-all duration-300 hover:pl-2 inline-block py-1"
                   >
                     {link.label}
                   </Link>
@@ -143,8 +143,8 @@ export default function Footer() {
               </li>
               <li className="flex items-center gap-2">
                 <Mail className="h-5 w-5 text-gp-accent flex-shrink-0" />
-                <a href="mailto:info@ourganiproperties.com" className="text-white/80 hover:text-gp-accent transition-colors">
-                  info@ourganiproperties.com
+                <a href="mailto:marketing@ourganiproperties.com" className="text-white/80 hover:text-gp-accent transition-colors">
+                  marketing@ourganiproperties.com
                 </a>
               </li>
             </ul>

@@ -9,11 +9,6 @@ interface TeamMember {
 
 const teamMembers: TeamMember[] = [
   {
-    name: 'Dr. Ananth Krishna',
-    title: 'Director',
-    image: '/images/Ananth Sir.webp',
-  },
-  {
     name: 'Ashok Chauhan',
     title: 'Managing Director',
     image: '/images/Ashok.webp',

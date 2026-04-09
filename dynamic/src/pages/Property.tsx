@@ -110,6 +110,7 @@ export default function PropertyPage() {
       <SEOHead
         title={`${property.title} | ${property.area}, ${property.city} | Gani Properties`}
         description={property.description || `Explore ${property.title} in ${property.area}, ${property.city}. ${property.priceLabel ? `Price: ${property.priceLabel}.` : ''} ${property.size ? `Size: ${property.size}.` : ''} Contact Gani Properties for more details.`}
+        image={property.images[0]}
         keywords={[
           property.title,
           `${property.type} ${property.city}`,

@@ -63,7 +63,7 @@ export default function PrivacyPage() {
                 If you have any questions about this Privacy Policy, please contact us at:
               </p>
               <p className="ml-4">
-                Email: <a href="mailto:info@ourganiproperties.com" className="text-gp-accent hover:underline">info@ourganiproperties.com</a><br />
+                Email: <a href="mailto:marketing@ourganiproperties.com" className="text-gp-accent hover:underline">marketing@ourganiproperties.com</a><br />
                 Phone: <a href="tel:+919900570799" className="text-gp-accent hover:underline">+91 99005 70799</a>
               </p>
             </div>

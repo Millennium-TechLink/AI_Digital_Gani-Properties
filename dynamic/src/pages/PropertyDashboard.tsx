@@ -30,7 +30,8 @@ const PROPERTY_TYPES: { value: PropertyType; label: string }[] = [
   { value: 'retail', label: 'Retail' },
   { value: 'hospitality', label: 'Hospitality' },
   { value: 'industrial', label: 'Industrial' },
-  { value: 'farm-plots', label: 'Land' },
+  { value: 'farm-plots', label: 'Farm Land' },
+  { value: 'agricultural-lands', label: 'Agricultural Lands' },
 ];
 
 const STATUS_OPTIONS = [
@@ -71,6 +72,7 @@ export default function PropertyDashboard() {
     googleMapsUrl: '',
     images: [] as string[],
     description: '',
+    featured: false,
   });
 
   const [highlightInput, setHighlightInput] = useState('');
@@ -149,16 +151,17 @@ export default function PropertyDashboard() {
       highlights: [...property.highlights],
       lat: property.lat?.toString() || '',
       lon: property.lon?.toString() || '',
-      googleMapsUrl: '',
+      googleMapsUrl: property.googleMapsUrl || '',
       images: [...property.images],
       description: property.description,
+      featured: property.featured || false,
     });
     setShowForm(true);
     setFormError(null);
   };
 
   const handleDelete = async (id: string) => {
-    if (!confirm('Are you sure you want to delete this property?')) {
+    if (!window.confirm('Are you sure you want to delete this property? This action cannot be undone.')) {
       return;
     }
 
@@ -236,6 +239,7 @@ export default function PropertyDashboard() {
         googleMapsUrl: formData.googleMapsUrl || undefined,
         images: formData.images,
         description: formData.description,
+        featured: formData.featured,
       };
 
       if (editingProperty) {
@@ -261,6 +265,7 @@ export default function PropertyDashboard() {
         googleMapsUrl: '',
         images: [],
         description: '',
+        featured: false,
       });
       setEditingProperty(null);
       setShowForm(false);
@@ -300,6 +305,7 @@ export default function PropertyDashboard() {
       googleMapsUrl: '',
       images: [],
       description: '',
+      featured: false,
     });
     setFormError(null);
   };
@@ -586,6 +592,18 @@ export default function PropertyDashboard() {
                     onChange={(e) => setFormData({ ...formData, lon: e.target.value })}
                     placeholder="77.5946"
                   />
+                </div>
+                <div className="flex items-center space-x-2 pt-8">
+                  <input
+                    type="checkbox"
+                    id="featured"
+                    checked={formData.featured}
+                    onChange={(e) => setFormData({ ...formData, featured: e.target.checked })}
+                    className="h-5 w-5 rounded border-gp-ink/20 text-gp-accent focus:ring-gp-accent"
+                  />
+                  <label htmlFor="featured" className="text-sm font-medium text-gp-ink">
+                    Featured Property (Show on Home)
+                  </label>
                 </div>
               </div>
 

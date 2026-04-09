@@ -11,7 +11,7 @@ export const siteConfig = {
   ogImage: '/images/og-image.jpg',
   twitterHandle: '@GaniProperties',
   phone: '+91 99005 70799',
-  email: 'info@ourganiproperties.com',
+  email: 'marketing@ourganiproperties.com',
   address: {
     street: 'Bengaluru',
     city: 'Bengaluru',

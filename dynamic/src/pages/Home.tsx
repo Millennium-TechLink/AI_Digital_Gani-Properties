@@ -21,7 +21,10 @@ export default function HomePage() {
   const loadProperties = async () => {
     try {
       const properties = await propertiesApi.getAll();
-      setFeaturedProperties(properties.slice(0, 6));
+      // Prioritize featured properties, then fill with others up to 6
+      const featured = properties.filter(p => p.featured);
+      const others = properties.filter(p => !p.featured);
+      setFeaturedProperties([...featured, ...others].slice(0, 6));
     } catch (err) {
       console.error('Error loading properties:', err);
       // Silently fail - component will show empty state
