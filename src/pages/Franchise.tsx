@@ -92,7 +92,7 @@ const partnershipTerms = [
   {
     icon: Clock,
     title: 'Agreement Duration',
-    description: '5-year initial term with renewal options based on performance review and mutual consent',
+    description: '3-year initial term with renewal options based on performance review and mutual consent',
   },
   {
     icon: IndianRupee,

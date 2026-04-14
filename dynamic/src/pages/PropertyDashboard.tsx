@@ -805,7 +805,7 @@ export default function PropertyDashboard() {
                            property.type.startsWith('retail') ? 'Retail' :
                            property.type.startsWith('hospitality') ? 'Hospitality' :
                            property.type.startsWith('industrial') ? 'Industrial' :
-                           (property.type === 'farm-plots' || property.type === 'agricultural-lands') ? 'Land' :
+                           (property.type === 'farm-plots' || property.type === 'agricultural-lands') ? 'Layout' :
                            property.type}
                         </span>
                       </td>

@@ -5,7 +5,7 @@ export type Subcategory = {
   type: string; // PropertyType for filtering
 };
 
-export type CategoryKey = 'residential' | 'commercial' | 'retail' | 'hospitality' | 'industrial' | 'land';
+export type CategoryKey = 'residential' | 'commercial' | 'retail' | 'hospitality' | 'industrial' | 'layout';
 
 export const CATEGORY_MAP: Record<CategoryKey, Subcategory[]> = {
   residential: [
@@ -32,7 +32,7 @@ export const CATEGORY_MAP: Record<CategoryKey, Subcategory[]> = {
     { id: 'ind-warehouses', label: 'Warehouses', path: '/properties?type=industrial-warehouses', type: 'industrial-warehouses' },
     { id: 'ind-logistics', label: 'Logistics Parks', path: '/properties?type=industrial-logistics', type: 'industrial-logistics' },
   ],
-  land: [
+  layout: [
     { id: 'land-agri', label: 'Agricultural Land', path: '/properties?type=agricultural-lands', type: 'agricultural-lands' },
     { id: 'land-res', label: 'Residential Land', path: '/properties?type=residential-plots', type: 'residential-plots' },
     { id: 'land-com', label: 'Commercial Land', path: '/properties?type=commercial', type: 'commercial' },

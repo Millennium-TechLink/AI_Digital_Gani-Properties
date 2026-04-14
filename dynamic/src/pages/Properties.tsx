@@ -69,7 +69,7 @@ export default function PropertiesPage() {
       return 'industrial';
     }
     if (type === 'farm-plots' || type === 'agricultural-lands') {
-      return 'land';
+      return 'layout';
     }
     return null;
   }, [filters.type]);
@@ -164,7 +164,7 @@ export default function PropertiesPage() {
           category ? `${category} properties Bangalore` : 'properties Bangalore',
           'real estate Bangalore',
           'property listings Bangalore',
-          ...(category ? [`${category} plots`, `${category} land`] : []),
+          ...(category ? [`${category} plots`, `${category} layouts`] : []),
         ]}
         url={`${import.meta.env.VITE_SITE_URL || 'https://ganiproperties.com'}/properties${filters.type ? `?type=${filters.type}` : ''}`}
         structuredData={breadcrumbSchema}
@@ -228,11 +228,11 @@ export default function PropertiesPage() {
                   Gani Properties Industrial Park redefines industrial real estate in Bengaluru.
                 </p>
               </div>
-            ) : category === 'land' ? (
+            ) : category === 'layout' ? (
               <div className="relative">
                 <div className="absolute -left-4 top-0 bottom-0 w-1 bg-gradient-to-b from-gp-accent to-gp-gold rounded-full" />
                 <h1 className="text-2xl md:text-3xl font-display font-bold text-gp-ink mb-4 leading-[1.3] pl-6">
-                  Premium Land Investments
+                  Premium Layout Investments
                 </h1>
                 <p className="text-base md:text-lg text-gp-ink-muted leading-relaxed pl-6">
                   Discover premium farmland and agricultural lands for cultivation, farming, and investment across Bengaluru.
@@ -281,7 +281,7 @@ export default function PropertiesPage() {
               className="flex justify-between items-center mb-8"
             >
               <p className="text-gp-ink-muted">
-                {filteredProperties.length} property{filteredProperties.length !== 1 ? 'ies' : ''} found
+                {filteredProperties.length} {filteredProperties.length === 1 ? 'property' : 'properties'} found
               </p>
               <div className="flex gap-2">
                 <Button

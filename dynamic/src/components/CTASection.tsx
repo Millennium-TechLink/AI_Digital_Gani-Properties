@@ -28,7 +28,7 @@ export default function CTASection() {
             Ready to Find Your Perfect Property?
           </h2>
           <p className="text-xl text-white/90 mb-10 leading-relaxed">
-            Connect with our team today to explore premium lands in Bengaluru
+            Connect with our team today to explore premium layouts in Bengaluru
           </p>
           <motion.div
             initial={{ opacity: 0, y: 20 }}

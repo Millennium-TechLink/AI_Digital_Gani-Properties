@@ -51,7 +51,7 @@ const categories = [
   },
   {
     slug: 'farm-plots',
-    title: 'Land',
+    title: 'Layouts',
     description: 'Farm plots and agricultural lands for investment',
     image: '/images/Land.webp',
     count: '120+',

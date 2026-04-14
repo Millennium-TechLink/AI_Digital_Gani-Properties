@@ -21,7 +21,7 @@ export default function ImmersiveHero() {
 
   const y = useTransform(scrollYProgress, [0, 1], ['0%', '50%']);
   const opacity = useTransform(scrollYProgress, [0, 0.5], [1, 0]);
-  
+
   const [particles, setParticles] = useState<ParticleConfig[]>([]);
   const [isMounted, setIsMounted] = useState(false);
   const [screenHeight, setScreenHeight] = useState(800);
@@ -77,19 +77,19 @@ export default function ImmersiveHero() {
           }}
         />
         {/* Fallback background gradient (shows when image is loading) */}
-        <div 
+        <div
           className="absolute inset-0 w-full h-full bg-gradient-to-b from-gp-bg via-gp-surface to-gp-surface"
-          style={{ 
+          style={{
             opacity: imageLoaded ? 0 : 1,
             transition: 'opacity 0.6s ease-in-out',
             zIndex: 0
           }}
         />
-        
+
         {/* Dark Overlay - Reduced opacity to show image through (adjust opacity values as needed) */}
-        <div 
+        <div
           className="absolute inset-0"
-          style={{ 
+          style={{
             zIndex: 1,
             background: 'linear-gradient(to bottom, rgba(15, 58, 61, 0.4), rgba(15, 46, 49, 0.35), rgba(15, 46, 49, 0.4))'
           }}
@@ -140,7 +140,7 @@ export default function ImmersiveHero() {
 
       {/* Content - z-20 - GPU accelerated */}
       <motion.div
-        style={{ 
+        style={{
           opacity,
           willChange: 'opacity',
           transform: 'translate3d(0, 0, 0)',
@@ -166,7 +166,7 @@ export default function ImmersiveHero() {
             animate={{ opacity: 1, y: 0 }}
             transition={{ duration: 0.8, delay: 0.3, ease: [0.16, 1, 0.3, 1] }}
             className="text-6xl md:text-7xl lg:text-8xl font-display font-bold mb-6 leading-[1.1]"
-            style={{ 
+            style={{
               color: '#ffffff',
               willChange: 'transform, opacity',
               transform: 'translate3d(0, 0, 0)',
@@ -187,7 +187,7 @@ export default function ImmersiveHero() {
             className="text-xl md:text-2xl lg:text-3xl mb-12 max-w-3xl mx-auto leading-relaxed font-light"
             style={{ color: 'rgba(255, 255, 255, 0.95)' }}
           >
-            Your journey to land ownership begins here. Premium plots, fertile farmland, 
+            Your journey to land ownership begins here. Premium plots, fertile farmland,
             and agricultural lands that become the foundation of your legacy.
           </motion.p>
 
@@ -209,7 +209,7 @@ export default function ImmersiveHero() {
                 <ArrowDown className="ml-2 h-5 w-5" />
               </Link>
             </Button>
-            
+
             {/* Enhanced Schedule Visit Button Container */}
             <motion.div
               className="relative group"
@@ -218,7 +218,7 @@ export default function ImmersiveHero() {
             >
               {/* Glowing background effect */}
               <div className="absolute -inset-1 bg-gradient-to-r from-gp-accent via-gp-gold to-gp-accent rounded-2xl opacity-60 blur-xl group-hover:opacity-80 transition-opacity duration-300 animate-pulse" />
-              
+
               {/* Button container with gradient border */}
               <div className="relative bg-gradient-to-br from-gp-accent/20 via-gp-gold/20 to-gp-accent/20 backdrop-blur-md border-2 border-white/30 rounded-2xl p-[2px] group-hover:border-gp-accent transition-all duration-300">
                 <Button
@@ -243,9 +243,9 @@ export default function ImmersiveHero() {
             className="grid grid-cols-3 gap-8 max-w-2xl mx-auto pt-8 border-t border-white/20"
           >
             {[
-              { value: '15+', label: 'Years' },
-              { value: '200+', label: 'Properties' },
-              { value: '5K+', label: 'Families' },
+              { value: '25+', label: 'Years' },
+              { value: '100+', label: 'Properties' },
+              { value: '600+', label: 'Happy Families' },
             ].map((stat, i) => (
               <div key={i} className="text-center">
                 <div className="text-3xl font-display font-bold mb-1" style={{ color: '#C9B589' }}>

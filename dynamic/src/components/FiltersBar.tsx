@@ -79,7 +79,7 @@ export default function FiltersBar() {
             <option value="retail">Retail</option>
             <option value="hospitality">Hospitality</option>
             <option value="industrial">Industrial</option>
-            <option value="farm-plots">Farm Land</option>
+            <option value="farm-plots">Farm Layout</option>
             <option value="agricultural-lands">Agricultural Lands</option>
           </Select>
 

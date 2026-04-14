@@ -9,12 +9,12 @@ interface Stat {
 }
 
 const stats: Stat[] = [
-  { targetValue: 15, suffix: '+', label: 'Years of Legacy' },
-  { targetValue: 200, suffix: '+', label: 'Properties Delivered' },
+  { targetValue: 25, suffix: '+', label: 'Years Experience' },
+  { targetValue: 100, suffix: '+', label: 'Total Properties' },
   { targetValue: 50, suffix: '+', label: 'Ongoing Projects' },
   { targetValue: 500, suffix: '+', label: 'Acres Delivered' },
   { targetValue: 1200, suffix: '+', label: 'Acres in Progress' },
-  { targetValue: 5000, suffix: '+', label: 'Happy Customers' },
+  { targetValue: 600, suffix: '+', label: 'Happy Families' },
 ];
 
 function AnimatedCounter({ targetValue, suffix, label, delay = 0 }: Stat & { delay?: number }) {
@@ -39,11 +39,11 @@ function AnimatedCounter({ targetValue, suffix, label, delay = 0 }: Stat & { del
 
     const timer = setTimeout(() => {
       const startTime = performance.now();
-      
+
       const animate = (currentTime: number) => {
         const elapsed = currentTime - startTime;
         const progress = Math.min(elapsed / duration, 1);
-        
+
         // Ease-out cubic function for smooth deceleration
         const easeOut = 1 - Math.pow(1 - progress, 3);
         const newValue = Math.floor(targetValue * easeOut);
@@ -78,8 +78,8 @@ function AnimatedCounter({ targetValue, suffix, label, delay = 0 }: Stat & { del
   };
 
   return (
-    <div 
-      ref={ref} 
+    <div
+      ref={ref}
       className="text-center"
       style={{
         willChange: 'contents',
@@ -134,10 +134,10 @@ export default function OurStory() {
               A Legacy Built on Excellence
             </h2>
             <p className="text-lg text-gp-ink-muted leading-relaxed mb-8">
-              Since our inception, Gani Properties Pvt. Ltd. has been a trusted real estate 
-              developer in Bengaluru, known for delivering high-quality residential plots, 
-              farmland, and agricultural lands. With a strong foundation of trust, innovation, 
-              and customer-first approach, we continue to redefine Bengaluru&apos;s real estate 
+              Since our inception, Gani Properties Pvt. Ltd. has been a trusted real estate
+              developer in Bengaluru, known for delivering high-quality residential plots,
+              farmland, and agricultural lands. With a strong foundation of trust, innovation,
+              and customer-first approach, we continue to redefine Bengaluru&apos;s real estate
               landscape, creating sustainable, future-ready spaces that inspire modern living.
             </p>
 
@@ -145,12 +145,12 @@ export default function OurStory() {
             <div className="grid grid-cols-2 md:grid-cols-4 gap-6">
               {stats.map((stat, index) => (
                 <motion.div
-                  key={stat.label}
+                  key={index}
                   initial={{ opacity: 0, y: 20, scale: 0.9 }}
                   whileInView={{ opacity: 1, y: 0, scale: 1 }}
                   viewport={{ once: false }}
-                  transition={{ 
-                    duration: 0.4, 
+                  transition={{
+                    duration: 0.4,
                     delay: index * 0.05,
                     ease: [0.16, 1, 0.3, 1] // Smooth ease-out
                   }}

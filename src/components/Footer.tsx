@@ -188,7 +188,7 @@ export default function Footer() {
           transition={{ duration: 0.5, delay: 0.4 }}
           className="border-t border-white/10 pt-8"
         >
-          <div className="flex flex-col md:flex-row justify-between items-center gap-4">
+          <div className="flex flex-col md:flex-row justify-between items-center gap-4 md:pr-20">
             <motion.p
               initial={{ opacity: 0 }}
               whileInView={{ opacity: 1 }}

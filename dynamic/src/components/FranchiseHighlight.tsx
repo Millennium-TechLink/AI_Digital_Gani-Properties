@@ -26,16 +26,8 @@ const highlights = [
 
 const franchiseModels = [
   {
-    name: 'Marketing Franchise',
-    investment: '₹10-15 Lakhs',
-    roi: '12-18 Months',
-    feature: 'District-level focus',
-    gradient: 'from-blue-500/10 to-cyan-500/10',
-    borderColor: 'border-blue-200',
-  },
-  {
     name: 'City Franchise',
-    investment: '₹25-40 Lakhs',
+    investment: '₹8-10 Lakhs',
     roi: '18-24 Months',
     feature: 'Exclusive city rights',
     gradient: 'from-purple-500/10 to-pink-500/10',
@@ -43,7 +35,7 @@ const franchiseModels = [
   },
   {
     name: 'Regional Franchise',
-    investment: '₹50-80 Lakhs',
+    investment: '₹15-20 Lakhs',
     roi: '24-30 Months',
     feature: 'Multi-city operations',
     gradient: 'from-green-500/10 to-emerald-500/10',
@@ -51,7 +43,7 @@ const franchiseModels = [
   },
   {
     name: 'Builder Partner',
-    investment: '₹1 Crore+',
+    investment: 'Depends on Investment',
     roi: '30-36 Months',
     feature: 'State-level authority',
     gradient: 'from-amber-500/10 to-orange-500/10',
@@ -141,7 +133,7 @@ export default function FranchiseHighlight() {
           className="mb-12"
         >
           <h3 className="text-3xl md:text-4xl font-display font-bold text-gp-ink text-center mb-4">
-            Four Strategic Franchise Models
+            Three Strategic Franchise Models
           </h3>
           <p className="text-lg text-gp-ink-muted text-center mb-12 max-w-2xl mx-auto">
             Choose the investment level and market scope that aligns with your business goals and financial capacity.

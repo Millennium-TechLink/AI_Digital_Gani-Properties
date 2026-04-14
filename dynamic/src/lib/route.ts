@@ -7,7 +7,7 @@ import { PropertyType } from '@/types/property';
  */
 export function getActiveCategoryFromPath(pathname: string): CategoryKey | null {
   // Check for top-level category routes
-  const topLevelMatch = pathname.match(/^\/(residential|commercial|retail|hospitality|industrial|land)(?:\/|$)/);
+  const topLevelMatch = pathname.match(/^\/(residential|commercial|retail|hospitality|industrial|layout)(?:\/|$)/);
   if (topLevelMatch && topLevelMatch[1] in CATEGORY_MAP) {
     return topLevelMatch[1] as CategoryKey;
   }
@@ -62,7 +62,7 @@ export function getCategoryFromPropertyType(type: PropertyType): CategoryKey | n
     return 'industrial';
   }
   if (type === 'farm-plots' || type === 'agricultural-lands') {
-    return 'land';
+    return 'layout';
   }
   return null;
 }
@@ -77,7 +77,7 @@ export function getCategoryTitle(category: CategoryKey): string {
     retail: 'Retail',
     hospitality: 'Hospitality',
     industrial: 'Industrial',
-    land: 'Land',
+    layout: 'Layout',
   };
   return titles[category] || category;
 }

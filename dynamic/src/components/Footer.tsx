@@ -81,7 +81,7 @@ export default function Footer() {
               </div>
             </Link>
             <p className="text-white/80 leading-relaxed">
-              Your trusted partner in finding the perfect land for your dreams. 
+              Your trusted partner in finding the perfect Layout for your dreams. 
               With verified titles and transparent pricing.
             </p>
           </motion.div>
@@ -98,7 +98,7 @@ export default function Footer() {
               {[
                 { to: '/properties', label: 'Browse Properties' },
                 { to: '/properties?type=residential-plots', label: 'Residential Plots' },
-                { to: '/properties?type=farm-plots', label: 'Farm Land' },
+                { to: '/properties?type=farm-plots', label: 'Layouts' },
                 { to: '/about', label: 'About Us' },
               ].map((link, index) => (
                 <motion.li
@@ -188,7 +188,7 @@ export default function Footer() {
           transition={{ duration: 0.5, delay: 0.4 }}
           className="border-t border-white/10 pt-8"
         >
-          <div className="flex flex-col md:flex-row justify-between items-center gap-4">
+          <div className="flex flex-col md:flex-row justify-between items-center gap-4 md:pr-20">
             <motion.p
               initial={{ opacity: 0 }}
               whileInView={{ opacity: 1 }}
