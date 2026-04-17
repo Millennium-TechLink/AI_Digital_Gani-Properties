@@ -97,6 +97,7 @@ export default function Navbar() {
     { to: '/', label: 'Home' },
     { to: '/properties', label: 'Properties' },
     { to: '/franchise', label: 'Franchise' },
+    { to: '/careers', label: 'Careers' },
     { to: '/about', label: 'About' },
     { to: '/contact', label: 'Contact' },
   ];
