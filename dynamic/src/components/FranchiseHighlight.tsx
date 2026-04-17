@@ -1,13 +1,13 @@
 import { motion } from 'framer-motion';
 import { Link } from 'react-router-dom';
-import { ArrowRight, TrendingUp, Handshake, Award, Target, Zap } from 'lucide-react';
+import { ArrowRight, TrendingUp, Handshake, Award, Target, Zap, Sparkles } from 'lucide-react';
 import { Button } from '@/components/ui/button';
 
 const highlights = [
   {
     icon: TrendingUp,
-    title: 'Proven Growth Model',
-    description: 'Established systems for sustainable expansion',
+    title: 'Pioneering Model',
+    description: 'India\'s first construction-focused franchise ecosystem',
     color: 'from-blue-500/20 to-purple-500/20',
   },
   {
@@ -74,20 +74,23 @@ export default function FranchiseHighlight() {
           transition={{ duration: 0.6, ease: [0.16, 1, 0.3, 1] }}
           className="text-center max-w-4xl mx-auto mb-16"
         >
-          <motion.span
-            initial={{ opacity: 0 }}
-            whileInView={{ opacity: 1 }}
+          <motion.div
+            initial={{ opacity: 0, scale: 0.9 }}
+            whileInView={{ opacity: 1, scale: 1 }}
             viewport={{ once: true }}
-            transition={{ duration: 0.5, delay: 0.1 }}
-            className="text-sm font-medium text-gp-accent uppercase tracking-wider mb-4 block"
+            transition={{ duration: 0.5 }}
+            className="inline-flex items-center gap-2 px-4 py-2 rounded-full bg-gp-accent/10 border border-gp-accent/20 mb-6"
           >
-            FRANCHISE OPPORTUNITY
-          </motion.span>
+            <Sparkles className="w-4 h-4 text-gp-accent" />
+            <span className="text-sm font-bold text-gp-accent tracking-widest uppercase">
+              Pioneering Segment Leader
+            </span>
+          </motion.div>
           <h2 className="text-5xl md:text-6xl font-display font-bold text-gp-ink mb-6">
-            Partner with Gani Properties
+            India&apos;s First <span className="text-gp-accent">&quot;Approval to Key&quot;</span> Franchise
           </h2>
           <p className="text-xl text-gp-ink-muted leading-relaxed mb-8">
-            Leverage our strong brand reputation, proven systems, and extensive support network to build your real estate empire across India.
+            Gani Properties introduces the <span className="font-bold text-gp-ink">first-of-its-kind construction franchise ecosystem</span> in India. We move beyond traditional real estate by offering a comprehensive model that provides employment, technical support, and vocational training for sustainable business growth.
           </p>
         </motion.div>
 

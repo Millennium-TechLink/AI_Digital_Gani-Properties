@@ -4,24 +4,22 @@ import { zodResolver } from '@hookform/resolvers/zod';
 import { z } from 'zod';
 import { motion, AnimatePresence } from 'framer-motion';
 import { Loader2, Send, MessageCircle } from 'lucide-react';
-import { Button } from '@/components/ui/button';
-import { Input } from '@/components/ui/input';
-import { Textarea } from '@/components/ui/textarea';
-import { Select } from '@/components/ui/select';
 import { 
   submitToGoogleSheets, 
   collectUTMParameters, 
   getCurrentPagePath,
   validateFormData,
-  type FormSubmissionData 
+  FormSubmissionData 
 } from '@/lib/googleSheetsForm';
+import { Button } from '@/components/ui/button';
+import { Input } from '@/components/ui/input';
+import { Textarea } from '@/components/ui/textarea';
 import { cn } from '@/lib/utils';
 
 const leadFormSchema = z.object({
   name: z.string().min(2, 'Name must be at least 2 characters'),
   phone: z.string().min(10, 'Please enter a valid phone number').regex(/^[0-9]+$/, 'Phone must contain only numbers'),
   email: z.string().email('Please enter a valid email').optional().or(z.literal('')),
-  interest: z.enum(['Residential Plots', 'Farm Plots', 'Agricultural Lands', 'General']).optional(),
   message: z.string().optional(),
 });
 
@@ -66,7 +64,7 @@ export default function LeadForm({ context = 'contact', propertyTitle, className
         name: data.name,
         phone: data.phone,
         email: data.email || undefined,
-        interest: data.interest,
+        interest: propertyTitle || (context === 'contact' ? 'General Inquiry' : context),
         message: data.message,
         page,
         hp: honeypotValue, // Honeypot field (should be empty for real users)
@@ -104,7 +102,7 @@ export default function LeadForm({ context = 'contact', propertyTitle, className
     : 'https://wa.me/919900570799?text=Hi%20Gani%20Properties%2C%20I%20want%20to%20schedule%20a%20site%20visit';
 
   return (
-    <div className={cn('bg-white rounded-3xl border border-gp-ink/10 p-8', className)}>
+    <div className={cn('bg-white rounded-3xl border border-gp-ink/10 p-8 relative', className)}>
       <form onSubmit={handleSubmit(onSubmit)} className="space-y-6">
         <div>
           <label htmlFor="name" className="block text-sm font-medium text-gp-ink mb-2">
@@ -160,32 +158,19 @@ export default function LeadForm({ context = 'contact', propertyTitle, className
           )}
         </div>
 
-        {!compact && (
-          <>
-            <div>
-              <label htmlFor="interest" className="block text-sm font-medium text-gp-ink mb-2">
-                Interest
-              </label>
-              <Select id="interest" {...register('interest')}>
-                <option value="">Select your interest</option>
-                <option value="Residential Plots">Residential Plots</option>
-                <option value="Farm Plots">Farm Plots</option>
-                <option value="Agricultural Lands">Agricultural Lands</option>
-                <option value="General">General Inquiry</option>
-              </Select>
-            </div>
 
-            <div>
-              <label htmlFor="message" className="block text-sm font-medium text-gp-ink mb-2">
-                Message
-              </label>
-              <Textarea
-                id="message"
-                placeholder="Tell us about your requirements..."
-                {...register('message')}
-              />
-            </div>
-          </>
+
+        {!compact && (
+          <div>
+            <label htmlFor="message" className="block text-sm font-medium text-gp-ink mb-2">
+              Message
+            </label>
+            <Textarea
+              id="message"
+              placeholder={propertyTitle ? `I am interested in ${propertyTitle}...` : "Tell us about your requirements..."}
+              {...register('message')}
+            />
+          </div>
         )}
 
         {/* Honeypot */}

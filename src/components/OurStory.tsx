@@ -136,9 +136,10 @@ export default function OurStory() {
             <p className="text-lg text-gp-ink-muted leading-relaxed mb-8">
               Since our inception, Gani Properties Pvt. Ltd. has been a trusted real estate
               developer in Bengaluru, known for delivering high-quality residential plots,
-              farmland, and agricultural lands. With a strong foundation of trust, innovation,
-              and customer-first approach, we continue to redefine Bengaluru&apos;s real estate
-              landscape, creating sustainable, future-ready spaces that inspire modern living.
+              farmland, and agricultural lands. We specialize in an **End-to-End Service model**, 
+              managing every project—including residential, commercial, educational, and hospital projects—from initial **Approval to Key** handover. By overseeing the 
+              complete **PSD (Project Schematics/Design)** and pre-construction stages, we ensure 
+              a seamless and transparent experience for all our clients.
             </p>
 
             {/* Statistics Grid */}

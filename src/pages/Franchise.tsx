@@ -1,8 +1,8 @@
-import { motion, useScroll, useTransform, useInView } from 'framer-motion';
-import { useRef, useState, useEffect } from 'react';
+import { motion, useScroll, useTransform } from 'framer-motion';
+import { useRef, useState } from 'react';
 import SEOHead from '@/components/SEOHead';
 import { 
-  TrendingUp, Award, Target, Zap, Clock, 
+  TrendingUp, Award, Clock, 
   IndianRupee, MapPin, Users, BarChart3, 
   CheckCircle2, ArrowRight, Building2, Globe, Shield,
   Sparkles, Star, ArrowDown
@@ -13,27 +13,12 @@ import Image from '@/components/Image';
 
 const franchiseModels = [
   {
-    id: 'marketing',
-    name: 'Marketing Franchise',
-    model: 'Model D',
-    investment: '₹10-15 Lakhs',
-    territory: 'District-level focus',
-    revenueSplit: '60% You, 40% Us',
-    roi: '12-18 Months',
-    gradient: 'from-blue-500/10 to-cyan-500/10',
-    borderColor: 'border-blue-200',
-    hoverGradient: 'from-blue-500/20 to-cyan-500/20',
-    icon: Target,
-    color: 'blue',
-  },
-  {
     id: 'city',
     name: 'City Franchise',
     model: 'Model A',
-    investment: '₹25-40 Lakhs',
+    investment: '₹8-10 Lakhs',
     territory: 'Exclusive city rights',
     revenueSplit: '70% You, 30% Us',
-    roi: '18-24 Months',
     gradient: 'from-purple-500/10 to-pink-500/10',
     borderColor: 'border-purple-200',
     hoverGradient: 'from-purple-500/20 to-pink-500/20',
@@ -44,10 +29,9 @@ const franchiseModels = [
     id: 'regional',
     name: 'Regional Franchise',
     model: 'Model B',
-    investment: '₹50-80 Lakhs',
+    investment: '₹15-20 Lakhs',
     territory: 'Multi-city operations',
     revenueSplit: '75% You, 25% Us',
-    roi: '24-30 Months',
     gradient: 'from-green-500/10 to-emerald-500/10',
     borderColor: 'border-green-200',
     hoverGradient: 'from-green-500/20 to-emerald-500/20',
@@ -58,10 +42,9 @@ const franchiseModels = [
     id: 'builder',
     name: 'Builder Partner',
     model: 'Model C',
-    investment: '₹1 Crore+',
+    investment: 'Depends on Investment',
     territory: 'State-level authority',
     revenueSplit: '80% You, 20% Us',
-    roi: '30-36 Months',
     gradient: 'from-amber-500/10 to-orange-500/10',
     borderColor: 'border-amber-200',
     hoverGradient: 'from-amber-500/20 to-orange-500/20',
@@ -73,18 +56,18 @@ const franchiseModels = [
 const supportFeatures = [
   {
     icon: Award,
-    title: 'Complete Branding Package',
-    description: 'Marketing materials, digital campaigns, and promotional support',
+    title: 'First-in-Segment Model',
+    description: 'The first dedicated franchise model in the Indian construction industry with proven systems.',
   },
   {
     icon: Users,
-    title: 'Extensive Training Programs',
-    description: '7-14 day onboarding plus ongoing workshops on sales and operations',
+    title: 'Vocational Training',
+    description: 'Specialized training on local market capture, customer interaction, and construction management.',
   },
   {
     icon: TrendingUp,
-    title: 'Lead Generation Support',
-    description: 'Qualified leads and digital promotion tools to accelerate growth',
+    title: 'Business & Tech Support',
+    description: 'Comprehensive technical support, knowledge transfer, and lead generation to fuel your growth.',
   },
 ];
 
@@ -121,52 +104,7 @@ const responsibilities = {
   ],
 };
 
-// Animated Counter Component
-function AnimatedCounter({ value, suffix = '', delay = 0 }: { value: string; suffix?: string; delay?: number }) {
-  const ref = useRef(null);
-  const isInView = useInView(ref, { once: true, margin: '-100px' });
-  const [displayValue, setDisplayValue] = useState(value);
 
-  useEffect(() => {
-    if (!isInView) return;
-
-    // For ROI ranges like "12-18", just show the range
-    if (value.includes('-')) {
-      return; // Already set to the full range
-    }
-
-    // For single numbers, animate them
-    const numericValue = parseInt(value);
-    if (isNaN(numericValue)) {
-      return;
-    }
-    
-    const duration = 2000;
-    const steps = 60;
-    const increment = numericValue / steps;
-    let current = 0;
-    let step = 0;
-
-    const timer = setTimeout(() => {
-      const interval = setInterval(() => {
-        step++;
-        current += increment;
-        if (step >= steps) {
-          setDisplayValue(numericValue.toString());
-          clearInterval(interval);
-        } else {
-          setDisplayValue(Math.floor(current).toString());
-        }
-      }, duration / steps);
-    }, delay);
-
-    return () => {
-      clearTimeout(timer);
-    };
-  }, [isInView, value, delay]);
-
-  return <span ref={ref}>{displayValue}{suffix}</span>;
-}
 
 export default function FranchisePage() {
   const heroRef = useRef<HTMLElement>(null);
@@ -353,7 +291,7 @@ export default function FranchisePage() {
                   animation: 'shimmer 3s ease-in-out infinite',
                 }}
               >
-                Real Estate Success
+                Construction Franchising Success
               </motion.span>
               
               {/* Text Glow Effect */}
@@ -375,7 +313,7 @@ export default function FranchisePage() {
               transition={{ duration: 0.8, delay: 0.4 }}
               className="text-xl md:text-2xl text-white/90 leading-relaxed mb-8 max-w-3xl mx-auto"
             >
-              Trusted across India for quality construction, innovative designs, and reliable property solutions that build lasting value.
+              India&apos;s first comprehensive <span className="text-gp-accent font-bold">&quot;Approval to Key&quot;</span> franchise model, providing specialized business support and technical vocational training.
             </motion.p>
             <motion.p
               initial={{ opacity: 0, y: 20 }}
@@ -383,7 +321,7 @@ export default function FranchisePage() {
               transition={{ duration: 0.8, delay: 0.6 }}
               className="text-lg text-white/80 leading-relaxed mb-12 max-w-2xl mx-auto"
             >
-              Our franchise model provides strong branding, proven systems, and continuous support to ensure long-term profitability for ambitious partners.
+              Our &quot;Paid Socialised Service&quot; model ensures you enter the market with strong branding, proven technical benchmarking, and vocational training on capturing your local market.
             </motion.p>
             <motion.div
               initial={{ opacity: 0, y: 20 }}
@@ -453,18 +391,18 @@ export default function FranchisePage() {
               className="text-sm font-medium text-gp-accent uppercase tracking-wider mb-4 block inline-flex items-center gap-2"
             >
               <Star className="w-4 h-4" />
-              FRANCHISE MODELS
+              Pricing ~ FRANCHISE MODELS
               <Star className="w-4 h-4" />
             </motion.span>
             <h2 className="text-4xl md:text-6xl font-display font-bold text-gp-ink mb-6">
-              Four Strategic Franchise Models
+              Three Strategic Franchise Models
             </h2>
             <p className="text-xl text-gp-ink-muted leading-relaxed">
               Choose the investment level and market scope that aligns with your business goals and financial capacity.
             </p>
           </motion.div>
 
-          <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-6 mb-12">
+          <div className="flex flex-wrap justify-center gap-8 mb-12">
             {franchiseModels.map((model, index) => {
               const Icon = model.icon;
               const isSelected = selectedModel === model.id;
@@ -487,7 +425,7 @@ export default function FranchisePage() {
                   }}
                   onHoverStart={() => setSelectedModel(model.id)}
                   onHoverEnd={() => setSelectedModel(null)}
-                  className="group cursor-pointer"
+                  className="group cursor-pointer w-full md:w-[calc(50%-2rem)] lg:w-[calc(33.333%-2rem)] max-w-sm"
                 >
                   <motion.div
                     className={`bg-gradient-to-br ${isSelected ? model.hoverGradient : model.gradient} rounded-3xl p-8 border-2 ${model.borderColor} transition-all duration-500 h-full flex flex-col relative overflow-hidden`}
@@ -547,16 +485,7 @@ export default function FranchisePage() {
                             <p className="text-sm text-gp-ink-muted font-medium">{model.revenueSplit}</p>
                           </div>
                         </motion.div>
-                        <motion.div
-                          whileHover={{ x: 5 }}
-                          className="flex items-start gap-3"
-                        >
-                          <Zap className="w-6 h-6 text-gp-gold mt-0.5 flex-shrink-0" />
-                          <div>
-                            <p className="text-sm font-semibold text-gp-ink">ROI Timeline</p>
-                            <p className="text-sm text-gp-ink-muted font-medium">{model.roi}</p>
-                          </div>
-                        </motion.div>
+
                       </div>
                     </div>
                   </motion.div>
@@ -598,10 +527,9 @@ export default function FranchisePage() {
                   </h2>
                   <div className="space-y-5 mb-8">
                     {[
-                      { icon: IndianRupee, label: 'Investment', value: '₹25-40 Lakhs', color: 'text-gp-accent' },
+                      { icon: IndianRupee, label: 'Investment', value: '₹8-10 Lakhs', color: 'text-gp-accent' },
                       { icon: MapPin, label: 'Territory', value: 'Exclusive city rights', color: 'text-gp-gold' },
                       { icon: BarChart3, label: 'Revenue Split', value: '70% You, 30% Us', color: 'text-gp-accent' },
-                      { icon: Clock, label: 'ROI Timeline', value: '18-24 months', color: 'text-gp-gold' },
                     ].map((item, index) => {
                       const Icon = item.icon;
                       return (
@@ -683,7 +611,7 @@ export default function FranchisePage() {
             {[
               {
                 title: 'Regional Franchise (Model B)',
-                investment: '₹50-80 Lakhs',
+                investment: '₹15-20 Lakhs',
                 coverage: 'Multiple cities, semi-exclusive rights',
                 revenue: '75% franchisee, 25% franchisor',
                 description: 'Includes dedicated manager and construction training modules for comprehensive regional growth.',
@@ -694,7 +622,7 @@ export default function FranchisePage() {
               },
               {
                 title: 'Exclusive Builder Partner (Model C)',
-                investment: '₹1 Crore+',
+                investment: 'Depends on Investment',
                 coverage: 'State-level or major metro authority',
                 revenue: '80% franchisee, 20% franchisor',
                 description: 'Complete project support, joint ventures, and legal consulting for maximum market penetration.',
@@ -823,77 +751,11 @@ export default function FranchisePage() {
             })}
           </div>
 
-          <motion.div
-            initial={{ opacity: 0, scale: 0.9 }}
-            whileInView={{ opacity: 1, scale: 1 }}
-            viewport={{ once: true }}
-            transition={{ duration: 0.6, delay: 0.3 }}
-            className="bg-gradient-to-r from-gp-accent/10 via-gp-gold/10 to-gp-accent/10 rounded-3xl p-10 max-w-4xl mx-auto text-center border-2 border-gp-accent/20"
-          >
-            <p className="text-xl text-gp-ink font-medium">
-              One-time franchise fees range from <span className="font-bold text-gp-accent text-2xl">₹5-20 Lakhs</span> with optional security deposits of <span className="font-bold text-gp-accent text-2xl">₹2-5 Lakhs</span>.
-            </p>
-          </motion.div>
+
         </div>
       </section>
 
-      {/* ROI Analysis - Enhanced with Animations */}
-      <section className="py-32 bg-white relative overflow-hidden">
-        <div className="absolute inset-0 opacity-[0.02]">
-          <div className="absolute inset-0 bg-[linear-gradient(45deg,transparent_25%,rgba(201,181,137,1)_25%,rgba(201,181,137,1)_50%,transparent_50%,transparent_75%,rgba(201,181,137,1)_75%,rgba(201,181,137,1)_100%)] bg-[length:60px_60px]" />
-        </div>
 
-        <div className="container mx-auto px-4 lg:px-6 relative z-10">
-          <motion.div
-            initial={{ opacity: 0, y: 20 }}
-            whileInView={{ opacity: 1, y: 0 }}
-            viewport={{ once: true }}
-            transition={{ duration: 0.6 }}
-            className="max-w-6xl mx-auto"
-          >
-            <div className="text-center mb-20">
-              <h2 className="text-4xl md:text-6xl font-display font-bold text-gp-ink mb-6">
-                Revenue Potential & ROI Analysis
-              </h2>
-            </div>
-
-            <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-6">
-              {[
-                { roi: '12-18', suffix: ' Months', model: 'Marketing Franchise Model', color: 'from-blue-500/20 to-cyan-500/20', border: 'border-blue-200' },
-                { roi: '18-24', suffix: ' Months', model: 'City Franchise Model', color: 'from-purple-500/20 to-pink-500/20', border: 'border-purple-200' },
-                { roi: '24-30', suffix: ' Months', model: 'Regional Franchise Model', color: 'from-green-500/20 to-emerald-500/20', border: 'border-green-200' },
-                { roi: '30-36', suffix: ' Months', model: 'Builder Partner Model', color: 'from-amber-500/20 to-orange-500/20', border: 'border-amber-200' },
-              ].map((item, index) => (
-                <motion.div
-                  key={item.model}
-                  initial={{ opacity: 0, y: 50, scale: 0.8 }}
-                  whileInView={{ opacity: 1, y: 0, scale: 1 }}
-                  viewport={{ once: true, margin: '-50px' }}
-                  transition={{
-                    duration: 0.8,
-                    delay: index * 0.15,
-                    ease: [0.16, 1, 0.3, 1],
-                  }}
-                  whileHover={{ 
-                    y: -12,
-                    scale: 1.05,
-                    transition: { duration: 0.3 }
-                  }}
-                  className={`bg-gradient-to-br ${item.color} rounded-3xl p-10 border-2 ${item.border} shadow-xl`}
-                >
-                  <div className="text-center">
-                    <div className="text-5xl font-bold text-gp-ink mb-2">
-                      <AnimatedCounter value={item.roi} suffix={item.suffix} delay={index * 200} />
-                    </div>
-                    <div className="text-sm font-semibold text-gp-accent uppercase tracking-wider mb-4">ROI</div>
-                    <p className="text-gp-ink-muted text-sm font-medium">{item.model}</p>
-                  </div>
-                </motion.div>
-              ))}
-            </div>
-          </motion.div>
-        </div>
-      </section>
 
       {/* Support System - Enhanced */}
       <section className="py-32 bg-gradient-to-br from-gp-bg via-gp-surface to-gp-bg relative overflow-hidden">

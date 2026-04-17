@@ -1,7 +1,7 @@
 @import url('https://fonts.googleapis.com/css2?family=Playfair+Display:wght@400;600&family=Inter:wght@400;500;600&family=Poppins:wght@400;500;600&display=swap');
-@tailwind base;
-@tailwind components;
-@tailwind utilities;
+@import "tailwindcss/base";
+@import "tailwindcss/components";
+@import "tailwindcss/utilities";
 
 @layer base {
   :root {
@@ -142,9 +142,18 @@
       scroll-behavior: smooth;
     }
   }
+  html,
+  body,
+  #root {
+    position: relative;
+  }
 
   body {
-    @apply bg-white text-gp-ink antialiased;
+    background-color: white;
+    color: var(--gp-ink, #0F3A3D);
+    position: relative;
+    -webkit-font-smoothing: antialiased;
+    -moz-osx-font-smoothing: grayscale;
     font-family: var(--font-body);
   }
 
@@ -266,5 +275,54 @@
     100% {
       background-position: 200% 0;
     }
+  }
+
+  /* Carousel Progress Animation */
+  @keyframes carousel-progress {
+    from {
+      transform: scaleX(0);
+    }
+    to {
+      transform: scaleX(1);
+    }
+  }
+
+  .animate-carousel-progress {
+    animation: carousel-progress 5s linear forwards;
+    transform-origin: left;
+  }
+
+  /* Glassmorphism Utilities */
+  .glass-card {
+    background: rgba(255, 255, 255, 0.7);
+    backdrop-filter: blur(12px) saturate(180%);
+    -webkit-backdrop-filter: blur(12px) saturate(180%);
+    border: 1px solid rgba(255, 255, 255, 0.3);
+  }
+
+  .glass-dark {
+    background: rgba(14, 27, 28, 0.7);
+    backdrop-filter: blur(10px) saturate(150%);
+    -webkit-backdrop-filter: blur(10px) saturate(150%);
+    border: 1px solid rgba(255, 255, 255, 0.1);
+  }
+
+  /* Premium Shadows & Glows */
+  .shadow-gold-glow {
+    box-shadow: 0 0 20px rgba(213, 179, 106, 0.3), 0 0 40px rgba(213, 179, 106, 0.1);
+  }
+
+  .shadow-soft-xl {
+    box-shadow: 0 25px 50px -12px rgba(0, 0, 0, 0.15);
+  }
+
+  /* Text Gradients */
+  .text-gradient-gold {
+    background: linear-gradient(135deg, #C9B589 0%, #D5B36A 50%, #C9B589 100%);
+    -webkit-background-clip: text;
+    background-clip: text;
+    -webkit-text-fill-color: transparent;
+    background-size: 200% auto;
+    animation: shimmer 4s linear infinite;
   }
 }

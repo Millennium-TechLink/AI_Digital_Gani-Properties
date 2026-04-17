@@ -28,9 +28,9 @@ function App() {
         description="Leading property providers in Bangalore offering verified residential plots, farmland, and agricultural lands. Trusted real estate dealer with transparent pricing in Kattigenahalli, Yelahanka, Hunasamaranahalli, and Chikkaballapur."
       />
       
-      <div className="min-h-screen flex flex-col">
+      <div className="min-h-screen flex flex-col relative">
         <Navbar />
-        <main className="flex-grow">
+        <main className="flex-grow relative">
           <Routes>
             <Route path="/" element={<PageTransition><HomePage /></PageTransition>} />
             <Route path="/properties" element={<PageTransition><PropertiesPage /></PageTransition>} />

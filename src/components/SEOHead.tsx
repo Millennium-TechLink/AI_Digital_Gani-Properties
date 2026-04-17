@@ -75,14 +75,14 @@ export default function SEOHead({
 
       {/* Geo Tags */}
       <meta name="geo.region" content="IN-KA" />
-      <meta name="geo.placename" content="Bengaluru" />
+      <meta name="geo.placename" content="Ballari" />
       <meta name="geo.position" content={`${siteConfig.geo.latitude};${siteConfig.geo.longitude}`} />
       <meta name="ICBM" content={`${siteConfig.geo.latitude}, ${siteConfig.geo.longitude}`} />
 
       {/* Local Business Tags */}
       <meta name="contact" content={siteConfig.phone} />
       <meta name="email" content={siteConfig.email} />
-      <meta name="locality" content="Bengaluru" />
+      <meta name="locality" content="Ballari" />
       <meta name="region" content="Karnataka" />
       <meta name="country" content="India" />
 

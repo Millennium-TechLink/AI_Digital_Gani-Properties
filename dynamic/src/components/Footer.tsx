@@ -65,24 +65,20 @@ export default function Footer() {
             viewport={{ once: true, margin: '-50px' }}
             transition={{ duration: 0.5, ease: [0.16, 1, 0.3, 1] }}
           >
-            <Link to="/" className="flex items-center gap-3 mb-4 group">
-              <div className="relative h-12 w-auto flex-shrink-0">
+            <Link to="/" className="flex items-center mb-4 group">
+              <div className="relative h-14 w-auto flex-shrink-0">
                 <Image
                   src="/images/Logo.webp"
                   alt="Gani Properties"
-                  width={100}
-                  height={48}
+                  width={140}
+                  height={56}
                   className="h-full w-auto object-contain transition-transform group-hover:scale-105"
                 />
               </div>
-              <div className="flex flex-col">
-                <span className="text-xl font-display font-bold text-white group-hover:text-gp-accent transition-colors">Gani Properties</span>
-                <span className="text-xs text-white/70">Pvt. Ltd. • Builders and Developers</span>
-              </div>
             </Link>
             <p className="text-white/80 leading-relaxed">
-              Your trusted partner in finding the perfect Layout for your dreams. 
-              With verified titles and transparent pricing.
+              Your trusted partner for premium layouts. We deliver clear titles, 
+              transparent pricing, and end-to-end support to build your dream property.
             </p>
           </motion.div>
 
@@ -131,9 +127,17 @@ export default function Footer() {
             <ul className="space-y-3">
               <li className="flex items-start gap-2">
                 <MapPin className="h-5 w-5 text-gp-accent mt-0.5 flex-shrink-0" />
-                <span className="text-white/80">
-                  Bengaluru, Karnataka
-                </span>
+                <a 
+                  href="https://maps.google.com/?q=Gani+Properties,+2nd+Floor,+Neema+Square,+Moka+Road,+Basaveshwara+Nagar,+Ballari,+Karnataka+583103"
+                  target="_blank"
+                  rel="noopener noreferrer"
+                  className="text-white/80 text-sm leading-relaxed hover:text-gp-accent transition-colors block"
+                >
+                  <span className="block font-medium text-white mb-1">Head Office</span>
+                  <span className="block">2nd Floor, Neema Square, Moka Road</span>
+                  <span className="block">Basaveshwara Nagar, Ballari</span>
+                  <span className="block">Karnataka 583103</span>
+                </a>
               </li>
               <li className="flex items-center gap-2">
                 <Phone className="h-5 w-5 text-gp-accent flex-shrink-0" />

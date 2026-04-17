@@ -1,9 +1,11 @@
 import { motion, useInView } from 'framer-motion';
-import { useRef } from 'react';
+import { useRef, lazy, Suspense } from 'react';
 import SEOHead from '@/components/SEOHead';
 import { MapPin, Phone, Mail, Clock, MessageCircle } from 'lucide-react';
 import { Button } from '@/components/ui/button';
 import LeadForm from '@/components/LeadForm';
+const OfficeMap = lazy(() => import('@/components/OfficeMap'));
+import 'leaflet/dist/leaflet.css';
 
 export default function ContactPage() {
   const ref = useRef(null);
@@ -13,7 +15,7 @@ export default function ContactPage() {
     <>
       <SEOHead
         title="Contact Gani Properties - Property Providers in Bangalore | Phone, Email, WhatsApp"
-        description="Contact Gani Properties for your real estate needs in Bangalore. Call +91 99005 70799, email marketing@ourganiproperties.com, or visit us in Bengaluru. Schedule site visits for properties in Kattigenahalli, Yelahanka, Hunasamaranahalli, and Chikkaballapur."
+        description="Contact Gani Properties for your real estate needs. Call +91 99005 70799, email marketing@ourganiproperties.com, or visit us in Ballari. Schedule site visits for properties in Kattigenahalli, Yelahanka, Hunasamaranahalli, and Chikkaballapur."
         keywords={[
           'contact Gani Properties',
           'property dealers contact Bangalore',
@@ -59,13 +61,14 @@ export default function ContactPage() {
         </div>
 
         <div className="container mx-auto px-4 lg:px-6 relative z-10">
-          <div className="max-w-7xl mx-auto">
-            <div className="grid grid-cols-1 lg:grid-cols-2 gap-12 lg:gap-16">
+          <div className="max-w-7xl mx-auto relative">
+            <div className="grid grid-cols-1 lg:grid-cols-12 gap-12 lg:gap-16 items-center">
               {/* Contact Form */}
               <motion.div
                 initial={{ opacity: 0, x: -30 }}
                 animate={isInView ? { opacity: 1, x: 0 } : {}}
                 transition={{ duration: 0.6, ease: [0.16, 1, 0.3, 1] }}
+                className="lg:col-span-7"
               >
                 <div className="bg-gradient-to-br from-white to-gp-surface/5 rounded-3xl p-8 md:p-10 shadow-xl border border-gp-ink/10">
                   <LeadForm context="contact" />
@@ -77,20 +80,20 @@ export default function ContactPage() {
                 initial={{ opacity: 0, x: 30 }}
                 animate={isInView ? { opacity: 1, x: 0 } : {}}
                 transition={{ duration: 0.6, delay: 0.1, ease: [0.16, 1, 0.3, 1] }}
-                className="space-y-8"
+                className="lg:col-span-5 space-y-8"
               >
                 <div>
                   <h2 className="text-3xl md:text-4xl font-display font-bold text-gp-ink mb-8">
                     Get in Touch
                   </h2>
 
-                  <div className="space-y-6">
+                  <div className="space-y-4">
                     {[
                       {
                         icon: MapPin,
-                        title: 'Address',
-                        content: 'Bengaluru, Karnataka, India',
-                        link: null,
+                        title: 'Head Office',
+                        content: '2nd Floor, Neema Square, Moka Road\nBasaveshwara Nagar, Ballari\nKarnataka 583103',
+                        link: 'https://maps.google.com/?q=Gani+Properties,+2nd+Floor,+Neema+Square,+Moka+Road,+Basaveshwara+Nagar,+Ballari,+Karnataka+583103',
                       },
                       {
                         icon: Phone,
@@ -118,7 +121,7 @@ export default function ContactPage() {
                           initial={{ opacity: 0, y: 20 }}
                           animate={isInView ? { opacity: 1, y: 0 } : {}}
                           transition={{ duration: 0.5, delay: 0.2 + index * 0.1 }}
-                          className="flex items-start gap-4 p-6 bg-white rounded-2xl border border-gp-ink/10 hover:border-gp-accent/30 hover:shadow-lg transition-all duration-300 group"
+                          className="flex items-start gap-4 p-5 bg-white rounded-2xl border border-gp-ink/10 hover:border-gp-accent/30 hover:shadow-lg transition-all duration-300 group"
                         >
                           <div className="w-14 h-14 bg-gradient-to-br from-gp-accent/20 to-gp-gold/20 rounded-2xl flex items-center justify-center flex-shrink-0 group-hover:scale-110 transition-transform duration-300">
                             <Icon className="h-7 w-7 text-gp-accent" />
@@ -194,7 +197,7 @@ export default function ContactPage() {
         </div>
 
         <div className="container mx-auto px-4 lg:px-6 relative z-10">
-          <div className="max-w-6xl mx-auto">
+          <div className="max-w-6xl mx-auto relative">
             <motion.div
               initial={{ opacity: 0, y: 30 }}
               whileInView={{ opacity: 1, y: 0 }}
@@ -209,7 +212,7 @@ export default function ContactPage() {
                 Find Our Location
               </h2>
               <p className="text-lg text-gp-ink-muted leading-relaxed max-w-2xl mx-auto">
-                Visit us in Bengaluru to discuss your property needs in person.
+                Visit us in Ballari to discuss your property needs in person.
               </p>
             </motion.div>
 
@@ -220,17 +223,13 @@ export default function ContactPage() {
               transition={{ duration: 0.6, delay: 0.2 }}
               className="h-[500px] rounded-3xl overflow-hidden border border-gp-ink/10 shadow-2xl bg-white"
             >
-              <iframe
-                src="https://www.openstreetmap.org/export/embed.html?bbox=77.59,13.08,77.6,13.09&layer=mapnik&marker=13.0827,77.5946"
-                width="100%"
-                height="100%"
-                frameBorder="0"
-                allowFullScreen
-                loading="lazy"
-                referrerPolicy="no-referrer-when-downgrade"
-                className="w-full h-full"
-                title="Gani Properties Location"
-              />
+              <Suspense fallback={
+                <div className="h-full w-full flex items-center justify-center bg-gp-surface/5">
+                  <div className="animate-spin rounded-full h-12 w-12 border-b-2 border-gp-accent"></div>
+                </div>
+              }>
+                <OfficeMap />
+              </Suspense>
             </motion.div>
           </div>
         </div>
