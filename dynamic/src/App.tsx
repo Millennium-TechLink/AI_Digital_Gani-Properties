@@ -16,7 +16,8 @@ import FranchisePage from './pages/Franchise';
 import PrivacyPage from './pages/Privacy';
 import TermsPage from './pages/Terms';
 import NotFoundPage from './pages/NotFound';
-import PropertyDashboard from './pages/PropertyDashboard';
+import Dashboard from './pages/Dashboard';
+import CareersPage from './pages/Careers';
 
 function App() {
   return (
@@ -41,10 +42,12 @@ function App() {
             <Route path="/franchise" element={<PageTransition><FranchisePage /></PageTransition>} />
             <Route path="/privacy" element={<PageTransition><PrivacyPage /></PageTransition>} />
             <Route path="/terms" element={<PageTransition><TermsPage /></PageTransition>} />
-            <Route path="/dashboard" element={<PropertyDashboard />} />
+            <Route path="/dashboard" element={<Dashboard />} />
+            <Route path="/careers" element={<PageTransition><CareersPage /></PageTransition>} />
             <Route path="*" element={<PageTransition><NotFoundPage /></PageTransition>} />
           </Routes>
         </main>
+
         <Footer />
         <BackToTop />
       </div>

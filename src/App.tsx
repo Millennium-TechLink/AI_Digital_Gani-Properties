@@ -11,6 +11,7 @@ import CataloguePage from './pages/Catalogue';
 import PropertyTypePage from './pages/PropertyType';
 import AboutPage from './pages/About';
 import ContactPage from './pages/Contact';
+import CareersPage from './pages/Careers';
 import FranchisePage from './pages/Franchise';
 import PrivacyPage from './pages/Privacy';
 import TermsPage from './pages/Terms';
@@ -34,6 +35,7 @@ function App() {
             <Route path="/catalogue" element={<PageTransition><CataloguePage /></PageTransition>} />
             <Route path="/property-type/:type" element={<PageTransition><PropertyTypePage /></PageTransition>} />
             <Route path="/about" element={<PageTransition><AboutPage /></PageTransition>} />
+            <Route path="/careers" element={<PageTransition><CareersPage /></PageTransition>} />
             <Route path="/contact" element={<PageTransition><ContactPage /></PageTransition>} />
             <Route path="/franchise" element={<PageTransition><FranchisePage /></PageTransition>} />
             <Route path="/privacy" element={<PageTransition><PrivacyPage /></PageTransition>} />
@@ -41,6 +43,7 @@ function App() {
             <Route path="*" element={<PageTransition><NotFoundPage /></PageTransition>} />
           </Routes>
         </main>
+
         <Footer />
         <BackToTop />
       </div>
