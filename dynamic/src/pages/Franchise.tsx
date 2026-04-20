@@ -1,11 +1,11 @@
-import { motion, useScroll, useTransform, useInView } from 'framer-motion';
-import { useRef, useState, useEffect } from 'react';
+import { motion, useScroll, useTransform } from 'framer-motion';
+import { useRef, useState } from 'react';
 import SEOHead from '@/components/SEOHead';
 import { 
-  TrendingUp, Award, Target, Zap, Clock, 
+  TrendingUp, Award, Zap, Clock, 
   IndianRupee, MapPin, Users, BarChart3, 
   CheckCircle2, ArrowRight, Building2, Globe, Shield,
-  Sparkles, Star, ArrowDown
+  Sparkles, Star, ArrowDown, HardHat
 } from 'lucide-react';
 import { Button } from '@/components/ui/button';
 import { Link } from 'react-router-dom';
@@ -830,7 +830,139 @@ export default function FranchisePage() {
         </div>
       </section>
 
-      {/* Responsibilities - Enhanced */}
+      {/* Partner Eligibility Section */}
+      <section className="py-32 bg-slate-50 relative overflow-hidden">
+        <div className="container mx-auto px-4 lg:px-6 relative z-10">
+          <motion.div
+            initial={{ opacity: 0, y: 20 }}
+            whileInView={{ opacity: 1, y: 0 }}
+            viewport={{ once: true }}
+            transition={{ duration: 0.6 }}
+            className="text-center max-w-3xl mx-auto mb-20"
+          >
+            <h2 className="text-4xl md:text-6xl font-display font-bold text-gp-ink mb-6">
+              Partner Eligibility
+            </h2>
+            <p className="text-xl text-gp-ink-muted">
+              We seek visionary partners with a commitment to excellence and a drive for market expansion.
+            </p>
+          </motion.div>
+
+          <div className="grid grid-cols-1 lg:grid-cols-3 gap-8 max-w-6xl mx-auto">
+            {[
+              {
+                tier: 'City Partner',
+                financial: '₹8-10 Lakhs',
+                professional: 'Market knowledge, local influence, and dedicated focus on city-level growth.',
+                bg: 'bg-white'
+              },
+              {
+                tier: 'Regional Partner',
+                financial: '₹15-20 Lakhs',
+                professional: 'Multi-city operational capability, strong leadership, and scaling mindset.',
+                bg: 'bg-white'
+              },
+              {
+                tier: 'Builder Partner',
+                financial: 'Capital Intesive',
+                professional: 'Land ownership or development expertise, long-term state-level vision.',
+                bg: 'bg-white shadow-xl border-gp-accent/20'
+              }
+            ].map((item, index) => (
+              <motion.div
+                key={index}
+                initial={{ opacity: 0, scale: 0.95 }}
+                whileInView={{ opacity: 1, scale: 1 }}
+                viewport={{ once: true }}
+                transition={{ duration: 0.5, delay: index * 0.1 }}
+                className={`${item.bg} p-10 rounded-[2.5rem] border border-gp-ink/5 flex flex-col items-center text-center`}
+              >
+                <div className="text-gp-accent font-bold uppercase tracking-widest mb-4">{item.tier}</div>
+                <div className="text-3xl font-bold text-gp-ink mb-6">{item.financial}</div>
+                <div className="w-12 h-0.5 bg-gp-accent/20 mb-6" />
+                <p className="text-gp-ink-muted leading-relaxed">
+                  {item.professional}
+                </p>
+              </motion.div>
+            ))}
+          </div>
+        </div>
+      </section>
+
+      {/* Support Structure Section */}
+      <section className="py-32 bg-gp-ink relative overflow-hidden">
+        <div className="absolute inset-0 opacity-10">
+          <div className="absolute top-0 right-0 w-96 h-96 bg-gp-accent rounded-full blur-[120px] -mr-48 -mt-48" />
+          <div className="absolute bottom-0 left-0 w-96 h-96 bg-gp-gold rounded-full blur-[120px] -ml-48 -mb-48" />
+        </div>
+
+        <div className="container mx-auto px-4 lg:px-6 relative z-10">
+          <motion.div
+            initial={{ opacity: 0, y: 20 }}
+            whileInView={{ opacity: 1, y: 0 }}
+            viewport={{ once: true }}
+            transition={{ duration: 0.6 }}
+            className="text-center max-w-3xl mx-auto mb-20"
+          >
+            <h2 className="text-4xl md:text-6xl font-display font-bold text-white mb-6">
+              Our Support Ecosystem
+            </h2>
+            <p className="text-xl text-white/70">
+              We empower our partners with end-to-end support across four critical business pillars.
+            </p>
+          </motion.div>
+
+          <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-8">
+            {[
+              {
+                title: 'Tech Support',
+                icon: Zap,
+                items: ['Integrated ERP Systems', 'Lead Management (CRM)', 'Digital Asset Access']
+              },
+              {
+                title: 'Legal & Doc',
+                icon: Shield,
+                items: ['Contractual Guidance', 'Regulatory Compliance', 'Agreement Drafting']
+              },
+              {
+                title: 'Marketing & PR',
+                icon: TrendingUp,
+                items: ['National Branding', 'Localized Campaigns', 'Digital PR Strategy']
+              },
+              {
+                title: 'Engineering/PSD',
+                icon: HardHat,
+                items: ['Design Benchmarking', 'Site Feasibility', 'Technical Consulting']
+              }
+            ].map((support, index) => {
+              const Icon = support.icon;
+              return (
+                <motion.div
+                  key={index}
+                  initial={{ opacity: 0, y: 30 }}
+                  whileInView={{ opacity: 1, y: 0 }}
+                  viewport={{ once: true }}
+                  transition={{ duration: 0.5, delay: index * 0.1 }}
+                  className="bg-white/5 backdrop-blur-sm p-8 rounded-3xl border border-white/10 hover:border-white/20 transition-all group"
+                >
+                  <div className="w-14 h-14 rounded-2xl bg-gp-accent/20 flex items-center justify-center mb-6 group-hover:bg-gp-accent transition-colors">
+                    <Icon className="w-7 h-7 text-gp-accent group-hover:text-white" />
+                  </div>
+                  <h3 className="text-xl font-bold text-white mb-6">{support.title}</h3>
+                  <ul className="space-y-4">
+                    {support.items.map((item, i) => (
+                      <li key={i} className="flex items-center gap-3 text-white/60 text-sm">
+                        <CheckCircle2 className="w-4 h-4 text-gp-accent" />
+                        {item}
+                      </li>
+                    ))}
+                  </ul>
+                </motion.div>
+              );
+            })}
+          </div>
+        </div>
+      </section>
       <section className="py-32 bg-white relative overflow-hidden">
         <div className="container mx-auto px-4 lg:px-6 relative z-10">
           <motion.div

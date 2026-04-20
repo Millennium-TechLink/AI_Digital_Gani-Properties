@@ -2,15 +2,10 @@ import { useState } from 'react';
 import { Link } from 'react-router-dom';
 import { motion } from 'framer-motion';
 import { MapPin, Phone, Mail, Facebook, Instagram, Linkedin } from 'lucide-react';
+import axios from 'axios';
 import { Button } from '@/components/ui/button';
 import { Input } from '@/components/ui/input';
 import Image from '@/components/Image';
-import { 
-  submitToGoogleSheets, 
-  collectUTMParameters, 
-  getCurrentPagePath,
-  type FormSubmissionData 
-} from '@/lib/googleSheetsForm';
 
 export default function Footer() {
   const [email, setEmail] = useState('');
@@ -23,25 +18,23 @@ export default function Footer() {
     setNewsletterLoading(true);
     
     try {
-      const utm = collectUTMParameters();
-      const formData: FormSubmissionData = {
+      const formData = {
         name: 'Newsletter',
         phone: '0000000000',
         email,
         interest: 'Newsletter',
         message: 'Newsletter subscription',
-        page: getCurrentPagePath(),
-        hp: '',
-        ...utm,
+        page: window.location.pathname,
       };
 
-      const result = await submitToGoogleSheets(formData);
+      const API_BASE = import.meta.env.VITE_API_URL || (import.meta.env.DEV ? 'http://localhost:3000/api' : '/api');
+      const response = await axios.post(`${API_BASE}/leads`, formData);
 
-      if (result.success) {
+      if (response.data.success) {
         alert('Thank you for subscribing!');
         setEmail('');
       } else {
-        alert(result.error || 'Something went wrong. Please try again.');
+        alert('Something went wrong. Please try again.');
       }
     } catch (error) {
       console.error('Newsletter subscription error:', error);
