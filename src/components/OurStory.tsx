@@ -9,12 +9,12 @@ interface Stat {
 }
 
 const stats: Stat[] = [
-  { targetValue: 25, suffix: '+', label: 'Years Experience' },
-  { targetValue: 100, suffix: '+', label: 'Total Properties' },
-  { targetValue: 50, suffix: '+', label: 'Ongoing Projects' },
-  { targetValue: 500, suffix: '+', label: 'Acres Delivered' },
-  { targetValue: 1200, suffix: '+', label: 'Acres in Progress' },
-  { targetValue: 600, suffix: '+', label: 'Happy Families' },
+  { targetValue: 25, suffix: '+', label: 'Years of legacy' },
+  { targetValue: 100, suffix: '+', label: 'Properties Delivered' },
+  { targetValue: 30, suffix: '', label: 'Ongoing Projects' },
+  { targetValue: 100, suffix: '+', label: 'Acres Delivered' },
+  { targetValue: 60, suffix: '+', label: 'Acres in Progress' },
+  { targetValue: 600, suffix: '+', label: 'Happy Customers' },
 ];
 
 function AnimatedCounter({ targetValue, suffix, label, delay = 0 }: Stat & { delay?: number }) {
