@@ -136,14 +136,14 @@ export default function Navbar() {
               whileHover={{ scale: 1.05 }}
               whileTap={{ scale: 0.95 }}
               transition={{ duration: 0.3, ease: [0.16, 1, 0.3, 1] }}
-              className="relative h-16 w-auto flex-shrink-0"
+              className="relative h-20 w-auto flex-shrink-0 flex items-center translate-y-1"
             >
               <Image
-                src="/images/Logo.webp"
+                src="/images/Logo.svg"
                 alt="Gani Properties"
-                width={160}
+                width={200}
                 height={64}
-                className="h-full w-auto object-contain transition-transform group-hover:scale-105"
+                className="h-16 w-auto object-contain transition-transform group-hover:scale-105"
                 priority
               />
             </motion.div>

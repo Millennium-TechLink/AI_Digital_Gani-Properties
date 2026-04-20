@@ -61,7 +61,7 @@ export default function Footer() {
             <Link to="/" className="flex items-center mb-4 group">
               <div className="relative h-14 w-auto flex-shrink-0">
                 <Image
-                  src="/images/Logo.webp"
+                  src="/images/Logo.svg"
                   alt="Gani Properties"
                   width={140}
                   height={56}

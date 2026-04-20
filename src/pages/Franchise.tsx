@@ -1,11 +1,11 @@
-import { motion, useScroll, useTransform } from 'framer-motion';
+import { motion, useScroll, useTransform, AnimatePresence } from 'framer-motion';
 import { useRef, useState } from 'react';
 import SEOHead from '@/components/SEOHead';
 import { 
   TrendingUp, Award, Zap, Clock, 
   IndianRupee, MapPin, Users, BarChart3, 
   CheckCircle2, ArrowRight, Building2, Globe, Shield,
-  Sparkles, Star, ArrowDown, HardHat
+  Sparkles, Star, ArrowDown, HardHat, X
 } from 'lucide-react';
 import { Button } from '@/components/ui/button';
 import { Link } from 'react-router-dom';
@@ -24,6 +24,9 @@ const franchiseModels = [
     hoverGradient: 'from-purple-500/20 to-pink-500/20',
     icon: Building2,
     color: 'purple',
+    features: ['Standard CRM Access', 'Local Marketing Suite', '7 Days Training', 'Legal Documentation'],
+    requirements: ['500 sq.ft Office', '2 Staff Members', 'City-level focus'],
+    cta: 'Apply for City Rights'
   },
   {
     id: 'regional',
@@ -37,6 +40,9 @@ const franchiseModels = [
     hoverGradient: 'from-green-500/20 to-emerald-500/20',
     icon: Globe,
     color: 'green',
+    features: ['Advanced CRM Tools', 'Regional PR Campaigns', '15 Days Vocational Training', 'Dedicated Regional Manager'],
+    requirements: ['1000 sq.ft Hub', '5+ Staff Members', 'Zonal Market Influence'],
+    cta: 'Scale Regionally'
   },
   {
     id: 'builder',
@@ -50,6 +56,9 @@ const franchiseModels = [
     hoverGradient: 'from-amber-500/20 to-orange-500/20',
     icon: Shield,
     color: 'amber',
+    features: ['Enterprise ERP Systems', 'National Branding', 'Ongoing Expert Training', 'full Legal & Project Consulting'],
+    requirements: ['Corporate Headquarters', 'Full Engineering Team', 'Strategic Partnership'],
+    cta: 'Become a Strategic Partner'
   },
 ];
 
@@ -115,7 +124,10 @@ export default function FranchisePage() {
 
   const heroY = useTransform(scrollYProgress, [0, 1], ['0%', '50%']);
   const [selectedModel, setSelectedModel] = useState<string | null>(null);
+  const [activeModelId, setActiveModelId] = useState<string | null>(null);
   const [imageLoaded, setImageLoaded] = useState(false);
+
+  const activeModel = franchiseModels.find(m => m.id === activeModelId);
 
   return (
     <>
@@ -410,6 +422,7 @@ export default function FranchisePage() {
               return (
                 <motion.div
                   key={model.id}
+                  onClick={() => setActiveModelId(model.id)}
                   initial={{ opacity: 0, y: 50, scale: 0.9 }}
                   whileInView={{ opacity: 1, y: 0, scale: 1 }}
                   viewport={{ once: true, margin: '-50px' }}
@@ -428,7 +441,7 @@ export default function FranchisePage() {
                   className="group cursor-pointer w-full md:w-[calc(50%-2rem)] lg:w-[calc(33.333%-2rem)] max-w-sm"
                 >
                   <motion.div
-                    className={`bg-gradient-to-br ${isSelected ? model.hoverGradient : model.gradient} rounded-3xl p-8 border-2 ${model.borderColor} transition-all duration-500 h-full flex flex-col relative overflow-hidden`}
+                    className={`bg-gradient-to-br ${isSelected ? model.hoverGradient : model.gradient} rounded-3xl p-8 border-2 ${model.borderColor} transition-all duration-500 h-full flex flex-col relative overflow-hidden shadow-sm`}
                     whileHover={{ 
                       boxShadow: '0 20px 40px rgba(0,0,0,0.15)',
                     }}
@@ -492,6 +505,60 @@ export default function FranchisePage() {
                 </motion.div>
               );
             })}
+          </div>
+        </div>
+      </section>
+
+      <section className="py-32 bg-white relative overflow-hidden border-t border-gp-ink/5">
+        <div className="container mx-auto px-4 lg:px-6 relative z-10">
+          <motion.div
+            initial={{ opacity: 0, y: 20 }}
+            whileInView={{ opacity: 1, y: 0 }}
+            viewport={{ once: true }}
+            transition={{ duration: 0.6 }}
+            className="text-center max-w-3xl mx-auto mb-20"
+          >
+            <h2 className="text-4xl md:text-5xl font-display font-bold text-gp-ink mb-6">
+              Compare All Models
+            </h2>
+            <p className="text-lg text-gp-ink-muted">
+              Find the perfect partnership tier that fits your expansion goals.
+            </p>
+          </motion.div>
+
+          <div className="max-w-5xl mx-auto overflow-x-auto rounded-3xl border border-gp-ink/10 bg-white shadow-xl">
+            <table className="w-full text-left border-collapse">
+              <thead>
+                <tr className="bg-gp-ink text-white">
+                  <th className="p-6 font-display font-bold">Key Feature</th>
+                  {franchiseModels.map(m => (
+                    <th key={m.id} className="p-6 font-display font-bold text-center border-l border-white/10">
+                      {m.name}
+                    </th>
+                  ))}
+                </tr>
+              </thead>
+              <tbody className="divide-y divide-gp-ink/5">
+                {[
+                  { label: 'Investment Tier', values: ['₹8-10 Lakhs', '₹15-20 Lakhs', 'Capital Intensive'] },
+                  { label: 'Territory Rights', values: ['City-Level', 'Regional Hub', 'State/Metro'] },
+                  { label: 'Revenue Share', values: ['70% Partner', '75% Partner', '80% Partner'] },
+                  { label: 'CRM/ERP Access', values: ['Standard', 'Advanced', 'Enterprise'] },
+                  { label: 'Marketing Scope', values: ['Local Focus', 'Regional Outreach', 'National PR'] },
+                  { label: 'Training Duration', values: ['7 Days', '15 Days', 'Continuous'] },
+                  { label: 'Site Support', values: ['Design Only', 'Direct Managed', 'Custom Engineering'] },
+                ].map((row, i) => (
+                  <tr key={i} className="hover:bg-gp-surface/30 transition-colors">
+                    <td className="p-6 font-semibold text-gp-ink">{row.label}</td>
+                    {row.values.map((val, idx) => (
+                      <td key={idx} className="p-6 text-center text-gp-ink-muted border-l border-gp-ink/5 italic">
+                        {val}
+                      </td>
+                    ))}
+                  </tr>
+                ))}
+              </tbody>
+            </table>
           </div>
         </div>
       </section>
@@ -1019,6 +1086,107 @@ export default function FranchisePage() {
           </motion.div>
         </div>
       </section>
+
+
+      {/* Model Detail Modal */}
+      <AnimatePresence mode="wait">
+        {activeModelId && activeModel && (
+          <div className="fixed inset-0 z-[100] flex items-center justify-center p-4">
+            <motion.div
+              initial={{ opacity: 0 }}
+              animate={{ opacity: 1 }}
+              exit={{ opacity: 0 }}
+              onClick={() => setActiveModelId(null)}
+              className="absolute inset-0 bg-gp-bg/90 backdrop-blur-md"
+            />
+            
+            <motion.div
+              layoutId={activeModelId}
+              initial={{ opacity: 0, scale: 0.9, y: 20 }}
+              animate={{ opacity: 1, scale: 1, y: 0 }}
+              exit={{ opacity: 0, scale: 0.9, y: 20 }}
+              className="relative w-full max-w-4xl bg-white rounded-[2.5rem] shadow-2xl overflow-hidden z-10 border border-gp-ink/5"
+            >
+              {/* Close Button */}
+              <button
+                onClick={() => setActiveModelId(null)}
+                className="absolute top-6 right-6 w-12 h-12 rounded-full bg-gp-surface flex items-center justify-center text-gp-ink hover:bg-gp-accent hover:text-white transition-all z-20"
+              >
+                <X className="w-6 h-6" />
+              </button>
+
+              <div className="grid grid-cols-1 md:grid-cols-2">
+                <div className="p-8 md:p-12">
+                  <div className={`w-16 h-16 rounded-2xl bg-gradient-to-br ${activeModel.gradient} flex items-center justify-center mb-6`}>
+                    <activeModel.icon className="w-8 h-8 text-gp-accent" />
+                  </div>
+                  <h3 className="text-sm font-bold text-gp-accent uppercase tracking-[0.2em] mb-2">{activeModel.model}</h3>
+                  <h2 className="text-4xl font-display font-bold text-gp-ink mb-6">{activeModel.name}</h2>
+                  
+                  <div className="space-y-6 mb-8">
+                    <div className="flex items-start gap-4">
+                      <div className="w-10 h-10 rounded-xl bg-gp-surface flex items-center justify-center flex-shrink-0">
+                        <IndianRupee className="w-5 h-5 text-gp-accent" />
+                      </div>
+                      <div>
+                        <p className="text-xs font-bold text-gp-ink-muted uppercase tracking-wider mb-1">Investment</p>
+                        <p className="text-lg font-bold text-gp-ink">{activeModel.investment}</p>
+                      </div>
+                    </div>
+                    <div className="flex items-start gap-4">
+                      <div className="w-10 h-10 rounded-xl bg-gp-surface flex items-center justify-center flex-shrink-0">
+                        <BarChart3 className="w-5 h-5 text-gp-accent" />
+                      </div>
+                      <div>
+                        <p className="text-xs font-bold text-gp-ink-muted uppercase tracking-wider mb-1">Revenue Split</p>
+                        <p className="text-lg font-bold text-gp-ink">{activeModel.revenueSplit}</p>
+                      </div>
+                    </div>
+                  </div>
+
+                  <div className="pt-6 border-t border-gp-ink/10">
+                    <h4 className="text-sm font-bold text-gp-ink mb-4">Core Benefits:</h4>
+                    <ul className="grid grid-cols-1 gap-3">
+                      {activeModel.features.map((f, i) => (
+                        <li key={i} className="flex items-center gap-3 text-gp-ink-muted">
+                          <CheckCircle2 className="w-4 h-4 text-gp-accent" />
+                          <span>{f}</span>
+                        </li>
+                      ))}
+                    </ul>
+                  </div>
+                </div>
+
+                <div className="bg-gp-surface/50 p-8 md:p-12 flex flex-col justify-between">
+                  <div>
+                    <h4 className="text-sm font-bold text-gp-ink mb-6 uppercase tracking-wider">Partner Requirements</h4>
+                    <ul className="space-y-4 mb-8">
+                      {activeModel.requirements.map((r, i) => (
+                        <li key={i} className="bg-white p-4 rounded-2xl shadow-sm border border-gp-ink/5 flex items-center gap-4 group hover:border-gp-accent transition-colors">
+                          <div className="w-2 h-2 rounded-full bg-gp-accent group-hover:scale-150 transition-transform" />
+                          <span className="text-gp-ink font-medium">{r}</span>
+                        </li>
+                      ))}
+                    </ul>
+                  </div>
+
+                  <div>
+                    <p className="text-sm text-gp-ink-muted mb-6 leading-relaxed">
+                      Taking the first step involves a detailed feasibility study and credit audit. Join our network of successful real estate entrepreneurs.
+                    </p>
+                    <Link to="/contact">
+                      <Button className="w-full py-7 text-lg group shadow-xl">
+                        {activeModel.cta}
+                        <ArrowRight className="ml-2 w-5 h-5 group-hover:translate-x-1 transition-transform" />
+                      </Button>
+                    </Link>
+                  </div>
+                </div>
+              </div>
+            </motion.div>
+          </div>
+        )}
+      </AnimatePresence>
 
       {/* Final CTA - Enhanced */}
       <section className="py-32 bg-gradient-to-br from-gp-bg via-gp-surface to-gp-bg relative overflow-hidden">
