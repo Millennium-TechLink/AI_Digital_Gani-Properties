@@ -12,6 +12,8 @@ interface ImmersivePropertyShowcaseProps {
 export default function ImmersivePropertyShowcase({ properties }: ImmersivePropertyShowcaseProps) {
   const [currentIndex, setCurrentIndex] = useState(0);
   const [direction, setDirection] = useState(0);
+  const [isPaused, setIsPaused] = useState(false);
+  const [progress, setProgress] = useState(0);
   const ref = useRef<HTMLElement>(null);
 
   const showcasedProperties = properties.slice(0, 6);
@@ -22,36 +24,59 @@ export default function ImmersivePropertyShowcase({ properties }: ImmersivePrope
     offset: ['start end', 'end start'],
   });
 
-  const textOpacity = useTransform(scrollYProgress, [0, 0.3, 0.7, 1], [0.4, 1, 1, 0.4]);
+  // Optimized scroll transforms for better performance
+  const opacity = useTransform(scrollYProgress, [0, 0.3, 0.7, 1], [0.4, 1, 1, 0.4]);
 
   const nextSlide = useCallback(() => {
     setDirection(1);
     setCurrentIndex((prev) => (prev + 1) % totalSlides);
+    setProgress(0); // Reset progress on slide change
   }, [totalSlides]);
 
   const prevSlide = useCallback(() => {
     setDirection(-1);
     setCurrentIndex((prev) => (prev - 1 + totalSlides) % totalSlides);
+    setProgress(0); // Reset progress on slide change
   }, [totalSlides]);
 
-  // Auto-slide — continuous, resets on manual interaction
+  // Auto-slide — frame-accurate state-based timer for perfect sync
   useEffect(() => {
-    if (totalSlides <= 1) return;
-    const interval = setInterval(nextSlide, 4000);
-    return () => clearInterval(interval);
-  }, [totalSlides, nextSlide, currentIndex]);
+    if (totalSlides <= 1 || isPaused) return;
+
+    const tickRate = 40; // 40ms for smooth 25fps updates
+    const increment = (tickRate / 4000) * 100; // Increment % per tick (duration: 4000ms)
+
+    const timer = setInterval(() => {
+      setProgress((prev) => {
+        if (prev >= 100) {
+          nextSlide();
+          return 0;
+        }
+        return prev + increment;
+      });
+    }, tickRate);
+
+    return () => clearInterval(timer);
+  }, [totalSlides, nextSlide, isPaused]);
 
   return (
     <section
       ref={ref}
-      // Force white bg via inline style — overrides any global CSS transform stacking context issues
-      style={{ backgroundColor: '#ffffff', position: 'relative', padding: '8rem 0' }}
+      // White background style from Upstream but with the Immersive layout
+      style={{ backgroundColor: '#ffffff', position: 'relative', padding: '8rem 0', overflow: 'hidden' }}
     >
-      <div className="container mx-auto px-4 lg:px-6">
+      {/* Background Pattern */}
+      <div className="absolute inset-0 opacity-[0.02] pointer-events-none">
+        <div className="absolute inset-0 bg-[linear-gradient(45deg,transparent_25%,rgba(201,181,137,1)_25%,rgba(201,181,137,1)_50%,transparent_50%,transparent_75%,rgba(201,181,137,1)_75%,rgba(201,181,137,1)_100%)] bg-[length:60px_60px]" />
+      </div>
 
-        {/* Header */}
+      <div className="container mx-auto px-4 lg:px-6 relative z-10">
         <motion.div
-          style={{ opacity: textOpacity }}
+          style={{ 
+            opacity,
+            willChange: 'opacity',
+            transform: 'translate3d(0, 0, 0)',
+          }}
           className="text-center max-w-3xl mx-auto mb-20"
         >
           <span className="text-sm font-bold text-gp-accent uppercase tracking-[0.3em] mb-4 block">
@@ -61,8 +86,8 @@ export default function ImmersivePropertyShowcase({ properties }: ImmersivePrope
             Handpicked <span className="text-gradient-gold">Excellence</span>
           </h2>
           <p className="text-xl text-gp-ink-muted leading-relaxed font-light">
-            Discover a curated collection of premium properties, where every land holds
-            the promise of a legacy.
+            Each property represents a careful selection of premium lands in prime locations, 
+            verified for quality and ready for your dreams.
           </p>
         </motion.div>
 
@@ -73,7 +98,10 @@ export default function ImmersivePropertyShowcase({ properties }: ImmersivePrope
 
               {/* Prev button — always in DOM flow, never clipped */}
               <button
-                onClick={prevSlide}
+                onClick={() => {
+                  setIsPaused(true);
+                  prevSlide();
+                }}
                 disabled={totalSlides <= 1}
                 style={{
                   flexShrink: 0,
@@ -89,6 +117,7 @@ export default function ImmersivePropertyShowcase({ properties }: ImmersivePrope
                   cursor: 'pointer',
                   boxShadow: '0 8px 24px rgba(0,0,0,0.25)',
                   opacity: totalSlides <= 1 ? 0 : 1,
+                  zIndex: 20
                 }}
                 aria-label="Previous slide"
               >
@@ -97,6 +126,8 @@ export default function ImmersivePropertyShowcase({ properties }: ImmersivePrope
 
               {/* Slide viewport */}
               <div
+                onMouseEnter={() => setIsPaused(true)}
+                onMouseLeave={() => setIsPaused(false)}
                 style={{
                   flex: 1,
                   height: '560px',
@@ -158,7 +189,6 @@ export default function ImmersivePropertyShowcase({ properties }: ImmersivePrope
                         position: 'relative',
                       }}
                     >
-                      {/* PropertyCard already renders its own featured badge if applicable */}
                       <PropertyCard property={showcasedProperties[currentIndex]} />
                     </div>
                   </motion.div>
@@ -167,7 +197,10 @@ export default function ImmersivePropertyShowcase({ properties }: ImmersivePrope
 
               {/* Next button */}
               <button
-                onClick={nextSlide}
+                onClick={() => {
+                  setIsPaused(true);
+                  nextSlide();
+                }}
                 disabled={totalSlides <= 1}
                 style={{
                   flexShrink: 0,
@@ -183,6 +216,7 @@ export default function ImmersivePropertyShowcase({ properties }: ImmersivePrope
                   cursor: 'pointer',
                   boxShadow: '0 8px 24px rgba(0,0,0,0.25)',
                   opacity: totalSlides <= 1 ? 0 : 1,
+                  zIndex: 20
                 }}
                 aria-label="Next slide"
               >
@@ -198,8 +232,10 @@ export default function ImmersivePropertyShowcase({ properties }: ImmersivePrope
                   <button
                     key={index}
                     onClick={() => {
+                      setIsPaused(true);
                       setDirection(index > currentIndex ? 1 : -1);
                       setCurrentIndex(index);
+                      setProgress(0);
                     }}
                     aria-label={`Go to slide ${index + 1}`}
                     style={{
@@ -217,15 +253,13 @@ export default function ImmersivePropertyShowcase({ properties }: ImmersivePrope
                   >
                     {isActive && (
                       <span
-                        key={currentIndex}
                         style={{
                           display: 'block',
                           height: '100%',
-                          width: '100%',
+                          width: `${progress}%`,
                           background: 'linear-gradient(90deg, #C9B589, #D5B36A)',
                           borderRadius: '999px',
                           transformOrigin: 'left',
-                          animation: 'carousel-progress 4s linear forwards',
                         }}
                       />
                     )}
@@ -233,38 +267,6 @@ export default function ImmersivePropertyShowcase({ properties }: ImmersivePrope
                 );
               })}
             </div>
-
-            {/* CTA */}
-            <motion.div
-              initial={{ opacity: 0, y: 20 }}
-              whileInView={{ opacity: 1, y: 0 }}
-              viewport={{ once: true }}
-              transition={{ duration: 0.6, delay: 0.3 }}
-              style={{ textAlign: 'center', marginTop: '48px' }}
-            >
-              <Link
-                to="/properties"
-                style={{
-                  display: 'inline-flex',
-                  alignItems: 'center',
-                  gap: '10px',
-                  backgroundColor: '#0E1B1C',
-                  color: '#C9B589',
-                  padding: '14px 32px',
-                  borderRadius: '999px',
-                  fontWeight: 700,
-                  fontSize: '13px',
-                  letterSpacing: '0.1em',
-                  textTransform: 'uppercase',
-                  textDecoration: 'none',
-                  boxShadow: '0 8px 24px rgba(0,0,0,0.2)',
-                  transition: 'all 0.3s ease',
-                }}
-              >
-                <span>Explore All Properties</span>
-                <ArrowRight size={18} />
-              </Link>
-            </motion.div>
           </div>
         ) : (
           <div style={{ height: '400px', display: 'flex', alignItems: 'center', justifyContent: 'center' }}>
@@ -273,6 +275,23 @@ export default function ImmersivePropertyShowcase({ properties }: ImmersivePrope
             </p>
           </div>
         )}
+
+        {/* CTA */}
+        <motion.div
+          initial={{ opacity: 0, y: 20 }}
+          whileInView={{ opacity: 1, y: 0 }}
+          viewport={{ once: true }}
+          transition={{ duration: 0.6, delay: 0.6 }}
+          className="text-center mt-12"
+        >
+          <Link
+            to="/properties"
+            className="inline-flex items-center gap-3 group text-lg font-medium text-gp-accent hover:text-gp-gold transition-colors"
+          >
+            <span>Explore All Properties</span>
+            <ArrowRight className="h-5 w-5 group-hover:translate-x-1 transition-transform" />
+          </Link>
+        </motion.div>
       </div>
     </section>
   );

@@ -1,4 +1,6 @@
+import { useEffect } from 'react';
 import { Routes, Route } from 'react-router-dom';
+import { statsApi } from './lib/statsApi';
 import SEOHead from './components/SEOHead';
 import Navbar from './components/Navbar';
 import Footer from './components/Footer';
@@ -18,8 +20,14 @@ import TermsPage from './pages/Terms';
 import NotFoundPage from './pages/NotFound';
 import Dashboard from './pages/Dashboard';
 import CareersPage from './pages/Careers';
+import DevelopersPage from './pages/Developers';
+import Chatbot from './components/Chatbot';
 
 function App() {
+  useEffect(() => {
+    statsApi.logVisit();
+  }, []);
+
   return (
     <>
       <ScrollToTop />
@@ -37,6 +45,7 @@ function App() {
             <Route path="/property/:slug" element={<PageTransition><PropertyPage /></PageTransition>} />
             <Route path="/catalogue" element={<PageTransition><CataloguePage /></PageTransition>} />
             <Route path="/property-type/:type" element={<PageTransition><PropertyTypePage /></PageTransition>} />
+            <Route path="/developers" element={<PageTransition><DevelopersPage /></PageTransition>} />
             <Route path="/about" element={<PageTransition><AboutPage /></PageTransition>} />
             <Route path="/contact" element={<PageTransition><ContactPage /></PageTransition>} />
             <Route path="/franchise" element={<PageTransition><FranchisePage /></PageTransition>} />
@@ -50,6 +59,7 @@ function App() {
 
         <Footer />
         <BackToTop />
+        <Chatbot />
       </div>
     </>
   );
