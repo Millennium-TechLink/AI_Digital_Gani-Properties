@@ -32,6 +32,8 @@ export interface Property {
   images: string[];
   description: string;
   postedAt: string;
+  featured?: boolean;
+  googleMapsUrl?: string;
 }
 
 export interface PropertyFilters {

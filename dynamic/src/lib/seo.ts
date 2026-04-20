@@ -13,15 +13,15 @@ export const siteConfig = {
   phone: '+91 99005 70799',
   email: 'marketing@ourganiproperties.com',
   address: {
-    street: 'Bengaluru',
-    city: 'Bengaluru',
+    street: '2nd Floor, Neema square, Moka Road, Beside Madhuri Nursing Home, KHB Colony, Basaveshwara Nagar, Sidiginamola',
+    city: 'Ballari',
     state: 'Karnataka',
     country: 'India',
-    postalCode: '',
+    postalCode: '583103',
   },
   geo: {
-    latitude: 13.0827,
-    longitude: 77.5946,
+    latitude: 15.1566,
+    longitude: 76.9408,
   },
   areas: [
     'Kattigenahalli',
@@ -119,7 +119,7 @@ export function generateLocalBusinessSchema() {
     ],
     areaServed: {
       '@type': 'City',
-      name: 'Bengaluru',
+      name: 'Ballari',
     },
   };
 }

@@ -62,14 +62,11 @@ export default function ImmersivePropertyShowcase({ properties }: ImmersivePrope
   return (
     <section
       ref={ref}
-      className="py-32 bg-gradient-to-b from-white via-gp-surface/5 to-white relative overflow-hidden"
-      style={{
-        willChange: 'transform',
-        transform: 'translate3d(0, 0, 0)',
-      }}
+      // White background style from Upstream but with the Immersive layout
+      style={{ backgroundColor: '#ffffff', position: 'relative', padding: '8rem 0', overflow: 'hidden' }}
     >
       {/* Background Pattern */}
-      <div className="absolute inset-0 opacity-[0.02]">
+      <div className="absolute inset-0 opacity-[0.02] pointer-events-none">
         <div className="absolute inset-0 bg-[linear-gradient(45deg,transparent_25%,rgba(201,181,137,1)_25%,rgba(201,181,137,1)_50%,transparent_50%,transparent_75%,rgba(201,181,137,1)_75%,rgba(201,181,137,1)_100%)] bg-[length:60px_60px]" />
       </div>
 
@@ -82,13 +79,13 @@ export default function ImmersivePropertyShowcase({ properties }: ImmersivePrope
           }}
           className="text-center max-w-3xl mx-auto mb-20"
         >
-          <span className="text-sm font-medium text-gp-accent uppercase tracking-wider mb-4 block">
-            FEATURED PROPERTIES
+          <span className="text-sm font-bold text-gp-accent uppercase tracking-[0.3em] mb-4 block">
+            ESTATE SELECTION
           </span>
-          <h2 className="text-5xl md:text-6xl font-display font-bold text-gp-ink mb-6">
-            Handpicked Excellence
+          <h2 className="text-5xl md:text-7xl font-display font-bold text-gp-ink mb-6">
+            Handpicked <span className="text-gradient-gold">Excellence</span>
           </h2>
-          <p className="text-xl text-gp-ink-muted leading-relaxed">
+          <p className="text-xl text-gp-ink-muted leading-relaxed font-light">
             Each property represents a careful selection of premium lands in prime locations, 
             verified for quality and ready for your dreams.
           </p>
@@ -120,6 +117,7 @@ export default function ImmersivePropertyShowcase({ properties }: ImmersivePrope
                   cursor: 'pointer',
                   boxShadow: '0 8px 24px rgba(0,0,0,0.25)',
                   opacity: totalSlides <= 1 ? 0 : 1,
+                  zIndex: 20
                 }}
                 aria-label="Previous slide"
               >
@@ -191,7 +189,6 @@ export default function ImmersivePropertyShowcase({ properties }: ImmersivePrope
                         position: 'relative',
                       }}
                     >
-                      {/* PropertyCard already renders its own featured badge if applicable */}
                       <PropertyCard property={showcasedProperties[currentIndex]} />
                     </div>
                   </motion.div>
@@ -219,6 +216,7 @@ export default function ImmersivePropertyShowcase({ properties }: ImmersivePrope
                   cursor: 'pointer',
                   boxShadow: '0 8px 24px rgba(0,0,0,0.25)',
                   opacity: totalSlides <= 1 ? 0 : 1,
+                  zIndex: 20
                 }}
                 aria-label="Next slide"
               >

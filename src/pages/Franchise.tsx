@@ -56,18 +56,18 @@ const franchiseModels = [
 const supportFeatures = [
   {
     icon: Award,
-    title: 'Complete Branding Package',
-    description: 'Marketing materials, digital campaigns, and promotional support',
+    title: 'First-in-Segment Model',
+    description: 'The first dedicated franchise model in the Indian construction industry with proven systems.',
   },
   {
     icon: Users,
-    title: 'Extensive Training Programs',
-    description: '7-14 day onboarding plus ongoing workshops on sales and operations',
+    title: 'Vocational Training',
+    description: 'Specialized training on local market capture, customer interaction, and construction management.',
   },
   {
     icon: TrendingUp,
-    title: 'Lead Generation Support',
-    description: 'Qualified leads and digital promotion tools to accelerate growth',
+    title: 'Business & Tech Support',
+    description: 'Comprehensive technical support, knowledge transfer, and lead generation to fuel your growth.',
   },
 ];
 
@@ -291,7 +291,7 @@ export default function FranchisePage() {
                   animation: 'shimmer 3s ease-in-out infinite',
                 }}
               >
-                Real Estate Success
+                Construction Franchising Success
               </motion.span>
               
               {/* Text Glow Effect */}
@@ -313,7 +313,7 @@ export default function FranchisePage() {
               transition={{ duration: 0.8, delay: 0.4 }}
               className="text-xl md:text-2xl text-white/90 leading-relaxed mb-8 max-w-3xl mx-auto"
             >
-              Trusted across India for quality construction, innovative designs, and reliable property solutions that build lasting value.
+              India&apos;s first comprehensive <span className="text-gp-accent font-bold">&quot;Approval to Key&quot;</span> franchise model, providing specialized business support and technical vocational training.
             </motion.p>
             <motion.p
               initial={{ opacity: 0, y: 20 }}
@@ -321,7 +321,7 @@ export default function FranchisePage() {
               transition={{ duration: 0.8, delay: 0.6 }}
               className="text-lg text-white/80 leading-relaxed mb-12 max-w-2xl mx-auto"
             >
-              Our franchise model provides strong branding, proven systems, and continuous support to ensure long-term profitability for ambitious partners.
+              Our &quot;Paid Socialised Service&quot; model ensures you enter the market with strong branding, proven technical benchmarking, and vocational training on capturing your local market.
             </motion.p>
             <motion.div
               initial={{ opacity: 0, y: 20 }}

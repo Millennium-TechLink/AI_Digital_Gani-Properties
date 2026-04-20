@@ -46,8 +46,8 @@ export default function StoryJourney() {
   const isInView = useInView(ref, { once: true, margin: '-50px' });
 
   return (
-    <section 
-      ref={ref} 
+    <section
+      ref={ref}
       className="py-32 bg-gradient-to-b from-white via-gp-surface/5 to-white relative overflow-hidden"
       style={{
         willChange: 'auto',
@@ -80,7 +80,7 @@ export default function StoryJourney() {
             From Dream to Reality
           </h2>
           <p className="text-xl text-gp-ink-muted leading-relaxed">
-            A story-driven journey where every step brings you closer to your perfect property. 
+            A story-driven journey where every step brings you closer to your perfect property.
             Experience the Gani Properties difference.
           </p>
         </motion.div>

@@ -50,6 +50,18 @@ export default function Navbar() {
     return () => window.removeEventListener('scroll', handleScroll);
   }, [isHomePage]);
 
+  // Lock scroll when mobile menu is open
+  useEffect(() => {
+    if (isOpen) {
+      document.body.style.overflow = 'hidden';
+    } else {
+      document.body.style.overflow = 'unset';
+    }
+    return () => {
+      document.body.style.overflow = 'unset';
+    };
+  }, [isOpen]);
+
   // Close dropdown when clicking outside
   useEffect(() => {
     const handleClickOutside = (event: MouseEvent) => {
@@ -119,25 +131,22 @@ export default function Navbar() {
     >
       <nav className="container mx-auto px-4 lg:px-6">
         <div className="flex h-20 items-center justify-between">
-          <Link to="/" className="flex items-center gap-3 group">
+          <Link to="/" className="flex items-center group">
             <motion.div
-              whileHover={{ scale: 1.1 }}
+              whileHover={{ scale: 1.05 }}
               whileTap={{ scale: 0.95 }}
               transition={{ duration: 0.3, ease: [0.16, 1, 0.3, 1] }}
-              className="relative h-14 w-auto flex-shrink-0"
+              className="relative h-16 w-auto flex-shrink-0"
             >
               <Image
                 src="/images/Logo.webp"
                 alt="Gani Properties"
-                width={120}
-                height={56}
-                className="h-full w-auto object-contain transition-transform group-hover:scale-110"
+                width={160}
+                height={64}
+                className="h-full w-auto object-contain transition-transform group-hover:scale-105"
                 priority
               />
             </motion.div>
-            <span className="text-2xl font-display font-bold text-white group-hover:text-gp-accent transition-colors duration-300 hidden sm:block">
-              Gani Properties
-            </span>
           </Link>
 
           {/* Desktop Navigation */}

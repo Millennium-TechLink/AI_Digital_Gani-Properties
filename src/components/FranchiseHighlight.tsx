@@ -1,13 +1,13 @@
 import { motion } from 'framer-motion';
 import { Link } from 'react-router-dom';
-import { ArrowRight, TrendingUp, Handshake, Award, Target, Zap } from 'lucide-react';
+import { ArrowRight, TrendingUp, Handshake, Award, Target, Zap, Sparkles } from 'lucide-react';
 import { Button } from '@/components/ui/button';
 
 const highlights = [
   {
     icon: TrendingUp,
-    title: 'Proven Growth Model',
-    description: 'Established systems for sustainable expansion',
+    title: 'Pioneering Model',
+    description: 'India\'s first construction-focused franchise ecosystem',
     color: 'from-blue-500/20 to-purple-500/20',
   },
   {
@@ -26,16 +26,8 @@ const highlights = [
 
 const franchiseModels = [
   {
-    name: 'Marketing Franchise',
-    investment: '₹10-15 Lakhs',
-    roi: '12-18 Months',
-    feature: 'District-level focus',
-    gradient: 'from-blue-500/10 to-cyan-500/10',
-    borderColor: 'border-blue-200',
-  },
-  {
     name: 'City Franchise',
-    investment: '₹25-40 Lakhs',
+    investment: '₹8-10 Lakhs',
     roi: '18-24 Months',
     feature: 'Exclusive city rights',
     gradient: 'from-purple-500/10 to-pink-500/10',
@@ -43,7 +35,7 @@ const franchiseModels = [
   },
   {
     name: 'Regional Franchise',
-    investment: '₹50-80 Lakhs',
+    investment: '₹15-20 Lakhs',
     roi: '24-30 Months',
     feature: 'Multi-city operations',
     gradient: 'from-green-500/10 to-emerald-500/10',
@@ -51,7 +43,7 @@ const franchiseModels = [
   },
   {
     name: 'Builder Partner',
-    investment: '₹1 Crore+',
+    investment: 'Depends on Investment',
     roi: '30-36 Months',
     feature: 'State-level authority',
     gradient: 'from-amber-500/10 to-orange-500/10',
@@ -82,20 +74,23 @@ export default function FranchiseHighlight() {
           transition={{ duration: 0.6, ease: [0.16, 1, 0.3, 1] }}
           className="text-center max-w-4xl mx-auto mb-16"
         >
-          <motion.span
-            initial={{ opacity: 0 }}
-            whileInView={{ opacity: 1 }}
+          <motion.div
+            initial={{ opacity: 0, scale: 0.9 }}
+            whileInView={{ opacity: 1, scale: 1 }}
             viewport={{ once: true }}
-            transition={{ duration: 0.5, delay: 0.1 }}
-            className="text-sm font-medium text-gp-accent uppercase tracking-wider mb-4 block"
+            transition={{ duration: 0.5 }}
+            className="inline-flex items-center gap-2 px-4 py-2 rounded-full bg-gp-accent/10 border border-gp-accent/20 mb-6"
           >
-            FRANCHISE OPPORTUNITY
-          </motion.span>
+            <Sparkles className="w-4 h-4 text-gp-accent" />
+            <span className="text-sm font-bold text-gp-accent tracking-widest uppercase">
+              Pioneering Segment Leader
+            </span>
+          </motion.div>
           <h2 className="text-5xl md:text-6xl font-display font-bold text-gp-ink mb-6">
-            Partner with Gani Properties
+            India&apos;s First <span className="text-gp-accent">&quot;Approval to Key&quot;</span> Franchise
           </h2>
           <p className="text-xl text-gp-ink-muted leading-relaxed mb-8">
-            Leverage our strong brand reputation, proven systems, and extensive support network to build your real estate empire across India.
+            Gani Properties introduces the <span className="font-bold text-gp-ink">first-of-its-kind construction franchise ecosystem</span> in India. We move beyond traditional real estate by offering a comprehensive model that provides employment, technical support, and vocational training for sustainable business growth.
           </p>
         </motion.div>
 
@@ -141,7 +136,7 @@ export default function FranchiseHighlight() {
           className="mb-12"
         >
           <h3 className="text-3xl md:text-4xl font-display font-bold text-gp-ink text-center mb-4">
-            Four Strategic Franchise Models
+            Three Strategic Franchise Models
           </h3>
           <p className="text-lg text-gp-ink-muted text-center mb-12 max-w-2xl mx-auto">
             Choose the investment level and market scope that aligns with your business goals and financial capacity.
