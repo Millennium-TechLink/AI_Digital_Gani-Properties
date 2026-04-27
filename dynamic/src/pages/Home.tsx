@@ -1,6 +1,6 @@
 import { useEffect, useState } from 'react';
 import SEOHead from '@/components/SEOHead';
-import ImmersiveHero from '@/components/ImmersiveHero';
+import HeroFullScreen from '@/components/HeroFullScreen';
 import ImmersiveCategories from '@/components/ImmersiveCategories';
 import StoryJourney from '@/components/StoryJourney';
 import OurStory from '@/components/OurStory';
@@ -8,6 +8,7 @@ import ImmersivePropertyShowcase from '@/components/ImmersivePropertyShowcase';
 import ManagementTeam from '@/components/ManagementTeam';
 import FranchiseHighlight from '@/components/FranchiseHighlight';
 import CTASection from '@/components/CTASection';
+import GSAPReveal from '@/components/GSAPReveal';
 import { propertiesApi } from '@/lib/propertiesApi';
 import { Property } from '@/types/property';
 
@@ -48,31 +49,45 @@ export default function HomePage() {
         url={`${import.meta.env.VITE_SITE_URL || 'https://ganiproperties.com'}/`}
       />
 
-      {/* Hero - Immersive entry point */}
-      <ImmersiveHero />
+      {/* Hero - Full Screen Cinematic FX */}
+      <HeroFullScreen />
       
       {/* Story Journey - Narrative flow */}
-      <StoryJourney />
+      <GSAPReveal direction="up" distance={30}>
+        <StoryJourney />
+      </GSAPReveal>
 
       {/* Categories - Visual showcase */}
-      <ImmersiveCategories />
+      <GSAPReveal direction="up" distance={50} delay={0.2}>
+        <ImmersiveCategories />
+      </GSAPReveal>
 
       {/* Our Story with Animated Stats */}
-      <OurStory />
+      <GSAPReveal direction="up" distance={50}>
+        <OurStory />
+      </GSAPReveal>
 
       {/* Featured Properties - Immersive showcase */}
-      <ImmersivePropertyShowcase 
-        properties={featuredProperties} 
-      />
+      <GSAPReveal direction="up" distance={50}>
+        <ImmersivePropertyShowcase 
+          properties={featuredProperties} 
+        />
+      </GSAPReveal>
 
       {/* Management Team */}
-      <ManagementTeam />
+      <GSAPReveal direction="up" distance={50}>
+        <ManagementTeam />
+      </GSAPReveal>
 
       {/* Franchise Opportunity Highlight */}
-      <FranchiseHighlight />
+      <GSAPReveal direction="up" distance={50}>
+        <FranchiseHighlight />
+      </GSAPReveal>
 
       {/* CTA Section */}
-      <CTASection />
+      <GSAPReveal direction="up" distance={50}>
+        <CTASection />
+      </GSAPReveal>
     </>
   );
 }

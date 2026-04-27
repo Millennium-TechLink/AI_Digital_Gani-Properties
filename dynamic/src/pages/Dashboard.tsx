@@ -437,16 +437,16 @@ export default function Dashboard() {
 
         {/* Tabs */}
         <div className="flex gap-2 p-1 bg-white/50 backdrop-blur-sm rounded-2xl border border-gp-ink/10 mb-8 w-fit">
-          <button onClick={() => setActiveTab('properties')} className={`px-6 py-2.5 rounded-xl font-bold transition-all flex items-center gap-2 ${activeTab === 'properties' ? 'bg-[#0F3A3D] text-white shadow-lg' : 'text-gp-ink-muted hover:text-gp-ink hover:bg-white/50'}`}>
+          <button onClick={() => setActiveTab('properties')} className={`px-6 py-2.5 rounded-xl font-bold transition-all flex items-center gap-2 ${activeTab === 'properties' ? 'bg-[#1A1A1A] text-white shadow-lg' : 'text-gp-ink-muted hover:text-gp-ink hover:bg-white/50'}`}>
             <Home size={18} /> Properties
           </button>
-          <button onClick={() => setActiveTab('careers')} className={`px-6 py-2.5 rounded-xl font-bold transition-all flex items-center gap-2 ${activeTab === 'careers' ? 'bg-[#0F3A3D] text-white shadow-lg' : 'text-gp-ink-muted hover:text-gp-ink hover:bg-white/50'}`}>
+          <button onClick={() => setActiveTab('careers')} className={`px-6 py-2.5 rounded-xl font-bold transition-all flex items-center gap-2 ${activeTab === 'careers' ? 'bg-[#1A1A1A] text-white shadow-lg' : 'text-gp-ink-muted hover:text-gp-ink hover:bg-white/50'}`}>
             <Briefcase size={18} /> Careers
           </button>
-          <button onClick={() => setActiveTab('leads')} className={`px-6 py-2.5 rounded-xl font-bold transition-all flex items-center gap-2 ${activeTab === 'leads' ? 'bg-[#0F3A3D] text-white shadow-lg' : 'text-gp-ink-muted hover:text-gp-ink hover:bg-white/50'}`}>
+          <button onClick={() => setActiveTab('leads')} className={`px-6 py-2.5 rounded-xl font-bold transition-all flex items-center gap-2 ${activeTab === 'leads' ? 'bg-[#1A1A1A] text-white shadow-lg' : 'text-gp-ink-muted hover:text-gp-ink hover:bg-white/50'}`}>
             <Mail size={18} /> Leads
           </button>
-          <button onClick={() => setActiveTab('settings')} className={`px-6 py-2.5 rounded-xl font-bold transition-all flex items-center gap-2 ${activeTab === 'settings' ? 'bg-[#0F3A3D] text-white shadow-lg' : 'text-gp-ink-muted hover:text-gp-ink hover:bg-white/50'}`}>
+          <button onClick={() => setActiveTab('settings')} className={`px-6 py-2.5 rounded-xl font-bold transition-all flex items-center gap-2 ${activeTab === 'settings' ? 'bg-[#1A1A1A] text-white shadow-lg' : 'text-gp-ink-muted hover:text-gp-ink hover:bg-white/50'}`}>
             <Settings size={18} /> Settings
           </button>
         </div>
@@ -875,7 +875,7 @@ export default function Dashboard() {
               </motion.div>
 
               <div className="flex items-center gap-3">
-                <Button type="submit" disabled={settingsSaving} className="bg-[#0F3A3D] text-white px-8">
+                <Button type="submit" disabled={settingsSaving} className="bg-[#1A1A1A] text-white px-8">
                   {settingsSaving ? <><Loader2 size={15} className="animate-spin mr-2" />Saving...</> : <><Save size={15} className="mr-2" />Save Settings</>}
                 </Button>
                 <p className="text-xs text-gp-ink-muted">Password is encrypted on the server. Leave blank to keep existing password.</p>

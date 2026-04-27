@@ -13,7 +13,7 @@ const Button = React.forwardRef<HTMLButtonElement, ButtonProps>(
     const buttonClasses = cn(
       "inline-flex items-center justify-center gap-2 whitespace-nowrap rounded-2xl font-medium transition-all duration-300 ease-out focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-gp-accent focus-visible:ring-offset-2 disabled:pointer-events-none disabled:opacity-50 active:scale-95",
       {
-        "bg-gp-accent text-gp-ink hover:bg-gp-gold hover:shadow-lg hover:scale-105 hover:-translate-y-0.5": variant === "default",
+        "bg-gp-accent text-white hover:bg-gp-gold hover:shadow-lg hover:scale-105 hover:-translate-y-0.5": variant === "default",
         "border border-gp-accent text-gp-accent bg-transparent hover:bg-gp-accent/10 hover:border-gp-gold hover:scale-105": variant === "outline",
         "text-gp-accent hover:bg-gp-accent/10 hover:scale-105": variant === "ghost",
         "h-11 px-6 text-base": size === "default",

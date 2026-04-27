@@ -169,14 +169,14 @@ export default function Chatbot() {
         whileHover={{ scale: 1.1, rotate: 5 }}
         whileTap={{ scale: 0.9 }}
         onClick={() => setIsOpen(!isOpen)}
-        className="fixed bottom-6 right-6 z-[9999] w-16 h-16 bg-[#0F3A3D] text-white rounded-full shadow-[0_10px_30px_rgba(15,58,61,0.4)] flex items-center justify-center border-2 border-[#C9B589]/30 overflow-hidden group"
+        className="fixed bottom-6 right-6 z-[9999] w-16 h-16 bg-[#0D0D0D] text-white rounded-full shadow-[0_10px_30px_rgba(0,0,0,0.5)] flex items-center justify-center border border-[#DD2B1C]/40 overflow-hidden group"
       >
-        <div className="absolute inset-0 bg-gradient-to-tr from-[#C9B589]/20 to-transparent opacity-0 group-hover:opacity-100 transition-opacity" />
+        <div className="absolute inset-0 bg-gradient-to-tr from-[#DD2B1C]/10 to-transparent opacity-0 group-hover:opacity-100 transition-opacity" />
         {isOpen ? <X size={28} /> : (
           <div className="relative">
             <MessageCircle size={30} className="relative z-10" />
-            <span className="absolute -top-1 -right-1 w-4 h-4 bg-[#C9B589] rounded-full border-2 border-[#0F3A3D] animate-ping" />
-            <span className="absolute -top-1 -right-1 w-4 h-4 bg-[#C9B589] rounded-full border-2 border-[#0F3A3D]" />
+            <span className="absolute -top-1 -right-1 w-4 h-4 bg-[#DD2B1C] rounded-full border-2 border-[#0D0D0D] animate-ping" />
+            <span className="absolute -top-1 -right-1 w-4 h-4 bg-[#DD2B1C] rounded-full border-2 border-[#0D0D0D]" />
           </div>
         )}
       </motion.button>
@@ -188,25 +188,25 @@ export default function Chatbot() {
             initial={{ opacity: 0, y: 100, scale: 0.8, transformOrigin: 'bottom right' }}
             animate={{ opacity: 1, y: 0, scale: 1 }}
             exit={{ opacity: 0, y: 100, scale: 0.8 }}
-            className="fixed bottom-24 right-6 z-[9998] w-[90vw] max-w-[400px] h-[600px] bg-white rounded-3xl shadow-[0_25px_80px_-15px_rgba(0,0,0,0.3)] border border-gp-ink/10 overflow-hidden flex flex-col"
+            className="fixed bottom-24 right-6 z-[9998] w-[90vw] max-w-[400px] h-[600px] bg-white rounded-3xl shadow-[0_25px_80px_-15px_rgba(0,0,0,0.2)] border border-black/10 overflow-hidden flex flex-col"
           >
             {/* Header */}
-            <div className="bg-[#0F3A3D] p-6 text-white flex items-center gap-4 relative overflow-hidden">
-               <div className="absolute top-0 right-0 w-32 h-32 bg-[#C9B589]/10 rounded-full blur-2xl -mr-16 -mt-16" />
-               <div className="w-12 h-12 bg-white/10 rounded-2xl backdrop-blur-md flex items-center justify-center border border-white/20">
-                  <Bot size={24} className="text-[#C9B589]" />
+            <div className="bg-white p-6 text-[#1A1A1A] flex items-center gap-4 relative overflow-hidden border-b border-black/5">
+               <div className="absolute top-0 right-0 w-32 h-32 bg-[#DD2B1C]/5 rounded-full blur-2xl -mr-16 -mt-16" />
+               <div className="w-12 h-12 bg-[#DD2B1C]/5 rounded-2xl flex items-center justify-center border border-[#DD2B1C]/20">
+                  <Bot size={24} className="text-[#DD2B1C]" />
                </div>
                <div>
                   <h3 className="font-display font-bold text-lg tracking-tight">Gani Concierge</h3>
                   <div className="flex items-center gap-1.5">
-                     <span className="w-2 h-2 bg-green-400 rounded-full animate-pulse" />
-                     <span className="text-[10px] font-bold text-white/60 uppercase tracking-widest">Always Active</span>
+                     <span className="w-2 h-2 bg-[#DD2B1C] rounded-full animate-pulse" />
+                     <span className="text-[10px] font-bold text-black/40 uppercase tracking-widest">Always Active</span>
                   </div>
                </div>
             </div>
 
             {/* Messages Area */}
-            <div className="flex-1 overflow-y-auto p-5 bg-gp-surface/30 space-y-4">
+            <div className="flex-1 overflow-y-auto p-5 bg-[#F9F9F9] space-y-4">
                {messages.map((msg) => (
                  <motion.div
                    key={msg.id}
@@ -215,13 +215,13 @@ export default function Chatbot() {
                    className={`flex ${msg.type === 'bot' ? 'justify-start' : 'justify-end'}`}
                  >
                    <div className={`flex gap-3 max-w-[85%] ${msg.type === 'user' ? 'flex-row-reverse' : ''}`}>
-                      <div className={`w-8 h-8 rounded-full flex items-center justify-center flex-shrink-0 mt-1 ${msg.type === 'bot' ? 'bg-[#0F3A3D] text-white' : 'bg-[#C9B589] text-white'}`}>
+                      <div className={`w-8 h-8 rounded-full flex items-center justify-center flex-shrink-0 mt-1 ${msg.type === 'bot' ? 'bg-[#DD2B1C]/10 text-[#DD2B1C]' : 'bg-[#DD2B1C] text-white'}`}>
                         {msg.type === 'bot' ? <Bot size={14} /> : <User size={14} />}
                       </div>
                       <div className={`p-4 rounded-2xl text-sm leading-relaxed shadow-sm ${
-                        msg.type === 'bot' 
-                        ? 'bg-white text-gp-ink rounded-tl-none border border-gp-ink/5' 
-                        : 'bg-[#0F3A3D] text-white rounded-tr-none'
+                        msg.type === 'bot'
+                        ? 'bg-white text-[#1A1A1A] rounded-tl-none border border-black/5 font-medium'
+                        : 'bg-[#DD2B1C] text-white rounded-tr-none'
                       }`}>
                          {typeof msg.text === 'string' ? msg.text.split('\n').map((line, i) => <div key={i}>{line}</div>) : msg.text}
                       </div>
@@ -231,13 +231,13 @@ export default function Chatbot() {
 
                {isTyping && (
                  <motion.div initial={{ opacity: 0 }} animate={{ opacity: 1 }} className="flex justify-start">
-                   <div className="bg-white p-4 rounded-2xl rounded-tl-none shadow-sm flex gap-1">
+                   <div className="bg-white p-4 rounded-2xl rounded-tl-none shadow-sm flex gap-1 border border-black/5">
                      {[0.1, 0.2, 0.3].map(d => (
-                       <motion.div 
+                       <motion.div
                         key={d}
-                        animate={{ y: [0, -3, 0] }} 
-                        transition={{ repeat: Infinity, duration: 0.6, delay: d }} 
-                        className="w-1.5 h-1.5 bg-gp-accent rounded-full" 
+                        animate={{ y: [0, -3, 0] }}
+                        transition={{ repeat: Infinity, duration: 0.6, delay: d }}
+                        className="w-1.5 h-1.5 bg-[#DD2B1C] rounded-full"
                        />
                      ))}
                    </div>
@@ -253,7 +253,7 @@ export default function Chatbot() {
                         whileHover={{ scale: 1.05 }}
                         whileTap={{ scale: 0.95 }}
                         onClick={() => handleSend(s)}
-                        className="px-4 py-2 bg-white hover:bg-gp-accent hover:text-white text-gp-accent border border-gp-accent/20 rounded-full text-xs font-bold transition-all shadow-sm"
+                        className="px-4 py-2 bg-white hover:bg-[#DD2B1C] hover:text-white text-[#1A1A1A]/70 border border-black/10 rounded-full text-xs font-bold transition-all shadow-sm"
                       >
                         {s}
                       </motion.button>
@@ -261,7 +261,7 @@ export default function Chatbot() {
                     <motion.button
                       whileHover={{ scale: 1.05 }}
                       onClick={() => setShowEnquiryForm(true)}
-                      className="px-4 py-2 bg-[#C9B589] text-white rounded-full text-xs font-bold shadow-md"
+                      className="px-4 py-2 bg-[#DD2B1C] text-white rounded-full text-xs font-bold shadow-md"
                     >
                       Instant Callback ⚡
                     </motion.button>
@@ -270,40 +270,40 @@ export default function Chatbot() {
 
                {/* Integrated Enquiry Form */}
                {showEnquiryForm && (
-                 <motion.div initial={{ opacity: 0, scale: 0.9 }} animate={{ opacity: 1, scale: 1 }} className="bg-white p-5 rounded-[2rem] border border-gp-accent/20 shadow-xl">
+                 <motion.div initial={{ opacity: 0, scale: 0.9 }} animate={{ opacity: 1, scale: 1 }} className="bg-white p-5 rounded-[2rem] border border-black/5 shadow-xl">
                     <div className="flex justify-between items-center mb-4">
-                      <h4 className="font-bold text-gp-ink">Instant Callback</h4>
-                      <button onClick={() => setShowEnquiryForm(false)} className="text-gp-ink-muted"><X size={16} /></button>
+                      <h4 className="font-bold text-[#1A1A1A]">Instant Callback</h4>
+                      <button onClick={() => setShowEnquiryForm(false)} className="text-black/30 hover:text-black"><X size={16} /></button>
                     </div>
                     <form onSubmit={handleFormSubmit} className="space-y-4">
                        <div className="space-y-1">
-                         <label className="text-[10px] font-bold text-gp-ink-muted uppercase">Full Name</label>
-                         <input 
-                            required 
-                            className="w-full bg-slate-50 px-4 py-2.5 rounded-xl border border-slate-200 text-slate-900 text-sm focus:ring-2 ring-gp-accent/20 transition-all outline-none" 
+                         <label className="text-[10px] font-bold text-black/40 uppercase tracking-wider">Full Name</label>
+                         <input
+                            required
+                            className="w-full bg-[#F5F5F5] px-4 py-2.5 rounded-xl border border-black/5 text-[#1A1A1A] text-sm focus:ring-2 ring-[#DD2B1C]/20 transition-all outline-none placeholder:text-black/20"
                             placeholder="e.g. Rahul Sharma"
                             value={formData.name}
                             onChange={e => setFormData({...formData, name: e.target.value})}
                          />
                        </div>
                        <div className="space-y-1">
-                         <label className="text-[10px] font-bold text-gp-ink-muted uppercase">Phone Number</label>
-                         <input 
-                            required 
+                         <label className="text-[10px] font-bold text-black/40 uppercase tracking-wider">Phone Number</label>
+                         <input
+                            required
                             type="tel"
-                            className="w-full bg-slate-50 px-4 py-2.5 rounded-xl border border-slate-200 text-slate-900 text-sm focus:ring-2 ring-gp-accent/20 transition-all outline-none" 
+                            className="w-full bg-[#F5F5F5] px-4 py-2.5 rounded-xl border border-black/5 text-[#1A1A1A] text-sm focus:ring-2 ring-[#DD2B1C]/20 transition-all outline-none placeholder:text-black/20"
                             placeholder="+91 00000 00000"
                             value={formData.phone}
                             onChange={e => setFormData({...formData, phone: e.target.value})}
                          />
                        </div>
-                       <Button 
-                        type="submit" 
+                       <Button
+                        type="submit"
                         disabled={formStatus === 'sending' || formStatus === 'success'}
-                        className="w-full py-5 bg-[#0F3A3D] font-bold text-xs"
+                        className="w-full py-5 bg-[#DD2B1C] hover:bg-red-700 text-white font-black tracking-widest text-[10px]"
                        >
-                         {formStatus === 'sending' ? <Loader2 className="animate-spin" /> : 
-                          formStatus === 'success' ? 'Sent!' : 'Request Call'}
+                         {formStatus === 'sending' ? <Loader2 className="animate-spin" /> :
+                          formStatus === 'success' ? 'SENT SUCCESSFULLY' : 'REQUEST CALL BACK'}
                        </Button>
                     </form>
                  </motion.div>
@@ -313,7 +313,7 @@ export default function Chatbot() {
 
             {/* Input Footer */}
             {!showEnquiryForm && (
-              <div className="p-4 bg-white border-t border-gp-ink/5">
+              <div className="p-4 bg-white border-t border-black/5">
                 <div className="relative">
                   <input
                     type="text"
@@ -321,16 +321,16 @@ export default function Chatbot() {
                     value={inputValue}
                     onChange={(e) => setInputValue(e.target.value)}
                     onKeyPress={(e) => e.key === 'Enter' && handleSend(inputValue)}
-                    className="w-full bg-slate-50 pl-5 pr-12 py-4 rounded-2xl border border-slate-200 text-slate-900 text-sm focus:ring-2 ring-gp-accent/50 placeholder:text-slate-400 outline-none transition-all"
+                    className="w-full bg-[#F5F5F5] pl-5 pr-12 py-4 rounded-2xl border border-black/5 text-[#1A1A1A] text-sm focus:ring-2 ring-[#DD2B1C]/30 placeholder:text-black/30 outline-none transition-all"
                   />
-                  <button 
+                  <button
                     onClick={() => handleSend(inputValue)}
-                    className="absolute right-2 top-1/2 -translate-y-1/2 w-10 h-10 bg-[#0F3A3D] text-white rounded-xl flex items-center justify-center hover:scale-105 transition-transform"
+                    className="absolute right-2 top-1/2 -translate-y-1/2 w-10 h-10 bg-[#DD2B1C] text-white rounded-xl flex items-center justify-center hover:bg-red-700 hover:scale-105 transition-all"
                   >
                     <Send size={18} />
                   </button>
                 </div>
-                <p className="text-[10px] text-gp-ink-muted text-center mt-3 font-medium">Powering premium property experiences</p>
+                <p className="text-[10px] text-black/20 text-center mt-3 font-bold tracking-widest uppercase">Gani Properties Legacy</p>
               </div>
             )}
           </motion.div>

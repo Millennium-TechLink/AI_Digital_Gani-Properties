@@ -120,30 +120,33 @@ export default function Navbar() {
       animate={{ y: 0 }}
       transition={{ duration: 0.6, ease: [0.16, 1, 0.3, 1] }}
       className={cn(
-        'fixed top-0 z-50 w-full transition-all duration-500',
+        'fixed top-0 left-0 right-0 z-50 transition-all duration-500',
         getHeaderClasses()
       )}
       style={
         isHomePage && !scrolled 
           ? { backgroundColor: 'transparent', backdropFilter: 'none' } 
-          : { backgroundColor: '#0F3A3D' }
+          : { backgroundColor: '#FFFFFF' }
       }
     >
       <nav className="container mx-auto px-4 lg:px-6">
         <div className="flex h-20 items-center justify-between">
-          <Link to="/" className="flex items-center group">
+          <Link to="/" className="flex items-center group relative max-w-[180px] sm:max-w-none">
             <motion.div
               whileHover={{ scale: 1.05 }}
               whileTap={{ scale: 0.95 }}
               transition={{ duration: 0.3, ease: [0.16, 1, 0.3, 1] }}
-              className="relative h-20 w-auto flex-shrink-0 flex items-center translate-y-1"
+              className={cn(
+                "relative h-20 w-auto flex-shrink-1 flex items-center translate-y-1 transition-all duration-500",
+                isHomePage && !scrolled ? "brightness-0 invert opacity-90" : ""
+              )}
             >
               <Image
                 src="/images/Logo.svg"
                 alt="Gani Properties"
-                width={200}
-                height={64}
-                className="h-16 w-auto object-contain transition-transform group-hover:scale-105"
+                width={180}
+                height={58}
+                className="h-12 sm:h-16 w-auto object-contain transition-transform group-hover:scale-105"
                 priority
               />
             </motion.div>
@@ -168,19 +171,12 @@ export default function Navbar() {
                     <Link
                       to={link.to}
                       className={cn(
-                        'text-white/90 hover:text-white transition-all duration-300 font-medium flex items-center gap-1 relative group',
-                        pathname === link.to && 'text-white'
+                        'transition-all duration-300 font-bold uppercase text-[10px] tracking-[0.2em] flex items-center gap-1 relative group',
+                        scrolled || !isHomePage ? 'text-gp-ink' : 'text-white'
                       )}
                     >
                       <span className="relative">
                         {link.label}
-                        {pathname === link.to && (
-                          <motion.div
-                            layoutId="activeTab"
-                            className="absolute bottom-0 left-0 right-0 h-0.5 bg-gp-accent"
-                            transition={{ type: "spring", stiffness: 380, damping: 30 }}
-                          />
-                        )}
                       </span>
                       <motion.div
                         animate={{ rotate: dropdownOpen ? 180 : 0 }}
@@ -198,7 +194,7 @@ export default function Navbar() {
                           animate={{ opacity: 1, y: 0, scale: 1 }}
                           exit={{ opacity: 0, y: -10, scale: 0.95 }}
                           transition={{ duration: 0.2, ease: [0.16, 1, 0.3, 1] }}
-                          className="absolute top-full left-0 mt-2 w-56 bg-white rounded-lg shadow-xl border border-gp-ink/10 overflow-hidden"
+                          className="absolute top-full left-0 mt-2 w-56 bg-white rounded-lg shadow-xl border border-black/10 overflow-hidden"
                         >
                           <div className="py-2">
                             {subcategories.map((subcategory, idx) => (
@@ -210,7 +206,7 @@ export default function Navbar() {
                               >
                                 <Link
                                   to={subcategory.path}
-                                  className="block px-4 py-2 text-gp-ink hover:bg-gp-surface/10 hover:text-gp-accent transition-all duration-200 hover:pl-6"
+                                  className="block px-4 py-2 text-[#1A1A1A] hover:bg-black/5 hover:text-[#DD2B1C] transition-all duration-200 hover:pl-6 text-[10px] font-bold uppercase tracking-wider"
                                   onClick={() => setDropdownOpen(false)}
                                 >
                                   {subcategory.label}
@@ -236,19 +232,13 @@ export default function Navbar() {
                   <Link
                     to={link.to}
                     className={cn(
-                      'text-white/90 hover:text-white transition-all duration-300 font-medium relative group',
-                      pathname === link.to && 'text-white'
+                      'transition-all duration-300 font-bold uppercase text-[10px] tracking-[0.2em] relative group',
+                      scrolled || !isHomePage ? 'text-gp-ink' : 'text-white',
+                      pathname === link.to && (scrolled || !isHomePage ? 'text-gp-accent' : 'text-white')
                     )}
                   >
                     <span className="relative">
                       {link.label}
-                      {pathname === link.to && (
-                        <motion.div
-                          layoutId="activeTab"
-                          className="absolute bottom-0 left-0 right-0 h-0.5 bg-gp-accent"
-                          transition={{ type: "spring", stiffness: 380, damping: 30 }}
-                        />
-                      )}
                     </span>
                   </Link>
                 </motion.div>
@@ -260,7 +250,10 @@ export default function Navbar() {
           <motion.button
             whileHover={{ scale: 1.1 }}
             whileTap={{ scale: 0.9 }}
-            className="lg:hidden text-white"
+            className={cn(
+              'lg:hidden transition-colors',
+              scrolled || !isHomePage ? 'text-gp-ink' : 'text-white'
+            )}
             onClick={() => setIsOpen(!isOpen)}
             aria-label="Toggle menu"
           >
@@ -298,7 +291,7 @@ export default function Navbar() {
               animate={{ opacity: 1, height: 'auto' }}
               exit={{ opacity: 0, height: 0 }}
               transition={{ duration: 0.3, ease: [0.16, 1, 0.3, 1] }}
-              className="lg:hidden pb-4 space-y-2 overflow-hidden"
+              className="lg:hidden pb-4 space-y-2 overflow-hidden bg-white px-4 rounded-b-2xl shadow-xl"
             >
               {navLinks.map((link, index) => {
                 if (link.to === '/properties' && activeCategory && subcategories.length > 0) {
@@ -314,15 +307,15 @@ export default function Navbar() {
                       <Link
                         to={link.to}
                         className={cn(
-                          'block py-2 text-white/90 hover:text-white transition-all duration-300 font-medium hover:pl-2',
-                          pathname === link.to && 'text-white'
+                          'block py-2 text-[#1A1A1A] hover:text-[#DD2B1C] transition-all duration-300 font-bold uppercase text-[10px] tracking-widest hover:pl-2',
+                          pathname === link.to && 'text-[#DD2B1C]'
                         )}
                         onClick={() => setIsOpen(false)}
                       >
                         {link.label}
                       </Link>
                       {/* Mobile subcategories */}
-                      <div className="pl-4 space-y-1">
+                      <div className="pl-4 space-y-1 border-l border-black/5">
                         {subcategories.map((subcategory, idx) => (
                           <motion.div
                             key={subcategory.id}
@@ -332,7 +325,7 @@ export default function Navbar() {
                           >
                             <Link
                               to={subcategory.path}
-                              className="block py-2 text-white/70 hover:text-white transition-all duration-300 text-sm hover:pl-2"
+                              className="block py-2 text-black/40 hover:text-[#DD2B1C] transition-all duration-300 text-[10px] font-bold uppercase tracking-widest hover:pl-2"
                               onClick={() => setIsOpen(false)}
                             >
                               {subcategory.label}
@@ -354,8 +347,8 @@ export default function Navbar() {
                     <Link
                       to={link.to}
                       className={cn(
-                        'block py-2 text-white/90 hover:text-white transition-all duration-300 hover:pl-2',
-                        pathname === link.to && 'text-white'
+                        'block py-2 text-[#1A1A1A] hover:text-[#DD2B1C] transition-all duration-300 font-bold uppercase text-[10px] tracking-widest hover:pl-2',
+                        pathname === link.to && 'text-[#DD2B1C]'
                       )}
                       onClick={() => setIsOpen(false)}
                     >

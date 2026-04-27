@@ -22,6 +22,7 @@ import Dashboard from './pages/Dashboard';
 import CareersPage from './pages/Careers';
 import DevelopersPage from './pages/Developers';
 import Chatbot from './components/Chatbot';
+import CustomCursor from './components/CustomCursor';
 
 function App() {
   useEffect(() => {
@@ -30,6 +31,7 @@ function App() {
 
   return (
     <>
+      <CustomCursor />
       <ScrollToTop />
       <SEOHead
         title="Gani Properties - Premium Property Providers in Bangalore"

@@ -1,9 +1,9 @@
 import { motion, useScroll, useTransform, AnimatePresence } from 'framer-motion';
 import { useRef, useState } from 'react';
 import SEOHead from '@/components/SEOHead';
-import { 
-  TrendingUp, Award, Zap, Clock, 
-  IndianRupee, MapPin, Users, BarChart3, 
+import {
+  TrendingUp, Award, Zap, Clock,
+  IndianRupee, MapPin, Users, BarChart3,
   CheckCircle2, ArrowRight, Building2, Globe, Shield,
   Sparkles, Star, ArrowDown, HardHat, X
 } from 'lucide-react';
@@ -19,11 +19,11 @@ const franchiseModels = [
     investment: '₹8-10 Lakhs',
     territory: 'Exclusive city rights',
     revenueSplit: '70% You, 30% Us',
-    gradient: 'from-purple-500/10 to-pink-500/10',
-    borderColor: 'border-purple-200',
-    hoverGradient: 'from-purple-500/20 to-pink-500/20',
+    gradient: 'from-red-500/10 to-red-600/10',
+    borderColor: 'border-red-200',
+    hoverGradient: 'from-red-500/20 to-red-600/20',
     icon: Building2,
-    color: 'purple',
+    color: 'red',
     features: ['Standard CRM Access', 'Local Marketing Suite', '7 Days Training', 'Legal Documentation'],
     requirements: ['500 sq.ft Office', '2 Staff Members', 'City-level focus'],
     cta: 'Apply for City Rights'
@@ -35,11 +35,11 @@ const franchiseModels = [
     investment: '₹15-20 Lakhs',
     territory: 'Multi-city operations',
     revenueSplit: '75% You, 25% Us',
-    gradient: 'from-green-500/10 to-emerald-500/10',
-    borderColor: 'border-green-200',
-    hoverGradient: 'from-green-500/20 to-emerald-500/20',
+    gradient: 'from-red-500/10 to-red-600/10',
+    borderColor: 'border-red-200',
+    hoverGradient: 'from-red-500/20 to-red-600/20',
     icon: Globe,
-    color: 'green',
+    color: 'red',
     features: ['Advanced CRM Tools', 'Regional PR Campaigns', '15 Days Vocational Training', 'Dedicated Regional Manager'],
     requirements: ['1000 sq.ft Hub', '5+ Staff Members', 'Zonal Market Influence'],
     cta: 'Scale Regionally'
@@ -51,11 +51,11 @@ const franchiseModels = [
     investment: 'Depends on Investment',
     territory: 'State-level authority',
     revenueSplit: '80% You, 20% Us',
-    gradient: 'from-amber-500/10 to-orange-500/10',
-    borderColor: 'border-amber-200',
-    hoverGradient: 'from-amber-500/20 to-orange-500/20',
+    gradient: 'from-red-500/10 to-red-600/10',
+    borderColor: 'border-red-200',
+    hoverGradient: 'from-red-500/20 to-red-600/20',
     icon: Shield,
-    color: 'amber',
+    color: 'red',
     features: ['Enterprise ERP Systems', 'National Branding', 'Ongoing Expert Training', 'full Legal & Project Consulting'],
     requirements: ['Corporate Headquarters', 'Full Engineering Team', 'Strategic Partnership'],
     cta: 'Become a Strategic Partner'
@@ -145,17 +145,17 @@ export default function FranchisePage() {
       />
 
       {/* Enhanced Hero Section with Background Image */}
-      <section 
+      <section
         ref={heroRef}
         className="relative min-h-screen flex items-center justify-center overflow-hidden"
-        style={{ backgroundColor: '#0F3A3D' }}
+        style={{ backgroundColor: '#FFFFFF' }}
       >
         {/* Parallax Background Image Layer */}
         <div className="absolute inset-0 z-0 overflow-hidden">
           {/* Background Image with Parallax Effect */}
           <motion.img
-            src="/images/Franchise Hero.webp"
-            alt="Franchise Hero Background"
+            src="/images/franchise_professional.png"
+            alt="Franchise Professional Visionary"
             className="absolute inset-0 w-full h-full object-cover"
             style={{
               y: heroY,
@@ -176,39 +176,39 @@ export default function FranchisePage() {
               setImageLoaded(false);
             }}
           />
-          
+
           {/* Fallback background gradient (shows when image is loading) */}
-          <div 
+          <div
             className="absolute inset-0 w-full h-full bg-gradient-to-b from-gp-bg via-gp-surface to-gp-bg"
-            style={{ 
+            style={{
               opacity: imageLoaded ? 0 : 1,
               transition: 'opacity 0.8s ease-in-out',
               zIndex: 0
             }}
           />
-          
+
           {/* Dark Overlay for Text Readability */}
-          <div 
+          <div
             className="absolute inset-0"
             style={{
               zIndex: 1,
-              background: 'linear-gradient(to bottom, rgba(15, 58, 61, 0.5), rgba(15, 46, 49, 0.4), rgba(15, 46, 49, 0.5))'
+              background: 'linear-gradient(to bottom, rgba(0, 0, 0, 0.4), rgba(0, 0, 0, 0.2), rgba(0, 0, 0, 0.5))'
             }}
           />
-          
+
           {/* Additional Gradient Overlay for Better Contrast */}
-          <div 
+          <div
             className="absolute inset-0"
             style={{
               zIndex: 2,
-              background: 'radial-gradient(ellipse at center, transparent 0%, rgba(15, 58, 61, 0.3) 50%, rgba(15, 46, 49, 0.7) 100%)'
+              background: 'radial-gradient(ellipse at center, transparent 0%, rgba(0, 0, 0, 0.2) 50%, rgba(0, 0, 0, 0.6) 100%)'
             }}
           />
         </div>
 
         {/* Animated Overlay Pattern - Subtle */}
         <div className="absolute inset-0 opacity-5" style={{ zIndex: 10 }}>
-          <div className="absolute inset-0 bg-[linear-gradient(45deg,transparent_25%,rgba(201,181,137,0.1)_25%,rgba(201,181,137,0.1)_50%,transparent_50%,transparent_75%,rgba(201,181,137,0.1)_75%,rgba(201,181,137,0.1)_100%)] bg-[length:40px_40px]" />
+          <div className="absolute inset-0 bg-[linear-gradient(45deg,transparent_25%,rgba(221,43,28,0.1)_25%,rgba(221,43,28,0.1)_50%,transparent_50%,transparent_75%,rgba(221,43,28,0.1)_75%,rgba(221,43,28,0.1)_100%)] bg-[length:40px_40px]" />
         </div>
 
         {/* Subtle Floating Particles - Reduced for Performance */}
@@ -223,8 +223,8 @@ export default function FranchisePage() {
               style={{
                 width: `${size}px`,
                 height: `${size}px`,
-                background: `radial-gradient(circle, rgba(201, 181, 137, 0.6) 0%, rgba(201, 181, 137, 0.1) 100%)`,
-                boxShadow: `0 0 ${size * 2}px rgba(201, 181, 137, 0.4)`,
+                background: `radial-gradient(circle, rgba(221, 43, 28, 0.6) 0%, rgba(221, 43, 28, 0.1) 100%)`,
+                boxShadow: `0 0 ${size * 2}px rgba(221, 43, 28, 0.4)`,
                 zIndex: 12,
               }}
               initial={{
@@ -275,9 +275,9 @@ export default function FranchisePage() {
               >
                 <div className="w-24 h-24 bg-gp-accent/20 rounded-full blur-xl" />
               </motion.div>
-              <Sparkles className="w-16 h-16 text-gp-accent mx-auto mb-6 relative z-10 drop-shadow-[0_0_20px_rgba(201,181,137,0.5)]" />
+              <Sparkles className="w-16 h-16 text-gp-accent mx-auto mb-6 relative z-10 drop-shadow-[0_0_20px_rgba(221,43,28,0.5)]" />
             </motion.div>
-            
+
             {/* Main Heading with Enhanced Effects */}
             <motion.h1
               initial={{ opacity: 0, y: 20 }}
@@ -305,7 +305,7 @@ export default function FranchisePage() {
               >
                 Construction Franchising Success
               </motion.span>
-              
+
               {/* Text Glow Effect */}
               <motion.div
                 className="absolute inset-0 bg-gradient-to-r from-gp-accent/20 to-gp-gold/20 blur-3xl -z-10"
@@ -385,7 +385,7 @@ export default function FranchisePage() {
       <section id="models" className="py-32 bg-white relative overflow-hidden">
         {/* Background Pattern */}
         <div className="absolute inset-0 opacity-[0.02]">
-          <div className="absolute inset-0 bg-[linear-gradient(45deg,transparent_25%,rgba(201,181,137,1)_25%,rgba(201,181,137,1)_50%,transparent_50%,transparent_75%,rgba(201,181,137,1)_75%,rgba(201,181,137,1)_100%)] bg-[length:60px_60px]" />
+          <div className="absolute inset-0 bg-[linear-gradient(45deg,transparent_25%,rgba(221,43,28,1)_25%,rgba(221,43,28,1)_50%,transparent_50%,transparent_75%,rgba(221,43,28,1)_75%,rgba(221,43,28,1)_100%)] bg-[length:60px_60px]" />
         </div>
 
         <div className="container mx-auto px-4 lg:px-6 relative z-10">
@@ -418,7 +418,7 @@ export default function FranchisePage() {
             {franchiseModels.map((model, index) => {
               const Icon = model.icon;
               const isSelected = selectedModel === model.id;
-              
+
               return (
                 <motion.div
                   key={model.id}
@@ -431,7 +431,7 @@ export default function FranchisePage() {
                     delay: index * 0.15,
                     ease: [0.16, 1, 0.3, 1],
                   }}
-                  whileHover={{ 
+                  whileHover={{
                     y: -12,
                     scale: 1.02,
                     transition: { duration: 0.3 }
@@ -442,7 +442,7 @@ export default function FranchisePage() {
                 >
                   <motion.div
                     className={`bg-gradient-to-br ${isSelected ? model.hoverGradient : model.gradient} rounded-3xl p-8 border-2 ${model.borderColor} transition-all duration-500 h-full flex flex-col relative overflow-hidden shadow-sm`}
-                    whileHover={{ 
+                    whileHover={{
                       boxShadow: '0 20px 40px rgba(0,0,0,0.15)',
                     }}
                   >
@@ -450,7 +450,7 @@ export default function FranchisePage() {
                     <motion.div
                       className={`absolute inset-0 bg-gradient-to-br ${model.hoverGradient} opacity-0 group-hover:opacity-100 transition-opacity duration-500`}
                     />
-                    
+
                     <div className="relative z-10">
                       <motion.div
                         whileHover={{ scale: 1.1 }}
@@ -459,7 +459,7 @@ export default function FranchisePage() {
                       >
                         <Icon className="w-10 h-10 text-gp-accent" />
                       </motion.div>
-                      
+
                       <span className="text-xs font-semibold text-gp-accent uppercase tracking-wider mb-2 block">
                         {model.model}
                       </span>
@@ -658,7 +658,7 @@ export default function FranchisePage() {
       {/* Regional & Builder Partnership - Enhanced */}
       <section className="py-32 bg-white relative overflow-hidden">
         <div className="absolute inset-0 opacity-[0.02]">
-          <div className="absolute inset-0 bg-[linear-gradient(45deg,transparent_25%,rgba(201,181,137,1)_25%,rgba(201,181,137,1)_50%,transparent_50%,transparent_75%,rgba(201,181,137,1)_75%,rgba(201,181,137,1)_100%)] bg-[length:60px_60px]" />
+          <div className="absolute inset-0 bg-[linear-gradient(45deg,transparent_25%,rgba(221,43,28,1)_25%,rgba(221,43,28,1)_50%,transparent_50%,transparent_75%,rgba(221,43,28,1)_75%,rgba(221,43,28,1)_100%)] bg-[length:60px_60px]" />
         </div>
 
         <div className="container mx-auto px-4 lg:px-6 relative z-10">
@@ -682,8 +682,8 @@ export default function FranchisePage() {
                 coverage: 'Multiple cities, semi-exclusive rights',
                 revenue: '75% franchisee, 25% franchisor',
                 description: 'Includes dedicated manager and construction training modules for comprehensive regional growth.',
-                gradient: 'from-green-500/10 to-emerald-500/10',
-                border: 'border-green-200',
+                gradient: 'from-red-500/5 to-red-600/5',
+                border: 'border-red-200',
                 icon: Globe,
                 delay: 0,
               },
@@ -693,8 +693,8 @@ export default function FranchisePage() {
                 coverage: 'State-level or major metro authority',
                 revenue: '80% franchisee, 20% franchisor',
                 description: 'Complete project support, joint ventures, and legal consulting for maximum market penetration.',
-                gradient: 'from-amber-500/10 to-orange-500/10',
-                border: 'border-amber-200',
+                gradient: 'from-red-500/5 to-red-600/5',
+                border: 'border-red-200',
                 icon: Shield,
                 delay: 0.2,
               },
@@ -794,7 +794,7 @@ export default function FranchisePage() {
                     delay: index * 0.15,
                     ease: [0.16, 1, 0.3, 1],
                   }}
-                  whileHover={{ 
+                  whileHover={{
                     y: -12,
                     rotateY: 5,
                     transition: { duration: 0.3 }
@@ -850,7 +850,7 @@ export default function FranchisePage() {
             className="max-w-6xl mx-auto"
           >
             <div className="text-center mb-20">
-              <h2 className="text-4xl md:text-6xl font-display font-bold text-white mb-6">
+              <h2 className="text-4xl md:text-6xl font-display font-bold text-gp-ink mb-6">
                 Comprehensive Support System
               </h2>
             </div>
@@ -869,7 +869,7 @@ export default function FranchisePage() {
                       delay: index * 0.2,
                       ease: [0.16, 1, 0.3, 1],
                     }}
-                    whileHover={{ 
+                    whileHover={{
                       y: -12,
                       rotateY: 5,
                       transition: { duration: 0.3 }
@@ -879,14 +879,14 @@ export default function FranchisePage() {
                     <motion.div
                       whileHover={{ scale: 1.2, rotate: 360 }}
                       transition={{ duration: 0.6 }}
-                      className="w-20 h-20 rounded-2xl bg-white/20 flex items-center justify-center mb-6"
+                      className="w-20 h-20 rounded-2xl bg-gp-red/10 flex items-center justify-center mb-6"
                     >
-                      <Icon className="w-10 h-10 text-white" />
+                      <Icon className="w-10 h-10 text-gp-red" />
                     </motion.div>
-                    <h3 className="text-2xl font-bold text-white mb-4">
+                    <h3 className="text-2xl font-bold text-gp-ink mb-4">
                       {feature.title}
                     </h3>
-                    <p className="text-white/80 leading-relaxed text-lg">
+                    <p className="text-gp-ink-muted leading-relaxed text-lg">
                       {feature.description}
                     </p>
                   </motion.div>
@@ -957,7 +957,7 @@ export default function FranchisePage() {
       </section>
 
       {/* Support Structure Section */}
-      <section className="py-32 bg-gp-ink relative overflow-hidden">
+      <section className="py-32 bg-gp-surface relative overflow-hidden">
         <div className="absolute inset-0 opacity-10">
           <div className="absolute top-0 right-0 w-96 h-96 bg-gp-accent rounded-full blur-[120px] -mr-48 -mt-48" />
           <div className="absolute bottom-0 left-0 w-96 h-96 bg-gp-gold rounded-full blur-[120px] -ml-48 -mb-48" />
@@ -971,10 +971,10 @@ export default function FranchisePage() {
             transition={{ duration: 0.6 }}
             className="text-center max-w-3xl mx-auto mb-20"
           >
-            <h2 className="text-4xl md:text-6xl font-display font-bold text-white mb-6">
+            <h2 className="text-4xl md:text-6xl font-display font-bold text-gp-ink mb-6">
               Our Support Ecosystem
             </h2>
-            <p className="text-xl text-white/70">
+            <p className="text-xl text-gp-ink-muted">
               We empower our partners with end-to-end support across four critical business pillars.
             </p>
           </motion.div>
@@ -1010,16 +1010,16 @@ export default function FranchisePage() {
                   whileInView={{ opacity: 1, y: 0 }}
                   viewport={{ once: true }}
                   transition={{ duration: 0.5, delay: index * 0.1 }}
-                  className="bg-white/5 backdrop-blur-sm p-8 rounded-3xl border border-white/10 hover:border-white/20 transition-all group"
+                  className="bg-white p-8 rounded-3xl border border-black/5 hover:border-gp-red/20 transition-all group shadow-sm"
                 >
-                  <div className="w-14 h-14 rounded-2xl bg-gp-accent/20 flex items-center justify-center mb-6 group-hover:bg-gp-accent transition-colors">
-                    <Icon className="w-7 h-7 text-gp-accent group-hover:text-white" />
+                  <div className="w-14 h-14 rounded-2xl bg-gp-red/10 flex items-center justify-center mb-6 group-hover:bg-gp-red transition-colors">
+                    <Icon className="w-7 h-7 text-gp-red group-hover:text-white" />
                   </div>
-                  <h3 className="text-xl font-bold text-white mb-6">{support.title}</h3>
+                  <h3 className="text-xl font-bold text-gp-ink mb-6">{support.title}</h3>
                   <ul className="space-y-4">
                     {support.items.map((item, i) => (
-                      <li key={i} className="flex items-center gap-3 text-white/60 text-sm">
-                        <CheckCircle2 className="w-4 h-4 text-gp-accent" />
+                      <li key={i} className="flex items-center gap-3 text-gp-ink-muted text-sm">
+                        <CheckCircle2 className="w-4 h-4 text-gp-red" />
                         {item}
                       </li>
                     ))}
@@ -1099,7 +1099,7 @@ export default function FranchisePage() {
               onClick={() => setActiveModelId(null)}
               className="absolute inset-0 bg-gp-bg/90 backdrop-blur-md"
             />
-            
+
             <motion.div
               layoutId={activeModelId}
               initial={{ opacity: 0, scale: 0.9, y: 20 }}
@@ -1122,7 +1122,7 @@ export default function FranchisePage() {
                   </div>
                   <h3 className="text-sm font-bold text-gp-accent uppercase tracking-[0.2em] mb-2">{activeModel.model}</h3>
                   <h2 className="text-4xl font-display font-bold text-gp-ink mb-6">{activeModel.name}</h2>
-                  
+
                   <div className="space-y-6 mb-8">
                     <div className="flex items-start gap-4">
                       <div className="w-10 h-10 rounded-xl bg-gp-surface flex items-center justify-center flex-shrink-0">
@@ -1216,10 +1216,10 @@ export default function FranchisePage() {
             <div className="inline-block mb-8">
               <Sparkles className="w-16 h-16 text-gp-accent" />
             </div>
-            <h2 className="text-4xl md:text-6xl font-display font-bold text-white mb-8">
+            <h2 className="text-4xl md:text-6xl font-display font-bold text-gp-ink mb-8">
               Ready to Transform Your Entrepreneurial Vision?
             </h2>
-            <p className="text-xl text-white/90 mb-12 leading-relaxed">
+            <p className="text-xl text-gp-ink-muted mb-12 leading-relaxed font-medium">
               Contact us today to explore your franchise opportunity and take the first step towards building your real estate empire.
             </p>
             <div className="flex flex-col sm:flex-row gap-6 justify-center">
@@ -1245,7 +1245,7 @@ export default function FranchisePage() {
                   <Button
                     size="lg"
                     variant="outline"
-                    className="border-2 border-white/30 text-white hover:bg-white/10 px-10 py-7 text-lg font-medium backdrop-blur-sm"
+                    className="border-2 border-black/10 text-gp-ink hover:bg-black/5 px-10 py-7 text-lg font-medium"
                   >
                     View Properties
                   </Button>

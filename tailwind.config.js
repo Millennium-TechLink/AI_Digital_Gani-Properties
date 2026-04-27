@@ -11,6 +11,7 @@ export default {
         'gp-surface': 'var(--gp-surface)',
         'gp-accent': 'var(--gp-accent)',
         'gp-gold': 'var(--gp-gold)',
+        'gp-red': 'var(--gp-red)',
         'gp-ink': 'var(--gp-ink)',
         'gp-ink-muted': 'var(--gp-ink-muted)',
         background: 'var(--background)',

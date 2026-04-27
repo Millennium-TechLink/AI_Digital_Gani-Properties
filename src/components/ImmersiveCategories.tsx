@@ -10,7 +10,7 @@ const categories = [
     description: 'Plots, apartments, and villas for your dream home',
     image: '/images/Residential.webp',
     count: '150+',
-    gradient: 'from-blue-500/20 to-purple-500/20',
+    gradient: 'from-red-600/40 to-red-900/60',
     link: '/properties?type=residential-plots',
   },
   {
@@ -19,7 +19,7 @@ const categories = [
     description: 'Office spaces and commercial properties for business',
     image: '/images/Commercial.webp',
     count: '80+',
-    gradient: 'from-indigo-500/20 to-blue-500/20',
+    gradient: 'from-red-600/40 to-red-900/60',
     link: '/properties?type=commercial',
   },
   {
@@ -28,7 +28,7 @@ const categories = [
     description: 'Shops, malls, and retail spaces in prime locations',
     image: '/images/Retail.webp',
     count: '60+',
-    gradient: 'from-pink-500/20 to-rose-500/20',
+    gradient: 'from-red-600/40 to-red-900/60',
     link: '/properties?type=retail',
   },
   {
@@ -37,7 +37,7 @@ const categories = [
     description: 'Hotels, restaurants, and hospitality establishments',
     image: '/images/Hospitality.webp',
     count: '40+',
-    gradient: 'from-orange-500/20 to-amber-500/20',
+    gradient: 'from-red-600/40 to-red-900/60',
     link: '/properties?type=hospitality',
   },
   {
@@ -46,7 +46,7 @@ const categories = [
     description: 'Warehouses, logistics parks, and industrial spaces',
     image: '/images/Industrial.webp',
     count: '50+',
-    gradient: 'from-gray-500/20 to-slate-500/20',
+    gradient: 'from-red-600/40 to-red-900/60',
     link: '/properties?type=industrial',
   },
   {
@@ -55,7 +55,7 @@ const categories = [
     description: 'Farm plots and agricultural lands for investment',
     image: '/images/Land.webp',
     count: '120+',
-    gradient: 'from-green-500/20 to-emerald-500/20',
+    gradient: 'from-red-600/40 to-red-900/60',
     link: '/properties?type=farm-plots',
   },
 ];
@@ -70,11 +70,7 @@ export default function ImmersiveCategories() {
       </div>
 
       <div className="container mx-auto px-4 lg:px-6 relative z-10">
-        <motion.div
-          initial={{ opacity: 0, y: 30 }}
-          whileInView={{ opacity: 1, y: 0 }}
-          viewport={{ once: true }}
-          transition={{ duration: 0.6 }}
+        <div
           className="text-center max-w-3xl mx-auto mb-20"
         >
           <span className="text-sm font-medium text-gp-accent uppercase tracking-wider mb-4 block">
@@ -86,7 +82,7 @@ export default function ImmersiveCategories() {
           <p className="text-xl text-gp-ink-muted leading-relaxed">
             From residential properties to commercial spaces, retail outlets, hospitality establishments, and industrial facilities—find the property that aligns with your vision.
           </p>
-        </motion.div>
+        </div>
 
         <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-8">
           {categories.map((category, index) => (
@@ -122,25 +118,25 @@ export default function ImmersiveCategories() {
                       }}
                     />
                     <div className={`absolute inset-0 bg-gradient-to-b ${category.gradient} z-10`} />
-                    <div className="absolute inset-0 bg-gradient-to-t from-gp-surface via-gp-surface/50 to-transparent z-20" />
+                    <div className="absolute inset-0 bg-gradient-to-t from-gp-ink via-gp-ink/40 to-transparent z-20" />
                   </div>
 
                   {/* Content */}
                   <div className="absolute inset-0 z-30 flex flex-col justify-end p-8">
                     <div className="mb-4">
-                      <span className="inline-block px-3 py-1 bg-white/20 backdrop-blur-sm rounded-full text-xs font-medium text-white mb-3">
+                      <span className="inline-block px-3 py-1 bg-white/20 backdrop-blur-sm rounded-full text-[10px] font-black text-white mb-3 uppercase tracking-widest">
                         {category.count} Available
                       </span>
                     </div>
-                    <h3 className="text-3xl font-display font-bold text-white mb-3 group-hover:text-gp-accent transition-colors">
+                    <h3 className="text-3xl font-display font-bold text-white mb-3 group-hover:text-white transition-colors uppercase tracking-tight">
                       {category.title}
                     </h3>
-                    <p className="text-white/90 mb-6 leading-relaxed">
+                    <p className="text-white/80 mb-6 leading-relaxed text-sm font-medium">
                       {category.description}
                     </p>
-                    <div className="flex items-center gap-2 text-white group-hover:text-gp-accent transition-colors font-medium">
+                    <div className="flex items-center gap-2 text-white group-hover:text-white transition-colors font-black text-[10px] uppercase tracking-[0.2em]">
                       <span>Explore</span>
-                      <ArrowRight className="h-5 w-5 group-hover:translate-x-2 transition-transform" />
+                      <ArrowRight className="h-4 w-4 group-hover:translate-x-2 transition-transform text-[#DD2B1C]" />
                     </div>
                   </div>
                 </div>

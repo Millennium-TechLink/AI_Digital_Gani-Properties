@@ -1,78 +1,67 @@
 import { Link } from 'react-router-dom';
-import { Button } from '@/components/ui/button';
 import { Phone } from 'lucide-react';
 import { motion } from 'framer-motion';
 
 export default function CTASection() {
   return (
-    <section className="py-20 bg-gradient-to-br from-gp-bg via-gp-surface to-gp-bg relative overflow-hidden">
-      {/* Decorative Pattern */}
-      <div className="absolute inset-0 opacity-10">
-        <div className="absolute top-0 right-0 w-96 h-96 bg-gp-accent rounded-full blur-3xl" />
-        <div className="absolute bottom-0 left-0 w-96 h-96 bg-gp-gold rounded-full blur-3xl" />
-      </div>
+    <section className="py-28 bg-[#F9F9F9] relative overflow-hidden">
+      {/* Red glow accents */}
+      <div className="absolute top-0 right-1/4 w-96 h-96 bg-[#DD2B1C]/3 rounded-full blur-3xl pointer-events-none" />
+      <div className="absolute bottom-0 left-1/4 w-96 h-96 bg-[#DD2B1C]/3 rounded-full blur-3xl pointer-events-none" />
+      
+      {/* Top border line */}
+      <div className="absolute top-0 left-0 right-0 h-px bg-gradient-to-r from-transparent via-[#DD2B1C]/20 to-transparent" />
 
       <div className="container mx-auto px-4 lg:px-6 relative z-10">
         <motion.div
           initial={{ opacity: 0, y: 20 }}
           whileInView={{ opacity: 1, y: 0 }}
           viewport={{ once: true }}
-          transition={{ duration: 0.5, ease: [0.16, 1, 0.3, 1] }}
-          className="max-w-3xl mx-auto text-center"
-          style={{
-            willChange: 'transform, opacity',
-            transform: 'translate3d(0, 0, 0)',
-          }}
+          transition={{ duration: 0.6, ease: [0.16, 1, 0.3, 1] }}
+          className="max-w-2xl mx-auto text-center"
         >
-          <h2 className="text-4xl md:text-5xl font-display font-bold text-white mb-6">
+          <div className="flex items-center justify-center gap-3 mb-6">
+            <div className="h-px w-8 bg-[#DD2B1C]/60" />
+            <span className="text-[10px] font-black text-[#DD2B1C] uppercase tracking-[0.4em]">Get Started</span>
+            <div className="h-px w-8 bg-[#DD2B1C]/60" />
+          </div>
+
+          <h2 className="text-4xl md:text-5xl font-display font-bold text-[#1A1A1A] mb-5 leading-tight">
             Ready to Find Your Perfect Property?
           </h2>
-          <p className="text-xl text-white/90 mb-10 leading-relaxed">
-            Connect with our team today to explore premium layouts in Bengaluru
+          <p className="text-[#666] mb-10 leading-relaxed font-medium">
+            Connect with our team today to explore premium lands in Bengaluru.
           </p>
+
           <motion.div
-            initial={{ opacity: 0, y: 20 }}
+            initial={{ opacity: 0, y: 12 }}
             whileInView={{ opacity: 1, y: 0 }}
             viewport={{ once: true }}
-            transition={{ duration: 0.5, delay: 0.1, ease: [0.16, 1, 0.3, 1] }}
+            transition={{ duration: 0.5, delay: 0.15 }}
             className="flex flex-col sm:flex-row gap-4 justify-center items-center"
-            style={{
-              willChange: 'transform, opacity',
-              transform: 'translate3d(0, 0, 0)',
-            }}
           >
-            <motion.div
-              whileHover={{ scale: 1.05, y: -2 }}
-              whileTap={{ scale: 0.95 }}
-              transition={{ duration: 0.2 }}
+            <motion.a
+              href="https://wa.me/919900570799?text=Hi%20Gani%20Properties%2C%20I%20want%20to%20schedule%20a%20site%20visit"
+              target="_blank"
+              rel="noopener noreferrer"
+              whileHover={{ scale: 1.03, y: -2 }}
+              whileTap={{ scale: 0.97 }}
+              className="flex items-center gap-2 px-8 py-3.5 bg-[#DD2B1C] text-white text-[10px] font-black uppercase tracking-[0.25em] hover:bg-red-700 transition-colors shadow-lg shadow-red-900/10"
             >
-              <Button
-                asChild
-                variant="default"
-                size="lg"
-                className="bg-white text-gp-ink hover:bg-gp-accent hover:text-white shadow-lg"
-              >
-                <a href="https://wa.me/919900570799?text=Hi%20Gani%20Properties%2C%20I%20want%20to%20schedule%20a%20site%20visit" target="_blank" rel="noopener noreferrer">
-                  <Phone className="h-5 w-5" />
-                  Get Started on WhatsApp
-                </a>
-              </Button>
-            </motion.div>
+              <Phone className="h-4 w-4" />
+              Get Started on WhatsApp
+            </motion.a>
+
             <motion.div
-              whileHover={{ scale: 1.05, y: -2 }}
-              whileTap={{ scale: 0.95 }}
-              transition={{ duration: 0.2, delay: 0.1 }}
+              whileHover={{ scale: 1.03, y: -2 }}
+              whileTap={{ scale: 0.97 }}
             >
-              <Button
-                asChild
-                variant="outline"
-                size="lg"
-                className="border-white text-white hover:bg-white/10 shadow-lg"
+              <Link
+                to="/contact"
+                className="flex items-center gap-2 px-8 py-3.5 border border-black/10 text-[#1A1A1A] text-[10px] font-black uppercase tracking-[0.25em] hover:bg-black/5 transition-colors backdrop-blur-sm"
               >
-                <Link to="/contact">
-                  Contact Us
-                </Link>
-              </Button>
+                Contact Us
+              </Link>
             </motion.div>
           </motion.div>
         </motion.div>

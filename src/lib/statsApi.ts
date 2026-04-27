@@ -31,6 +31,10 @@ export const statsApi = {
       await axios.post(`${API_BASE}/stats/visit`);
       sessionStorage.setItem('gani_session_hit', 'true');
     } catch (error) {
+      if (axios.isAxiosError(error) && !error.response) {
+        // Silently fail for network errors (API not running)
+        return;
+      }
       console.error('Failed to log visit:', error);
     }
   },

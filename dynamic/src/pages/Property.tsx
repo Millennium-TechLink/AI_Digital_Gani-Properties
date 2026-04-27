@@ -275,9 +275,9 @@ export default function PropertyPage() {
                   <h2 className="text-2xl font-display font-bold text-gp-ink mb-4">
                     Location
                   </h2>
-                  <div className="relative w-full h-64 rounded-lg overflow-hidden">
+                  <div className="relative w-full h-64 rounded-xl overflow-hidden bg-gp-surface border border-gp-ink/5">
                     <iframe
-                      src={`https://www.google.com/maps?q=${property.lat},${property.lon}&z=15&output=embed`}
+                      src={`https://maps.google.com/maps?q=${property.lat},${property.lon}&z=15&output=embed`}
                       width="100%"
                       height="100%"
                       style={{ border: 0 }}
@@ -285,6 +285,7 @@ export default function PropertyPage() {
                       loading="lazy"
                       referrerPolicy="no-referrer-when-downgrade"
                       title={`Map showing location of ${property.title}`}
+                      className="grayscale-[0.2] contrast-[1.1]"
                     />
                   </div>
                   <a

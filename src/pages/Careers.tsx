@@ -187,15 +187,15 @@ export default function CareersPage() {
       />
 
       {/* Hero Section */}
-      <div className="pt-32 pb-20 bg-gradient-to-b from-[#0F3A3D]/10 via-white to-white relative overflow-hidden">
+      <div className="pt-32 pb-20 bg-gradient-to-b from-[#DD2B1C]/5 via-white to-white relative overflow-hidden">
         <div className="absolute inset-0 opacity-5">
-          <div className="absolute top-0 right-1/4 w-96 h-96 bg-[#0F3A3D] rounded-full blur-3xl" />
-          <div className="absolute bottom-0 left-1/4 w-96 h-96 bg-[#C9B589] rounded-full blur-3xl" />
+          <div className="absolute top-0 right-1/4 w-96 h-96 bg-[#DD2B1C] rounded-full blur-3xl" />
+          <div className="absolute bottom-0 left-1/4 w-96 h-96 bg-[#1A1A1A] rounded-full blur-3xl" />
         </div>
         <div className="container mx-auto px-4 lg:px-6 relative z-10 text-center">
           <motion.div initial={{ opacity: 0, y: 30 }} animate={{ opacity: 1, y: 0 }} transition={{ duration: 0.6 }} className="max-w-4xl mx-auto">
-            <span className="text-sm font-medium text-[#0F3A3D] uppercase tracking-wider mb-4 block">JOIN OUR MISSION</span>
-            <h1 className="text-5xl md:text-6xl lg:text-7xl font-display font-bold text-[#0F3A3D] mb-6">Build Your Future with Us</h1>
+            <span className="text-sm font-medium text-[#DD2B1C] uppercase tracking-wider mb-4 block">JOIN OUR MISSION</span>
+            <h1 className="text-5xl md:text-6xl lg:text-7xl font-display font-bold text-[#1A1A1A] mb-6">Build Your Future with Us</h1>
             <p className="text-xl md:text-2xl text-gp-ink-muted leading-relaxed">
               Join a team of professionals dedicated to excellence in Bangalore&apos;s real estate.
             </p>
@@ -225,7 +225,7 @@ export default function CareersPage() {
                   <motion.div key={category} initial={{ opacity: 0, y: 50 }} whileInView={{ opacity: 1, y: 0 }} viewport={{ once: true }} transition={{ duration: 0.6 }}>
                     <div className="flex flex-col lg:flex-row gap-12 items-start">
                       <div className="lg:w-1/3">
-                        <div className="inline-flex items-center justify-center w-16 h-16 rounded-2xl bg-[#0F3A3D]/10 text-[#0F3A3D] mb-6">
+                        <div className="inline-flex items-center justify-center w-16 h-16 rounded-2xl bg-[#DD2B1C]/10 text-[#DD2B1C] mb-6">
                           <Icon size={32} />
                         </div>
                         <h2 className="text-3xl font-display font-bold text-gp-ink mb-4">{category}</h2>
@@ -244,7 +244,7 @@ export default function CareersPage() {
                                 <div className="flex items-center gap-2 flex-wrap mb-2">
                                   {(job.state || job.city) && (
                                     <span className="flex items-center gap-1 text-xs text-gp-ink-muted">
-                                      <MapPin size={11} className="text-[#0F3A3D]" />
+                                      <MapPin size={11} className="text-[#DD2B1C]" />
                                       {[job.city, job.state].filter(Boolean).join(', ')}
                                     </span>
                                   )}
@@ -253,12 +253,12 @@ export default function CareersPage() {
                                     {new Date(job.postedAt).toLocaleDateString('en-IN', { day: 'numeric', month: 'short', year: 'numeric' })}
                                   </span>
                                 </div>
-                                <h3 className="text-xl font-bold text-gp-ink group-hover:text-[#0F3A3D] transition-colors">{job.title}</h3>
+                                <h3 className="text-xl font-bold text-gp-ink group-hover:text-[#DD2B1C] transition-colors">{job.title}</h3>
                               </div>
                               <div className="flex items-center gap-3 shrink-0">
                                 <button
                                   onClick={(e) => { e.stopPropagation(); openApply(job); }}
-                                  className="px-5 py-2 bg-[#0F3A3D] hover:bg-[#0d2f31] text-white text-sm font-bold rounded-xl transition-all"
+                                  className="px-5 py-2 bg-[#1A1A1A] hover:bg-[#DD2B1C] text-white text-sm font-bold rounded-xl transition-all"
                                 >
                                   Apply Now
                                 </button>
@@ -283,11 +283,11 @@ export default function CareersPage() {
                                     <p className="text-gp-ink-muted leading-relaxed">{job.description}</p>
                                     {job.requirements?.length > 0 && (
                                       <div>
-                                        <p className="text-xs font-bold uppercase tracking-wider text-[#C9B589] mb-2">Requirements</p>
+                                        <p className="text-xs font-bold uppercase tracking-wider text-[#DD2B1C] mb-2">Requirements</p>
                                         <ul className="space-y-1.5">
                                           {job.requirements.map((req, i) => (
                                             <li key={i} className="text-sm text-gp-ink-muted flex items-start gap-2">
-                                              <span className="w-1.5 h-1.5 rounded-full bg-[#0F3A3D] mt-1.5 shrink-0" />
+                                              <span className="w-1.5 h-1.5 rounded-full bg-[#DD2B1C] mt-1.5 shrink-0" />
                                               {req}
                                             </li>
                                           ))}
@@ -296,7 +296,7 @@ export default function CareersPage() {
                                     )}
                                     <button
                                       onClick={() => openApply(job)}
-                                      className="flex items-center gap-2 px-6 py-2.5 bg-gradient-to-r from-[#C9B589] to-[#b8a070] text-[#0F3A3D] font-bold rounded-xl text-sm hover:opacity-90 transition-all"
+                                      className="flex items-center gap-2 px-6 py-2.5 bg-[#1A1A1A] text-white font-bold rounded-xl text-sm hover:bg-[#DD2B1C] transition-all"
                                     >
                                       <Send size={14} /> Apply for this Position
                                     </button>
@@ -330,7 +330,7 @@ export default function CareersPage() {
               { title: 'Team Excellence', desc: 'Work with the best in the industry on landmark projects.', icon: Users }
             ].map((f, i) => (
               <div key={i} className="bg-white p-10 rounded-3xl border border-gp-ink/10 text-center hover:shadow-xl transition-all">
-                <div className="w-16 h-16 mx-auto bg-[#0F3A3D]/5 text-[#0F3A3D] rounded-2xl flex items-center justify-center mb-6">
+                <div className="w-16 h-16 mx-auto bg-[#DD2B1C]/5 text-[#DD2B1C] rounded-2xl flex items-center justify-center mb-6">
                   <f.icon size={30} />
                 </div>
                 <h3 className="text-2xl font-bold mb-4">{f.title}</h3>
@@ -342,11 +342,11 @@ export default function CareersPage() {
       </section>
 
       {/* Partner Banner */}
-      <section className="py-24 bg-[#0F3A3D] relative overflow-hidden text-center text-white">
+      <section className="py-24 bg-[#1A1A1A] relative overflow-hidden text-center text-white">
         <div className="container mx-auto px-4 relative z-10">
           <h2 className="text-4xl font-display font-bold mb-6">Partner With Us</h2>
           <p className="max-w-2xl mx-auto text-white/70 mb-10">Searching for vendors and contractors to build the future of Bengaluru.</p>
-          <a href="/contact" className="px-10 py-4 bg-[#C9B589] text-[#0F3A3D] rounded-xl font-bold hover:bg-white transition-all uppercase tracking-widest text-sm shadow-xl">Become a Partner</a>
+          <a href="/contact" className="px-10 py-4 bg-[#DD2B1C] text-white rounded-xl font-bold hover:bg-white hover:text-[#DD2B1C] transition-all uppercase tracking-widest text-sm shadow-xl">Become a Partner</a>
         </div>
       </section>
 
@@ -378,11 +378,11 @@ export default function CareersPage() {
                 <div className="shrink-0 bg-white z-20 px-6 py-4 border-b border-gp-ink/10">
                   <div className="flex justify-between items-start">
                     <div>
-                      <p className="text-xs font-bold text-[#C9B589] uppercase tracking-widest mb-1">{selectedJob.category}</p>
-                      <h3 className="text-xl font-bold text-[#0F3A3D]">{selectedJob.title}</h3>
+                      <p className="text-xs font-bold text-[#DD2B1C] uppercase tracking-widest mb-1">{selectedJob.category}</p>
+                      <h3 className="text-xl font-bold text-[#1A1A1A]">{selectedJob.title}</h3>
                       {(selectedJob.city || selectedJob.state) && (
                         <p className="flex items-center gap-1 text-sm text-gp-ink-muted mt-1">
-                          <MapPin size={12} className="text-[#0F3A3D]" />
+                          <MapPin size={12} className="text-[#DD2B1C]" />
                           {[selectedJob.city, selectedJob.state].filter(Boolean).join(', ')}
                         </p>
                       )}
@@ -406,7 +406,7 @@ export default function CareersPage() {
                       </p>
                       <button
                         onClick={closeModal}
-                        className="mt-6 px-8 py-3 bg-[#0F3A3D] text-white font-bold rounded-xl hover:opacity-90 transition-all"
+                        className="mt-6 px-8 py-3 bg-[#1A1A1A] text-white font-bold rounded-xl hover:opacity-90 transition-all"
                       >
                         Close
                       </button>
@@ -422,10 +422,10 @@ export default function CareersPage() {
                       {/* Full Name */}
                       <div className="space-y-1.5">
                         <label className="text-sm font-semibold text-gp-ink flex items-center gap-1.5">
-                          <User size={13} className="text-[#0F3A3D]" /> Full Name *
+                          <User size={13} className="text-[#DD2B1C]" /> Full Name *
                         </label>
                         <input
-                          className="w-full px-3 py-2 border border-gp-ink/20 rounded-xl text-sm focus:outline-none focus:ring-2 focus:ring-[#0F3A3D]/30 focus:border-[#0F3A3D] transition-all"
+                          className="w-full px-3 py-2 border border-gp-ink/20 rounded-xl text-sm focus:outline-none focus:ring-2 focus:ring-[#DD2B1C]/30 focus:border-[#DD2B1C] transition-all"
                           value={formData.name}
                           onChange={e => setFormData({ ...formData, name: e.target.value })}
                           placeholder="e.g. Rahul Sharma"
@@ -436,11 +436,11 @@ export default function CareersPage() {
                       {/* Email */}
                       <div className="space-y-1.5">
                         <label className="text-sm font-semibold text-gp-ink flex items-center gap-1.5">
-                          <Mail size={13} className="text-[#0F3A3D]" /> Email Address *
+                          <Mail size={13} className="text-[#DD2B1C]" /> Email Address *
                         </label>
                         <input
                           type="email"
-                          className="w-full px-3 py-2 border border-gp-ink/20 rounded-xl text-sm focus:outline-none focus:ring-2 focus:ring-[#0F3A3D]/30 focus:border-[#0F3A3D] transition-all"
+                          className="w-full px-3 py-2 border border-gp-ink/20 rounded-xl text-sm focus:outline-none focus:ring-2 focus:ring-[#DD2B1C]/30 focus:border-[#DD2B1C] transition-all"
                           value={formData.email}
                           onChange={e => setFormData({ ...formData, email: e.target.value })}
                           placeholder="your@email.com"
@@ -451,9 +451,9 @@ export default function CareersPage() {
                       {/* Phone */}
                       <div className="space-y-1.5">
                         <label className="text-sm font-semibold text-gp-ink flex items-center gap-1.5">
-                          <Phone size={13} className="text-[#0F3A3D]" /> Phone Number *
+                          <Phone size={13} className="text-[#DD2B1C]" /> Phone Number *
                         </label>
-                        <div className="flex w-full items-center border border-gp-ink/20 rounded-xl focus-within:ring-2 focus-within:ring-[#0F3A3D]/30 focus-within:border-[#0F3A3D] transition-all overflow-hidden bg-white">
+                        <div className="flex w-full items-center border border-gp-ink/20 rounded-xl focus-within:ring-2 focus-within:ring-[#DD2B1C]/30 focus-within:border-[#DD2B1C] transition-all overflow-hidden bg-white">
                           <span className="pl-3 pr-2 py-2 text-sm font-medium text-gp-ink-muted border-r border-gp-ink/20 bg-gray-50 flex items-center shrink-0">
                             +91
                           </span>
@@ -473,7 +473,7 @@ export default function CareersPage() {
                       {/* Resume toggle */}
                       <div className="space-y-2">
                         <label className="text-sm font-semibold text-gp-ink flex items-center gap-1.5">
-                          <FileText size={13} className="text-[#0F3A3D]" /> Resume *
+                          <FileText size={13} className="text-[#DD2B1C]" /> Resume *
                         </label>
                         <div className="flex gap-1 p-1 bg-gray-100 rounded-xl w-fit">
                           <button type="button" onClick={() => setResumeMode('file')}
@@ -504,8 +504,8 @@ export default function CareersPage() {
                               </div>
                             ) : (
                               <button type="button" onClick={() => fileInputRef.current?.click()}
-                                className="w-full border-2 border-dashed border-gp-ink/20 hover:border-[#0F3A3D]/40 rounded-xl p-4 text-center transition-all hover:bg-[#0F3A3D]/5 group">
-                                <Upload size={20} className="mx-auto mb-1 text-gp-ink-muted group-hover:text-[#0F3A3D] transition-colors" />
+                                className="w-full border-2 border-dashed border-gp-ink/20 hover:border-[#DD2B1C]/40 rounded-xl p-4 text-center transition-all hover:bg-[#DD2B1C]/5 group">
+                                <Upload size={20} className="mx-auto mb-1 text-gp-ink-muted group-hover:text-[#DD2B1C] transition-colors" />
                                 <p className="text-sm font-semibold text-gp-ink">Click to upload your resume</p>
                                 <p className="text-xs text-gp-ink-muted mt-0.5">PDF, DOC, DOCX • Max 5 MB</p>
                               </button>
@@ -514,7 +514,7 @@ export default function CareersPage() {
                         ) : (
                           <input
                             type="url"
-                            className="w-full px-3 py-2 border border-gp-ink/20 rounded-xl text-sm focus:outline-none focus:ring-2 focus:ring-[#0F3A3D]/30 focus:border-[#0F3A3D] transition-all"
+                            className="w-full px-3 py-2 border border-gp-ink/20 rounded-xl text-sm focus:outline-none focus:ring-2 focus:ring-[#DD2B1C]/30 focus:border-[#DD2B1C] transition-all"
                             value={formData.resumeLink}
                             onChange={e => setFormData({ ...formData, resumeLink: e.target.value })}
                             placeholder="https://drive.google.com/your-resume or LinkedIn URL"
@@ -525,10 +525,10 @@ export default function CareersPage() {
                       {/* Cover Letter */}
                       <div className="space-y-1.5">
                         <label className="text-sm font-semibold text-gp-ink flex items-center gap-1.5">
-                          <Send size={13} className="text-[#0F3A3D]" /> Cover Letter
+                          <Send size={13} className="text-[#DD2B1C]" /> Cover Letter
                         </label>
                         <textarea
-                          className="w-full px-3 py-2 border border-gp-ink/20 rounded-xl text-sm focus:outline-none focus:ring-2 focus:ring-[#0F3A3D]/30 focus:border-[#0F3A3D] transition-all resize-none"
+                          className="w-full px-3 py-2 border border-gp-ink/20 rounded-xl text-sm focus:outline-none focus:ring-2 focus:ring-[#DD2B1C]/30 focus:border-[#DD2B1C] transition-all resize-none"
                           rows={3}
                           value={formData.coverLetter}
                           onChange={e => setFormData({ ...formData, coverLetter: e.target.value })}
@@ -542,7 +542,7 @@ export default function CareersPage() {
                           Cancel
                         </button>
                         <button type="submit" disabled={submitting}
-                          className="flex-1 flex items-center justify-center gap-2 px-4 py-2 bg-gradient-to-r from-[#C9B589] to-[#b8a070] text-[#0F3A3D] font-bold rounded-xl text-sm hover:opacity-90 transition-all disabled:opacity-60">
+                          className="flex-1 flex items-center justify-center gap-2 px-4 py-2 bg-[#1A1A1A] text-white font-bold rounded-xl text-sm hover:bg-[#DD2B1C] transition-all disabled:opacity-60">
                           {submitting
                             ? <><Loader2 size={15} className="animate-spin" /> Sending...</>
                             : <><Send size={15} /> Submit Application</>

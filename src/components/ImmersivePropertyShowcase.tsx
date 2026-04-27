@@ -1,4 +1,4 @@
-import { motion, useScroll, useTransform, AnimatePresence } from 'framer-motion';
+import { motion, AnimatePresence } from 'framer-motion';
 import { useRef, useState, useEffect, useCallback } from 'react';
 import { Link } from 'react-router-dom';
 import PropertyCard from '@/components/PropertyCard';
@@ -16,16 +16,13 @@ export default function ImmersivePropertyShowcase({ properties }: ImmersivePrope
   const [progress, setProgress] = useState(0);
   const ref = useRef<HTMLElement>(null);
 
-  const showcasedProperties = properties.slice(0, 6);
+  const showcasedProperties = properties.filter(p => p.featured).slice(0, 6);
   const totalSlides = showcasedProperties.length;
 
-  const { scrollYProgress } = useScroll({
-    target: ref,
-    offset: ['start end', 'end start'],
-  });
 
   // Optimized scroll transforms for better performance
-  const opacity = useTransform(scrollYProgress, [0, 0.3, 0.7, 1], [0.4, 1, 1, 0.4]);
+  // const opacity = useTransform(scrollYProgress, [0, 0.3, 0.7, 1], [0.4, 1, 1, 0.4]);
+  const opacity = 1; // Keep visible once revealed by GSAP
 
   const nextSlide = useCallback(() => {
     setDirection(1);
@@ -65,10 +62,6 @@ export default function ImmersivePropertyShowcase({ properties }: ImmersivePrope
       // White background style from Upstream but with the Immersive layout
       style={{ backgroundColor: '#ffffff', position: 'relative', padding: '8rem 0', overflow: 'hidden' }}
     >
-      {/* Background Pattern */}
-      <div className="absolute inset-0 opacity-[0.02] pointer-events-none">
-        <div className="absolute inset-0 bg-[linear-gradient(45deg,transparent_25%,rgba(201,181,137,1)_25%,rgba(201,181,137,1)_50%,transparent_50%,transparent_75%,rgba(201,181,137,1)_75%,rgba(201,181,137,1)_100%)] bg-[length:60px_60px]" />
-      </div>
 
       <div className="container mx-auto px-4 lg:px-6 relative z-10">
         <motion.div
@@ -83,7 +76,7 @@ export default function ImmersivePropertyShowcase({ properties }: ImmersivePrope
             ESTATE SELECTION
           </span>
           <h2 className="text-5xl md:text-7xl font-display font-bold text-gp-ink mb-6">
-            Handpicked <span className="text-gradient-gold">Excellence</span>
+            Handpicked <span className="text-gp-red italic">Excellence</span>
           </h2>
           <p className="text-xl text-gp-ink-muted leading-relaxed font-light">
             Each property represents a careful selection of premium lands in prime locations, 
@@ -130,7 +123,7 @@ export default function ImmersivePropertyShowcase({ properties }: ImmersivePrope
                 onMouseLeave={() => setIsPaused(false)}
                 style={{
                   flex: 1,
-                  height: '560px',
+                  height: '520px',
                   overflow: 'hidden',
                   borderRadius: '24px',
                   position: 'relative',
@@ -257,7 +250,7 @@ export default function ImmersivePropertyShowcase({ properties }: ImmersivePrope
                           display: 'block',
                           height: '100%',
                           width: `${progress}%`,
-                          background: 'linear-gradient(90deg, #C9B589, #D5B36A)',
+                          background: 'linear-gradient(90deg, #DD2B1C, #b91c1c)',
                           borderRadius: '999px',
                           transformOrigin: 'left',
                         }}

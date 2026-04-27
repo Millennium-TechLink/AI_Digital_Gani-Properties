@@ -23,6 +23,7 @@ export interface Property {
   type: PropertyType;
   city: string;
   area: string;
+  price?: number;
   priceLabel?: string;
   size?: string;
   status: 'available' | 'sold' | 'new';

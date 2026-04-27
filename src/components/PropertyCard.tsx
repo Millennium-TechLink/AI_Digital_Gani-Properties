@@ -1,8 +1,7 @@
 import { Link } from 'react-router-dom';
-import { MapPin } from 'lucide-react';
+import { MapPin, Maximize2, Building, HardHat, Hammer, Ruler } from 'lucide-react';
 import { motion } from 'framer-motion';
 import { Property } from '@/types/property';
-import { cn } from '@/lib/utils';
 import Image from './Image';
 
 interface PropertyCardProps {
@@ -10,163 +9,101 @@ interface PropertyCardProps {
   variant?: 'grid' | 'list';
 }
 
-export default function PropertyCard({ property, variant = 'grid' }: PropertyCardProps) {
+export default function PropertyCard({ property }: PropertyCardProps) {
   if (!property) return null;
 
-  const statusColors = {
-    available: 'glass-card border-green-500/30 text-green-700 font-bold',
-    sold: 'glass-dark border-white/10 text-white/60 font-medium',
-    new: 'glass-card border-gp-accent/30 text-gp-accent font-bold',
-  };
-
-  const Badge = ({ children, className }: { children: React.ReactNode; className?: string }) => (
-    <div className={cn("px-3 py-1 rounded-full text-[10px] font-bold tracking-widest uppercase border backdrop-blur-md transition-all duration-300 shadow-sm flex items-center justify-center", className)}>
-      {children}
-    </div>
-  );
-
-  if (variant === 'list') {
-    return (
+  return (
+    <Link 
+      to={`/property/${property.slug || property.id}`}
+      className="group block h-full property-card"
+    >
       <motion.div
-        initial={{ opacity: 0, y: 20 }}
-        whileInView={{ opacity: 1, y: 0 }}
-        viewport={{ once: true, margin: '-50px' }}
-        transition={{ duration: 0.5, ease: [0.16, 1, 0.3, 1] }}
-        whileHover={{ y: -4 }}
-        className="h-full"
+        whileHover={{ y: -8 }}
+        className="bg-white border border-gp-ink/5 overflow-hidden h-full flex flex-col relative transition-all duration-500 hover:shadow-2xl hover:border-gp-red/30"
       >
-        <Link to={`/property/${property.slug}`}>
-          <div className="group flex flex-col md:flex-row gap-6 p-6 bg-white rounded-3xl border border-gp-ink/10 hover:border-gp-accent/30 transition-all duration-500 hover:shadow-2xl cursor-pointer h-full relative">
-            {property.featured && (
-              <div className="absolute top-4 right-4 z-20">
-                <div className="px-4 py-1.5 glass-dark rounded-full shadow-gold-glow flex items-center gap-2 border-gp-accent/30">
-                  <span className="text-gp-gold">★</span>
-                  <span className="text-[10px] font-bold text-white tracking-[0.2em] uppercase">Featured</span>
-                </div>
+        {/* Construction Ruler Border Top */}
+        <div className="absolute top-0 left-0 right-0 h-1 bg-[repeating-linear-gradient(90deg,transparent,transparent_9px,rgba(0,0,0,0.1)_9px,rgba(0,0,0,0.1)_10px)] z-20" />
+        
+        {/* Image Container */}
+        <div className="relative h-[280px] overflow-hidden">
+          <Image
+            src={property.images && property.images[0] ? property.images[0] : '/images/Land.webp'}
+            alt={property.title}
+            fill
+            className="object-cover group-hover:scale-110 transition-transform duration-700 z-0"
+          />
+          <div className="absolute inset-0 bg-gradient-to-t from-black/60 via-transparent to-transparent opacity-60 group-hover:opacity-80 transition-opacity" />
+          
+          {/* Featured Badge - Top Right */}
+          {property.featured && (
+            <div className="absolute top-4 right-4 z-20">
+              <div className="px-3 py-1.5 bg-gp-ink/80 backdrop-blur-md border border-gp-red/30 rounded-full shadow-[0_0_15px_rgba(221,43,28,0.2)] flex items-center gap-2">
+                <span className="text-gp-red text-xs">★</span>
+                <span className="text-[10px] font-black text-white uppercase tracking-[0.2em]">Featured</span>
               </div>
-            )}
-            <motion.div
-              className="relative w-full md:w-64 h-48 rounded-2xl overflow-hidden flex-shrink-0"
-              whileHover={{ scale: 1.02 }}
-              transition={{ duration: 0.4 }}
-            >
-              <Image
-                src={property.images[0] || '/images/Land.webp'}
-                alt={property.title}
-                fill
-                className="object-cover transition-transform duration-700 group-hover:scale-110"
-              />
-            </motion.div>
-          <div className="flex-1 flex flex-col justify-between min-w-0">
-            <div>
-              <div className="flex items-start justify-between mb-2">
-                <h3 className="text-2xl font-display font-semibold text-gp-ink group-hover:text-gp-accent transition-colors line-clamp-2">
-                  {property.title}
-                </h3>
-                <Badge className={cn('ml-4 flex-shrink-0', statusColors[property.status as keyof typeof statusColors])}>
-                  {property.status}
-                </Badge>
+            </div>
+          )}
+
+          {/* Status Badge - Top Left */}
+          <div className="absolute top-4 left-4 z-10">
+            <div className={`px-3 py-1 text-[10px] font-black uppercase tracking-[0.2em] shadow-lg flex items-center gap-2 ${
+              property.status === 'available' ? 'bg-gp-red text-white' : 'bg-gp-ink text-white'
+            }`}>
+              {property.status === 'available' ? <HardHat className="w-3 h-3" /> : <Hammer className="w-3 h-3" />}
+              {property.status}
+            </div>
+          </div>
+
+          {/* Pricing Overlay */}
+          <div className="absolute bottom-4 left-4 text-white z-10">
+            <p className="text-[10px] font-bold uppercase tracking-[0.2em] mb-1 opacity-80 flex items-center gap-2">
+              <Ruler className="w-3 h-3 text-gp-red" />
+              Starting From
+            </p>
+            <p className="text-2xl font-black tracking-tight">
+              {property.price != null
+                ? `₹${property.price.toLocaleString()}` 
+                : property.priceLabel || 'Price on Request'}
+            </p>
+          </div>
+        </div>
+
+        {/* Content */}
+        <div className="p-8 flex-grow flex flex-col relative bg-white min-h-[240px]">
+          {/* Industrial Accent - Corner Ruler */}
+          <div className="absolute top-0 right-0 w-8 h-8 border-t-2 border-r-2 border-gp-red/10 group-hover:border-gp-red/30 transition-colors" />
+
+          <h3 className="text-lg font-display font-black text-gp-ink mb-2 uppercase tracking-tight group-hover:text-gp-red transition-colors line-clamp-1">
+            {property.title}
+          </h3>
+          
+          <div className="flex items-center gap-2 text-gp-ink/40 mb-4">
+            <MapPin className="h-3 w-3 text-gp-red" />
+            <span className="text-[10px] font-bold uppercase tracking-widest">{property.city}</span>
+          </div>
+
+          <div className="grid grid-cols-2 gap-4 mt-auto border-t border-gp-ink/5 pt-4">
+            <div className="flex items-center gap-3">
+              <div className="w-8 h-8 bg-gp-light-grey flex items-center justify-center border border-gp-ink/5">
+                <Maximize2 className="h-4 w-4 text-gp-red" />
               </div>
-              <div className="flex items-center gap-2 text-gp-ink-muted mb-4">
-                <MapPin className="h-4 w-4" />
-                <span className="text-sm">{property.area}, {property.city}</span>
+              <div>
+                <p className="text-[8px] font-black text-gp-ink/40 uppercase tracking-widest leading-none mb-1">Plot Area</p>
+                <p className="text-xs font-bold text-gp-ink">{property.area} sqft</p>
               </div>
-              {property.priceLabel && (
-                <p className="text-xl font-semibold text-gp-accent mb-2">{property.priceLabel}</p>
-              )}
-              {property.size && (
-                <p className="text-sm text-gp-ink-muted mb-4">{property.size}</p>
-              )}
-              {property.highlights.length > 0 && (
-                <ul className="flex flex-wrap gap-2 mb-4">
-                  {property.highlights.slice(0, 3).map((highlight, idx) => (
-                    <li key={idx} className="text-xs bg-gp-surface/10 text-gp-ink px-2 py-1 rounded-lg">
-                      {highlight}
-                    </li>
-                  ))}
-                </ul>
-              )}
+            </div>
+            <div className="flex items-center gap-3">
+              <div className="w-8 h-8 bg-gp-light-grey flex items-center justify-center border border-gp-ink/5">
+                <Building className="h-4 w-4 text-gp-red" />
+              </div>
+              <div>
+                <p className="text-[8px] font-black text-gp-ink/40 uppercase tracking-widest leading-none mb-1">Structure</p>
+                <p className="text-xs font-bold text-gp-ink">{property.type}</p>
+              </div>
             </div>
           </div>
         </div>
-      </Link>
-    </motion.div>
-    );
-  }
-
-  return (
-    <motion.div
-      initial={{ opacity: 0, y: 20 }}
-      whileInView={{ opacity: 1, y: 0 }}
-      viewport={{ once: true, margin: '-50px' }}
-      transition={{ duration: 0.4, ease: [0.16, 1, 0.3, 1] }}
-      whileHover={{ y: -4 }}
-      className="h-full relative"
-      style={{
-        willChange: 'transform, opacity',
-        transform: 'translate3d(0, 0, 0)',
-      }}
-    >
-      {property.featured && (
-        <div className="absolute top-4 right-4 z-20">
-          <div className="px-4 py-1.5 glass-dark rounded-full shadow-gold-glow flex items-center gap-2 border-gp-accent/30">
-            <span className="text-gp-gold">★</span>
-            <span className="text-[10px] font-bold text-white tracking-[0.2em] uppercase">Featured</span>
-          </div>
-        </div>
-      )}
-      <Link to={`/property/${property.slug}`}>
-        <div className="group bg-white rounded-3xl overflow-hidden border border-gp-ink/10 hover:border-gp-accent/30 transition-all duration-500 hover:shadow-2xl cursor-pointer h-full flex flex-col">
-          <motion.div
-            className="relative h-64 overflow-hidden bg-gp-surface/5"
-            whileHover={{ scale: 1.02 }}
-            transition={{ duration: 0.4 }}
-          >
-            <Image
-              src={property.images[0] || '/images/demo/placeholder.jpg'}
-              alt={property.title}
-              fill
-              className="object-cover transition-transform duration-700 group-hover:scale-110"
-            />
-          <div className="absolute top-4 left-4 z-10">
-            <Badge className={cn('', statusColors[property.status as keyof typeof statusColors])}>
-              {property.status}
-            </Badge>
-          </div>
-          </motion.div>
-        <div className="p-6 flex-1 flex flex-col">
-          <h3 className="text-2xl font-display font-semibold text-gp-ink mb-2 group-hover:text-gp-accent transition-colors line-clamp-2">
-            {property.title}
-          </h3>
-          <div className="flex items-center gap-2 text-gp-ink-muted mb-4">
-            <MapPin className="h-4 w-4" />
-            <span className="text-sm">{property.area}, {property.city}</span>
-          </div>
-          {property.priceLabel && (
-            <p className="text-xl font-semibold text-gp-accent mb-2">{property.priceLabel}</p>
-          )}
-          {property.size && (
-            <p className="text-sm text-gp-ink-muted mb-4">{property.size}</p>
-          )}
-          {property.highlights.length > 0 && (
-            <ul className="flex flex-wrap gap-2 mb-4 flex-1">
-              {property.highlights.slice(0, 3).map((highlight, idx) => (
-                <motion.li
-                  key={idx}
-                  initial={{ opacity: 0, scale: 0.8 }}
-                  whileInView={{ opacity: 1, scale: 1 }}
-                  viewport={{ once: true }}
-                  transition={{ duration: 0.3, delay: idx * 0.1 }}
-                  className="text-xs bg-gp-surface/10 text-gp-ink px-2 py-1 rounded-lg transition-all duration-300 group-hover:bg-gp-accent/20"
-                >
-                  {highlight}
-                </motion.li>
-              ))}
-            </ul>
-          )}
-        </div>
-      </div>
+      </motion.div>
     </Link>
-    </motion.div>
   );
 }

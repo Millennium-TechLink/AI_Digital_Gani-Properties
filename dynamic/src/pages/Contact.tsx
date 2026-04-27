@@ -156,7 +156,10 @@ export default function ContactPage() {
                   transition={{ duration: 0.6, delay: 0.6 }}
                   className="pt-8 border-t border-gp-ink/10"
                 >
-                  <div className="bg-gradient-to-br from-gp-surface to-gp-bg rounded-3xl p-8 text-white">
+                  <div className="bg-gp-red rounded-3xl p-8 text-white shadow-xl relative overflow-hidden group border border-gp-red/20">
+                    {/* Subtle decorative element */}
+                    <div className="absolute top-0 right-0 w-32 h-32 bg-white/5 rounded-full -mr-16 -mt-16 blur-2xl" />
+                    
                     <div className="flex items-center gap-3 mb-4">
                       <div className="w-12 h-12 bg-white/20 rounded-2xl flex items-center justify-center">
                         <MessageCircle className="h-6 w-6 text-white" />

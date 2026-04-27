@@ -45,7 +45,7 @@ export default function Footer() {
   };
 
   return (
-    <footer className="bg-gp-bg text-white relative overflow-hidden">
+    <footer className="bg-gp-ink text-white relative overflow-hidden">
       {/* Decorative gradient */}
       <div className="absolute top-0 left-0 right-0 h-px bg-gradient-to-r from-transparent via-gp-accent/50 to-transparent" />
       
@@ -58,15 +58,26 @@ export default function Footer() {
             viewport={{ once: true, margin: '-50px' }}
             transition={{ duration: 0.5, ease: [0.16, 1, 0.3, 1] }}
           >
-            <Link to="/" className="flex items-center mb-4 group">
-              <div className="relative h-14 w-auto flex-shrink-0">
-                <Image
-                  src="/images/Logo.svg"
-                  alt="Gani Properties"
-                  width={140}
-                  height={56}
-                  className="h-full w-auto object-contain transition-transform group-hover:scale-105"
-                />
+            <Link to="/" className="flex items-center mb-6 group">
+              <div className="flex items-center gap-4">
+                <div className="relative h-14 w-auto flex-shrink-0 brightness-0 invert opacity-90">
+                  <Image
+                    src="/images/Logo.svg"
+                    alt="Gani Properties"
+                    width={140}
+                    height={56}
+                    className="h-full w-auto object-contain transition-transform group-hover:scale-105"
+                  />
+                </div>
+                <div className="h-12 w-px bg-white/20" />
+                <div className="flex flex-col">
+                  <span className="text-[12px] font-black leading-[1.1] tracking-[0.1em] text-white/90">
+                    GANI PROPERTIES<br />
+                    BUILDERS AND<br />
+                    DEVELOPERS<br />
+                    PVT LTD
+                  </span>
+                </div>
               </div>
             </Link>
             <p className="text-white/80 leading-relaxed">
@@ -170,7 +181,7 @@ export default function Footer() {
               <Button
                 type="submit"
                 disabled={newsletterLoading}
-                className="bg-gp-accent text-gp-ink hover:bg-gp-gold whitespace-nowrap"
+                className="bg-[#DD2B1C] text-white hover:bg-red-700 whitespace-nowrap"
               >
                 {newsletterLoading ? 'Subscribing...' : 'Subscribe'}
               </Button>

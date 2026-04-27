@@ -19,7 +19,7 @@ const stats: Stat[] = [
 
 function AnimatedCounter({ targetValue, suffix, label, delay = 0 }: Stat & { delay?: number }) {
   const ref = useRef(null);
-  const isInView = useInView(ref, { once: false, margin: '-100px' });
+  const isInView = useInView(ref, { once: true, margin: '-50px' });
   const [count, setCount] = useState(0);
   const animationRef = useRef<number | null>(null);
 
@@ -149,7 +149,7 @@ export default function OurStory() {
                   key={index}
                   initial={{ opacity: 0, y: 20, scale: 0.9 }}
                   whileInView={{ opacity: 1, y: 0, scale: 1 }}
-                  viewport={{ once: false }}
+                  viewport={{ once: true }}
                   transition={{
                     duration: 0.4,
                     delay: index * 0.05,

@@ -9,13 +9,17 @@ const __dirname = path.dirname(fileURLToPath(import.meta.url));
 export default defineConfig({
   base: '/', // Ensure absolute paths from root
   plugins: [react()],
+  define: {
+    __BUNDLED_DEV__: false,
+    __SERVER_FORWARD_CONSOLE__: false,
+  },
   resolve: {
     alias: {
       '@': path.resolve(__dirname, './src'),
     },
   },
   server: {
-    port: 5173,
+    port: 5174,
     host: true,
   },
   build: {
@@ -23,9 +27,16 @@ export default defineConfig({
     sourcemap: false, // Disable sourcemaps in production for smaller bundle
     rollupOptions: {
       output: {
-        manualChunks: {
-          'react-vendor': ['react', 'react-dom', 'react-router-dom'],
-          'ui-vendor': ['framer-motion', 'lucide-react'],
+        manualChunks(id) {
+          if (id.includes('node_modules')) {
+            if (id.includes('react') || id.includes('react-dom') || id.includes('react-router-dom')) {
+              return 'react-vendor';
+            }
+            if (id.includes('framer-motion') || id.includes('lucide-react') || id.includes('gsap')) {
+              return 'ui-vendor';
+            }
+            return 'vendor';
+          }
         },
       },
     },

@@ -60,7 +60,7 @@ export default function PropertyCard({ property, variant = 'grid' }: PropertyCar
           <div className="flex-1 flex flex-col justify-between min-w-0">
             <div>
               <div className="flex items-start justify-between mb-2">
-                <h3 className="text-2xl font-display font-semibold text-gp-ink group-hover:text-gp-accent transition-colors line-clamp-2">
+                <h3 className="text-2xl font-display font-semibold text-gp-ink group-hover:text-gp-accent transition-colors leading-tight overflow-visible">
                   {property.title}
                 </h3>
                 <Badge className={cn('ml-4 flex-shrink-0', statusColors[property.status as keyof typeof statusColors])}>
@@ -109,24 +109,24 @@ export default function PropertyCard({ property, variant = 'grid' }: PropertyCar
     >
       {property.featured && (
         <div className="absolute top-4 right-4 z-20">
-          <div className="px-4 py-1.5 glass-dark rounded-full shadow-gold-glow flex items-center gap-2 border-gp-accent/30">
-            <span className="text-gp-gold">★</span>
-            <span className="text-[10px] font-bold text-white tracking-[0.2em] uppercase">Featured</span>
+          <div className="px-3 py-1.5 bg-gp-ink/80 backdrop-blur-md border border-gp-red/30 rounded-full shadow-[0_0_15px_rgba(221,43,28,0.2)] flex items-center gap-2">
+            <span className="text-gp-gold text-xs">★</span>
+            <span className="text-[10px] font-black text-white uppercase tracking-[0.2em]">Featured</span>
           </div>
         </div>
       )}
       <Link to={`/property/${property.slug}`}>
         <div className="group bg-white rounded-3xl overflow-hidden border border-gp-ink/10 hover:border-gp-accent/30 transition-all duration-500 hover:shadow-2xl cursor-pointer h-full flex flex-col">
           <motion.div
-            className="relative h-64 overflow-hidden bg-gp-surface/5"
+            className="relative h-[280px] overflow-hidden bg-gp-surface/5"
             whileHover={{ scale: 1.02 }}
             transition={{ duration: 0.4 }}
           >
             <Image
-              src={property.images[0] || '/images/demo/placeholder.jpg'}
+              src={property.images && property.images[0] ? property.images[0] : '/images/Land.webp'}
               alt={property.title}
               fill
-              className="object-cover transition-transform duration-700 group-hover:scale-110"
+              className="object-cover transition-transform duration-700 group-hover:scale-110 z-0"
             />
           <div className="absolute top-4 left-4 z-10">
             <Badge className={cn('', statusColors[property.status as keyof typeof statusColors])}>
@@ -134,8 +134,8 @@ export default function PropertyCard({ property, variant = 'grid' }: PropertyCar
             </Badge>
           </div>
           </motion.div>
-        <div className="p-6 flex-1 flex flex-col">
-          <h3 className="text-2xl font-display font-semibold text-gp-ink mb-2 group-hover:text-gp-accent transition-colors line-clamp-2">
+        <div className="pt-10 px-8 pb-8 flex-1 flex flex-col min-h-[240px]">
+          <h3 className="text-2xl font-display font-semibold text-gp-ink mb-3 group-hover:text-gp-accent transition-colors leading-tight overflow-visible">
             {property.title}
           </h3>
           <div className="flex items-center gap-2 text-gp-ink-muted mb-4">

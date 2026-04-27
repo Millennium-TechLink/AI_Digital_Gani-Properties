@@ -13,6 +13,11 @@ const teamMembers: TeamMember[] = [
     title: 'Managing Director',
     image: '/images/Ashok.webp',
   },
+  {
+    name: 'Ananth Krishna',
+    title: 'Director',
+    image: '/images/Ananth Sir.webp',
+  },
 ];
 
 export default function ManagementTeam() {

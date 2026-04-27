@@ -439,6 +439,27 @@
     ],
     "description": "Strategic logistics park with excellent highway connectivity, perfect for distribution centers, freight operations, or large-scale warehousing. The facility offers multiple units, ample parking for trucks, and is designed for efficient logistics operations.",
     "postedAt": "2024-11-06T10:00:00Z"
+  },
+  {
+    "id": "prop-farm-001",
+    "slug": "green-acres-farm",
+    "title": "Green Acres Farm Land",
+    "type": "farm-plots",
+    "city": "Bangalore",
+    "area": "Doddaballapura",
+    "priceLabel": "₹65 Lakhs onwards",
+    "size": "1 Acre",
+    "status": "available",
+    "highlights": ["Red Soil", "Water Connectivity", "Fenced"],
+    "lat": 13.2925,
+    "lon": 77.5428,
+    "images": [
+      "https://picsum.photos/seed/green-acres-1/800/600",
+      "https://picsum.photos/seed/green-acres-2/800/600"
+    ],
+    "description": "Beautiful farm land in Doddaballapura, perfect for weekend getaways or organic farming. Rich red soil and excellent connectivity.",
+    "postedAt": "2026-04-06T18:10:00.000Z",
+    "featured": true
   }
 ]
 

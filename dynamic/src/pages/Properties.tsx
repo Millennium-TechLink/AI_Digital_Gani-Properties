@@ -174,7 +174,7 @@ export default function PropertiesPage() {
         initial={{ opacity: 0, y: 20 }}
         animate={{ opacity: 1, y: 0 }}
         transition={{ duration: 0.6, ease: [0.16, 1, 0.3, 1] }}
-        className="pt-28 pb-12 bg-gradient-to-b from-gp-surface/10 to-white"
+        className="pt-28 pb-12 bg-white"
       >
         <div className="container mx-auto px-4 lg:px-6">
           <div className="max-w-3xl">

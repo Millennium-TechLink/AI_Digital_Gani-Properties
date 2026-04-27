@@ -48,7 +48,7 @@ export default function ImmersiveHero() {
     <section
       ref={ref}
       className="relative min-h-screen flex items-center justify-center overflow-hidden"
-      style={{ backgroundColor: '#0F3A3D' }} // Fallback background color
+      style={{ backgroundColor: '#1A1A1A' }} // Fallback background color
     >
       {/* Parallax Background Layer - z-0 */}
       <div className="absolute inset-0 z-0 overflow-hidden">
@@ -86,20 +86,16 @@ export default function ImmersiveHero() {
           }}
         />
 
-        {/* Dark Overlay - Reduced opacity to show image through (adjust opacity values as needed) */}
+        {/* Dark Overlay - Reduced opacity to show image through */}
         <div
           className="absolute inset-0"
           style={{
             zIndex: 1,
-            background: 'linear-gradient(to bottom, rgba(15, 58, 61, 0.4), rgba(15, 46, 49, 0.35), rgba(15, 46, 49, 0.4))'
+            background: 'linear-gradient(to bottom, rgba(26, 26, 26, 0.4), rgba(26, 26, 26, 0.35), rgba(26, 26, 26, 0.4))'
           }}
         />
       </div>
 
-      {/* Animated Overlay Pattern - z-10 */}
-      <div className="absolute inset-0 opacity-10" style={{ zIndex: 10 }}>
-        <div className="absolute inset-0 bg-[linear-gradient(45deg,transparent_25%,rgba(201,181,137,0.1)_25%,rgba(201,181,137,0.1)_50%,transparent_50%,transparent_75%,rgba(201,181,137,0.1)_75%,rgba(201,181,137,0.1)_100%)] bg-[length:40px_40px]" />
-      </div>
 
       {/* Floating Particles Effect - z-15 - Optimized for performance */}
       {isMounted && (
@@ -111,8 +107,8 @@ export default function ImmersiveHero() {
               style={{
                 width: '6px',
                 height: '6px',
-                backgroundColor: 'rgba(201, 181, 137, 0.7)',
-                boxShadow: '0 0 10px rgba(201, 181, 137, 0.9), 0 0 20px rgba(201, 181, 137, 0.5)',
+                backgroundColor: 'rgba(221, 43, 28, 0.7)',
+                boxShadow: '0 0 10px rgba(221, 43, 28, 0.9), 0 0 20px rgba(221, 43, 28, 0.5)',
                 willChange: 'transform, opacity',
                 transform: 'translate3d(0, 0, 0)',
                 backfaceVisibility: 'hidden',
@@ -156,7 +152,7 @@ export default function ImmersiveHero() {
             className="inline-flex items-center gap-2 px-4 py-2 bg-white/20 backdrop-blur-md rounded-full border border-white/30 mb-8 scale-90 sm:scale-100"
             style={{ backgroundColor: 'rgba(255, 255, 255, 0.15)' }}
           >
-            <MapPin className="h-4 w-4 text-gp-accent" style={{ color: '#C9B589' }} />
+            <MapPin className="h-4 w-4 text-gp-accent" style={{ color: '#DD2B1C' }} />
             <span className="text-xs sm:text-sm font-medium" style={{ color: '#ffffff' }}>Trusted in Bengaluru Since 2009</span>
           </motion.div>
 
@@ -174,7 +170,7 @@ export default function ImmersiveHero() {
           >
             Where Dreams
             <br />
-            <span className="bg-gradient-to-r from-gp-accent to-gp-gold bg-clip-text" style={{ WebkitTextFillColor: 'transparent', backgroundImage: 'linear-gradient(to right, #C9B589, #D5B36A)' }}>
+            <span className="bg-gradient-to-r from-gp-accent to-gp-gold bg-clip-text" style={{ WebkitTextFillColor: 'transparent', backgroundImage: 'linear-gradient(to right, #DD2B1C, #b91c1c)' }}>
               Take Root
             </span>
           </motion.h1>
