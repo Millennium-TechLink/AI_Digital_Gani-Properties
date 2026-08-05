@@ -1,9 +1,11 @@
 import { useState, useEffect } from 'react';
 import { ArrowUp } from 'lucide-react';
 import { motion, AnimatePresence } from 'framer-motion';
+import { useLenis } from 'lenis/react';
 
 export default function BackToTop() {
   const [isVisible, setIsVisible] = useState(false);
+  const lenis = useLenis();
 
   useEffect(() => {
     const toggleVisibility = () => {
@@ -29,11 +31,14 @@ export default function BackToTop() {
   }, []);
 
   const scrollToTop = () => {
-    // Smooth scroll to top
-    window.scrollTo({
-      top: 0,
-      behavior: 'smooth',
-    });
+    if (lenis) {
+      lenis.scrollTo(0, { duration: 1.2, easing: (t: number) => Math.min(1, 1.001 - Math.pow(2, -10 * t)) });
+    } else {
+      window.scrollTo({
+        top: 0,
+        behavior: 'smooth',
+      });
+    }
   };
 
   return (
@@ -50,10 +55,13 @@ export default function BackToTop() {
             ease: [0.16, 1, 0.3, 1]
           }}
           onClick={scrollToTop}
-          className="fixed bottom-8 right-8 z-50 w-14 h-14 bg-gradient-to-br from-gp-accent to-gp-gold rounded-full shadow-2xl flex items-center justify-center text-white hover:shadow-gp-accent/50 transition-all duration-300 group cursor-pointer"
+          // Stacked above the Chatbot toggle (fixed bottom-6 right-6, 64px) so the
+          // two floating buttons never overlap - Chatbot renders at a higher z-index
+          // and was sitting on top of / intercepting clicks on this button otherwise.
+          className="fixed bottom-28 right-8 z-50 w-14 h-14 bg-gradient-to-br from-gp-accent to-gp-gold rounded-full shadow-2xl flex items-center justify-center text-white hover:shadow-gp-accent/50 transition-all duration-300 group cursor-pointer"
           style={{
             position: 'fixed',
-            bottom: '2rem',
+            bottom: '7rem',
             right: '2rem',
           }}
           aria-label="Back to top"

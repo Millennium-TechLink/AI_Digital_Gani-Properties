@@ -6,6 +6,7 @@ User-agent: *
 Allow: /
 Disallow: /api/
 Disallow: /admin/
+Disallow: /dashboard
 Disallow: /dashboard/
 Disallow: /login
 Disallow: /properties/new
@@ -36,6 +37,5 @@ Crawl-delay: 1
 # Host
 Host: https://ourganiproperties.com
 
-# Sitemaps
+# Sitemap (dynamically generated - includes every live property page)
 Sitemap: https://ourganiproperties.com/sitemap.xml
-Sitemap: https://ourganiproperties.com/sitemap-properties.xml

@@ -33,10 +33,18 @@ export default async function handler(
     }
 
     // Get credentials from environment variables
-    const ADMIN_USERNAME = process.env.ADMIN_USERNAME || 'admin';
-    const ADMIN_PASSWORD = process.env.ADMIN_PASSWORD || 'admin123';
-    const JWT_SECRET = process.env.JWT_SECRET || 'your-secret-key-change-in-production';
+    const ADMIN_USERNAME = process.env.ADMIN_USERNAME;
+    const ADMIN_PASSWORD = process.env.ADMIN_PASSWORD;
+    const JWT_SECRET = process.env.JWT_SECRET;
     const JWT_EXPIRES_IN = process.env.JWT_EXPIRES_IN || '24h';
+
+    if (!ADMIN_USERNAME || !ADMIN_PASSWORD || !JWT_SECRET) {
+      console.error('Missing ADMIN_USERNAME, ADMIN_PASSWORD, or JWT_SECRET environment variable');
+      return res.status(500).json({
+        success: false,
+        message: 'Server misconfigured. Contact administrator.',
+      });
+    }
 
     // Check credentials
     if (username === ADMIN_USERNAME && password === ADMIN_PASSWORD) {

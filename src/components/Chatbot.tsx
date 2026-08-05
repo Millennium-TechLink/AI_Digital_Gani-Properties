@@ -1,7 +1,7 @@
 import React, { useState, useEffect, useRef } from 'react';
 import { motion, AnimatePresence } from 'framer-motion';
-import { 
-  MessageCircle, X, Send, Bot, User, 
+import {
+  MessageCircle, X, Send, Bot, User,
   Loader2
 } from 'lucide-react';
 import { Button } from '@/components/ui/button';
@@ -10,7 +10,7 @@ import axios from 'axios';
 // --- Bot Knowledge Base ---
 const KNOWLEDGE_BASE: Record<string, { response: string | React.ReactNode, suggestions?: string[] }> = {
   initial: {
-    response: "Hello! I'm Gani, your property concierge. How can I help you today?",
+    response: "Hello! How can I help you today?",
     suggestions: ["Franchise Models", "Property Types", "Approval to Key", "About Legacy", "Contact Now"]
   },
   "hi": {
@@ -192,123 +192,122 @@ export default function Chatbot() {
           >
             {/* Header */}
             <div className="bg-white p-6 text-[#1A1A1A] flex items-center gap-4 relative overflow-hidden border-b border-black/5">
-               <div className="absolute top-0 right-0 w-32 h-32 bg-[#DD2B1C]/5 rounded-full blur-2xl -mr-16 -mt-16" />
-               <div className="w-12 h-12 bg-[#DD2B1C]/5 rounded-2xl flex items-center justify-center border border-[#DD2B1C]/20">
-                  <Bot size={24} className="text-[#DD2B1C]" />
-               </div>
-               <div>
-                  <h3 className="font-display font-bold text-lg tracking-tight">Gani Concierge</h3>
-                  <div className="flex items-center gap-1.5">
-                     <span className="w-2 h-2 bg-[#DD2B1C] rounded-full animate-pulse" />
-                     <span className="text-[10px] font-bold text-black/40 uppercase tracking-widest">Always Active</span>
-                  </div>
-               </div>
+              <div className="absolute top-0 right-0 w-32 h-32 bg-[#DD2B1C]/5 rounded-full blur-2xl -mr-16 -mt-16" />
+              <div className="w-12 h-12 bg-[#DD2B1C]/5 rounded-2xl flex items-center justify-center border border-[#DD2B1C]/20">
+                <Bot size={24} className="text-[#DD2B1C]" />
+              </div>
+              <div>
+                <h3 className="font-display font-bold text-lg tracking-tight">Gani Concierge</h3>
+                <div className="flex items-center gap-1.5">
+                  <span className="w-2 h-2 bg-[#DD2B1C] rounded-full animate-pulse" />
+                  <span className="text-[10px] font-bold text-black/40 uppercase tracking-widest">Always Active</span>
+                </div>
+              </div>
             </div>
 
             {/* Messages Area */}
             <div className="flex-1 overflow-y-auto p-5 bg-[#F9F9F9] space-y-4">
-               {messages.map((msg) => (
-                 <motion.div
-                   key={msg.id}
-                   initial={{ opacity: 0, x: msg.type === 'bot' ? -20 : 20 }}
-                   animate={{ opacity: 1, x: 0 }}
-                   className={`flex ${msg.type === 'bot' ? 'justify-start' : 'justify-end'}`}
-                 >
-                   <div className={`flex gap-3 max-w-[85%] ${msg.type === 'user' ? 'flex-row-reverse' : ''}`}>
-                      <div className={`w-8 h-8 rounded-full flex items-center justify-center flex-shrink-0 mt-1 ${msg.type === 'bot' ? 'bg-[#DD2B1C]/10 text-[#DD2B1C]' : 'bg-[#DD2B1C] text-white'}`}>
-                        {msg.type === 'bot' ? <Bot size={14} /> : <User size={14} />}
-                      </div>
-                      <div className={`p-4 rounded-2xl text-sm leading-relaxed shadow-sm ${
-                        msg.type === 'bot'
+              {messages.map((msg) => (
+                <motion.div
+                  key={msg.id}
+                  initial={{ opacity: 0, x: msg.type === 'bot' ? -20 : 20 }}
+                  animate={{ opacity: 1, x: 0 }}
+                  className={`flex ${msg.type === 'bot' ? 'justify-start' : 'justify-end'}`}
+                >
+                  <div className={`flex gap-3 max-w-[85%] ${msg.type === 'user' ? 'flex-row-reverse' : ''}`}>
+                    <div className={`w-8 h-8 rounded-full flex items-center justify-center flex-shrink-0 mt-1 ${msg.type === 'bot' ? 'bg-[#DD2B1C]/10 text-[#DD2B1C]' : 'bg-[#DD2B1C] text-white'}`}>
+                      {msg.type === 'bot' ? <Bot size={14} /> : <User size={14} />}
+                    </div>
+                    <div className={`p-4 rounded-2xl text-sm leading-relaxed shadow-sm ${msg.type === 'bot'
                         ? 'bg-white text-[#1A1A1A] rounded-tl-none border border-black/5 font-medium'
                         : 'bg-[#DD2B1C] text-white rounded-tr-none'
                       }`}>
-                         {typeof msg.text === 'string' ? msg.text.split('\n').map((line, i) => <div key={i}>{line}</div>) : msg.text}
-                      </div>
-                   </div>
-                 </motion.div>
-               ))}
+                      {typeof msg.text === 'string' ? msg.text.split('\n').map((line, i) => <div key={i}>{line}</div>) : msg.text}
+                    </div>
+                  </div>
+                </motion.div>
+              ))}
 
-               {isTyping && (
-                 <motion.div initial={{ opacity: 0 }} animate={{ opacity: 1 }} className="flex justify-start">
-                   <div className="bg-white p-4 rounded-2xl rounded-tl-none shadow-sm flex gap-1 border border-black/5">
-                     {[0.1, 0.2, 0.3].map(d => (
-                       <motion.div
+              {isTyping && (
+                <motion.div initial={{ opacity: 0 }} animate={{ opacity: 1 }} className="flex justify-start">
+                  <div className="bg-white p-4 rounded-2xl rounded-tl-none shadow-sm flex gap-1 border border-black/5">
+                    {[0.1, 0.2, 0.3].map(d => (
+                      <motion.div
                         key={d}
                         animate={{ y: [0, -3, 0] }}
                         transition={{ repeat: Infinity, duration: 0.6, delay: d }}
                         className="w-1.5 h-1.5 bg-[#DD2B1C] rounded-full"
-                       />
-                     ))}
-                   </div>
-                 </motion.div>
-               )}
-
-               {/* Suggestions */}
-               {!isTyping && !showEnquiryForm && messages[messages.length - 1]?.type === 'bot' && (
-                 <div className="flex flex-wrap gap-2 py-2">
-                    {KNOWLEDGE_BASE[lastKey]?.suggestions?.map(s => (
-                      <motion.button
-                        key={s}
-                        whileHover={{ scale: 1.05 }}
-                        whileTap={{ scale: 0.95 }}
-                        onClick={() => handleSend(s)}
-                        className="px-4 py-2 bg-white hover:bg-[#DD2B1C] hover:text-white text-[#1A1A1A]/70 border border-black/10 rounded-full text-xs font-bold transition-all shadow-sm"
-                      >
-                        {s}
-                      </motion.button>
+                      />
                     ))}
-                    <motion.button
-                      whileHover={{ scale: 1.05 }}
-                      onClick={() => setShowEnquiryForm(true)}
-                      className="px-4 py-2 bg-[#DD2B1C] text-white rounded-full text-xs font-bold shadow-md"
-                    >
-                      Instant Callback ⚡
-                    </motion.button>
-                 </div>
-               )}
+                  </div>
+                </motion.div>
+              )}
 
-               {/* Integrated Enquiry Form */}
-               {showEnquiryForm && (
-                 <motion.div initial={{ opacity: 0, scale: 0.9 }} animate={{ opacity: 1, scale: 1 }} className="bg-white p-5 rounded-[2rem] border border-black/5 shadow-xl">
-                    <div className="flex justify-between items-center mb-4">
-                      <h4 className="font-bold text-[#1A1A1A]">Instant Callback</h4>
-                      <button onClick={() => setShowEnquiryForm(false)} className="text-black/30 hover:text-black"><X size={16} /></button>
+              {/* Suggestions */}
+              {!isTyping && !showEnquiryForm && messages[messages.length - 1]?.type === 'bot' && (
+                <div className="flex flex-wrap gap-2 py-2">
+                  {KNOWLEDGE_BASE[lastKey]?.suggestions?.map(s => (
+                    <motion.button
+                      key={s}
+                      whileHover={{ scale: 1.05 }}
+                      whileTap={{ scale: 0.95 }}
+                      onClick={() => handleSend(s)}
+                      className="px-4 py-2 bg-white hover:bg-[#DD2B1C] hover:text-white text-[#1A1A1A]/70 border border-black/10 rounded-full text-xs font-bold transition-all shadow-sm"
+                    >
+                      {s}
+                    </motion.button>
+                  ))}
+                  <motion.button
+                    whileHover={{ scale: 1.05 }}
+                    onClick={() => setShowEnquiryForm(true)}
+                    className="px-4 py-2 bg-[#DD2B1C] text-white rounded-full text-xs font-bold shadow-md"
+                  >
+                    Instant Callback ⚡
+                  </motion.button>
+                </div>
+              )}
+
+              {/* Integrated Enquiry Form */}
+              {showEnquiryForm && (
+                <motion.div initial={{ opacity: 0, scale: 0.9 }} animate={{ opacity: 1, scale: 1 }} className="bg-white p-5 rounded-[2rem] border border-black/5 shadow-xl">
+                  <div className="flex justify-between items-center mb-4">
+                    <h4 className="font-bold text-[#1A1A1A]">Instant Callback</h4>
+                    <button onClick={() => setShowEnquiryForm(false)} className="text-black/30 hover:text-black"><X size={16} /></button>
+                  </div>
+                  <form onSubmit={handleFormSubmit} className="space-y-4">
+                    <div className="space-y-1">
+                      <label className="text-[10px] font-bold text-black/40 uppercase tracking-wider">Full Name</label>
+                      <input
+                        required
+                        className="w-full bg-[#F5F5F5] px-4 py-2.5 rounded-xl border border-black/5 text-[#1A1A1A] text-sm focus:ring-2 ring-[#DD2B1C]/20 transition-all outline-none placeholder:text-black/20"
+                        placeholder="e.g. Rahul Sharma"
+                        value={formData.name}
+                        onChange={e => setFormData({ ...formData, name: e.target.value })}
+                      />
                     </div>
-                    <form onSubmit={handleFormSubmit} className="space-y-4">
-                       <div className="space-y-1">
-                         <label className="text-[10px] font-bold text-black/40 uppercase tracking-wider">Full Name</label>
-                         <input
-                            required
-                            className="w-full bg-[#F5F5F5] px-4 py-2.5 rounded-xl border border-black/5 text-[#1A1A1A] text-sm focus:ring-2 ring-[#DD2B1C]/20 transition-all outline-none placeholder:text-black/20"
-                            placeholder="e.g. Rahul Sharma"
-                            value={formData.name}
-                            onChange={e => setFormData({...formData, name: e.target.value})}
-                         />
-                       </div>
-                       <div className="space-y-1">
-                         <label className="text-[10px] font-bold text-black/40 uppercase tracking-wider">Phone Number</label>
-                         <input
-                            required
-                            type="tel"
-                            className="w-full bg-[#F5F5F5] px-4 py-2.5 rounded-xl border border-black/5 text-[#1A1A1A] text-sm focus:ring-2 ring-[#DD2B1C]/20 transition-all outline-none placeholder:text-black/20"
-                            placeholder="+91 00000 00000"
-                            value={formData.phone}
-                            onChange={e => setFormData({...formData, phone: e.target.value})}
-                         />
-                       </div>
-                       <Button
-                        type="submit"
-                        disabled={formStatus === 'sending' || formStatus === 'success'}
-                        className="w-full py-5 bg-[#DD2B1C] hover:bg-red-700 text-white font-black tracking-widest text-[10px]"
-                       >
-                         {formStatus === 'sending' ? <Loader2 className="animate-spin" /> :
-                          formStatus === 'success' ? 'SENT SUCCESSFULLY' : 'REQUEST CALL BACK'}
-                       </Button>
-                    </form>
-                 </motion.div>
-               )}
-               <div ref={messagesEndRef} />
+                    <div className="space-y-1">
+                      <label className="text-[10px] font-bold text-black/40 uppercase tracking-wider">Phone Number</label>
+                      <input
+                        required
+                        type="tel"
+                        className="w-full bg-[#F5F5F5] px-4 py-2.5 rounded-xl border border-black/5 text-[#1A1A1A] text-sm focus:ring-2 ring-[#DD2B1C]/20 transition-all outline-none placeholder:text-black/20"
+                        placeholder="+91 00000 00000"
+                        value={formData.phone}
+                        onChange={e => setFormData({ ...formData, phone: e.target.value })}
+                      />
+                    </div>
+                    <Button
+                      type="submit"
+                      disabled={formStatus === 'sending' || formStatus === 'success'}
+                      className="w-full py-5 bg-[#DD2B1C] hover:bg-red-700 text-white font-black tracking-widest text-[10px]"
+                    >
+                      {formStatus === 'sending' ? <Loader2 className="animate-spin" /> :
+                        formStatus === 'success' ? 'SENT SUCCESSFULLY' : 'REQUEST CALL BACK'}
+                    </Button>
+                  </form>
+                </motion.div>
+              )}
+              <div ref={messagesEndRef} />
             </div>
 
             {/* Input Footer */}

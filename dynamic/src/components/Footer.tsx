@@ -181,7 +181,7 @@ export default function Footer() {
               <Button
                 type="submit"
                 disabled={newsletterLoading}
-                className="bg-[#DD2B1C] text-white hover:bg-red-700 whitespace-nowrap"
+                className="bg-gp-accent text-white hover:bg-red-700 whitespace-nowrap"
               >
                 {newsletterLoading ? 'Subscribing...' : 'Subscribe'}
               </Button>

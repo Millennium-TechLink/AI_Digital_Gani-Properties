@@ -24,8 +24,16 @@ export const handler: Handler = async (event, context) => {
     }
 
     const token = authHeader.substring(7);
-    const JWT_SECRET = process.env.JWT_SECRET || 'your-secret-key-change-in-production';
-    
+    const JWT_SECRET = process.env.JWT_SECRET;
+
+    if (!JWT_SECRET) {
+      console.error('Missing JWT_SECRET environment variable');
+      return createResponse(500, {
+        success: false,
+        message: 'Server misconfigured. Contact administrator.',
+      });
+    }
+
     try {
       const decoded = jwt.verify(token, JWT_SECRET);
       return createResponse(200, {

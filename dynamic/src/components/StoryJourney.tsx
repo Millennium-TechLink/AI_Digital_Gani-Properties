@@ -45,8 +45,8 @@ export default function StoryJourney() {
       className="py-32 bg-white relative overflow-hidden"
     >
       {/* Subtle red accent glow */}
-      <div className="absolute top-0 left-1/3 w-96 h-96 bg-[#DD2B1C]/5 rounded-full blur-3xl pointer-events-none" />
-      <div className="absolute bottom-0 right-1/3 w-96 h-96 bg-[#DD2B1C]/5 rounded-full blur-3xl pointer-events-none" />
+      <div className="absolute top-0 left-1/3 w-96 h-96 bg-gp-accent/5 rounded-full blur-3xl pointer-events-none" />
+      <div className="absolute bottom-0 right-1/3 w-96 h-96 bg-gp-accent/5 rounded-full blur-3xl pointer-events-none" />
 
       <div className="container mx-auto px-4 lg:px-6 relative z-10">
         {/* Section Header */}
@@ -58,13 +58,13 @@ export default function StoryJourney() {
           className="text-center max-w-3xl mx-auto mb-20"
         >
           <div className="flex items-center justify-center gap-3 mb-4">
-            <div className="h-px w-8 bg-[#DD2B1C]/60" />
-            <span className="text-[10px] font-black text-[#DD2B1C] uppercase tracking-[0.4em]">
+            <div className="h-px w-8 bg-gp-accent/60" />
+            <span className="text-[10px] font-black text-gp-accent uppercase tracking-[0.4em]">
               YOUR JOURNEY
             </span>
-            <div className="h-px w-8 bg-[#DD2B1C]/60" />
+            <div className="h-px w-8 bg-gp-accent/60" />
           </div>
-          <h2 className="text-5xl md:text-6xl font-display font-bold text-[#1A1A1A] mb-6">
+          <h2 className="text-5xl md:text-6xl font-display font-bold text-gp-ink mb-6">
             From Dream to Reality
           </h2>
           <p className="text-lg text-[#666] leading-relaxed">
@@ -85,19 +85,22 @@ export default function StoryJourney() {
                 transition={{ duration: 0.6, delay: index * 0.08, ease: [0.16, 1, 0.3, 1] }}
                 className="group relative"
               >
-                <div className="bg-[#F9F9F9] border border-black/[0.04] hover:border-[#DD2B1C]/30 rounded-2xl p-8 h-full transition-all duration-400 hover:-translate-y-1 hover:shadow-[0_20px_60px_-15px_rgba(221,43,28,0.1)]">
+                <div 
+                  className="bg-[#F9F9F9] border border-black/[0.04] hover:border-gp-accent/30 rounded-2xl p-8 h-full transition-all duration-400 hover:-translate-y-1 hover:shadow-[0_20px_60px_-15px_rgba(221,43,28,0.1)] transform-gpu"
+                  style={{ willChange: 'transform, opacity' }}
+                >
                   {/* Step number */}
                   <div className="absolute top-5 right-6 text-5xl font-black text-black/[0.03] select-none" style={{ fontFamily: '"Rubik Wide", system-ui, sans-serif' }}>
                     {String(index + 1).padStart(2, '0')}
                   </div>
 
                   {/* Icon */}
-                  <div className="w-12 h-12 flex items-center justify-center border border-[#DD2B1C]/30 bg-[#DD2B1C]/5 mb-6 group-hover:bg-[#DD2B1C]/10 transition-colors duration-300">
-                    <StepIcon className="h-5 w-5 text-[#DD2B1C]" />
+                  <div className="w-12 h-12 flex items-center justify-center border border-gp-accent/30 bg-gp-accent/5 mb-6 group-hover:bg-gp-accent/10 transition-colors duration-300">
+                    <StepIcon className="h-5 w-5 text-gp-accent" />
                   </div>
 
                   {/* Content */}
-                  <h3 className="text-xl font-bold text-[#1A1A1A] mb-3 tracking-tight">
+                  <h3 className="text-xl font-bold text-gp-ink mb-3 tracking-tight">
                     {step.title}
                   </h3>
                   <p className="text-[#666] leading-relaxed text-sm font-medium">
@@ -105,7 +108,7 @@ export default function StoryJourney() {
                   </p>
 
                   {/* Bottom accent line on hover */}
-                  <div className="absolute bottom-0 left-0 h-[2px] w-0 bg-[#DD2B1C] group-hover:w-full transition-all duration-500 rounded-b-2xl" />
+                  <div className="absolute bottom-0 left-0 h-[2px] w-0 bg-gp-accent group-hover:w-full transition-all duration-500 rounded-b-2xl" />
                 </div>
               </motion.div>
             );

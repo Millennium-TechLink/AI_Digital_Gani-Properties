@@ -47,8 +47,7 @@ export default function ImmersiveHero() {
   return (
     <section
       ref={ref}
-      className="relative min-h-screen flex items-center justify-center overflow-hidden"
-      style={{ backgroundColor: '#1A1A1A' }} // Fallback background color
+      className="relative min-h-screen flex items-center justify-center overflow-hidden bg-gp-ink"
     >
       {/* Parallax Background Layer - z-0 */}
       <div className="absolute inset-0 z-0 overflow-hidden">
@@ -152,7 +151,7 @@ export default function ImmersiveHero() {
             className="inline-flex items-center gap-2 px-4 py-2 bg-white/20 backdrop-blur-md rounded-full border border-white/30 mb-8 scale-90 sm:scale-100"
             style={{ backgroundColor: 'rgba(255, 255, 255, 0.15)' }}
           >
-            <MapPin className="h-4 w-4 text-gp-accent" style={{ color: '#DD2B1C' }} />
+            <MapPin className="h-4 w-4 text-gp-accent" />
             <span className="text-xs sm:text-sm font-medium" style={{ color: '#ffffff' }}>Trusted in Bengaluru Since 2009</span>
           </motion.div>
 

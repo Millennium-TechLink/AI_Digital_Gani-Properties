@@ -31,6 +31,7 @@ import { careersApi, Career } from '@/lib/careersApi';
 import { statsApi, Lead, SiteStats } from '@/lib/statsApi';
 import { login, logout, isAuthenticated } from '@/lib/auth';
 import { Property, PropertyType } from '@/types/property';
+import SEOHead from '@/components/SEOHead';
 
 const PROPERTY_TYPES: { value: PropertyType; label: string }[] = [
   { value: 'residential-plots', label: 'Residential' },
@@ -379,34 +380,38 @@ export default function Dashboard() {
 
   if (!authenticated) {
     return (
-      <div className="min-h-screen flex items-center justify-center bg-gp-surface/5 pt-20">
-        <motion.div initial={{ opacity: 0, scale: 0.95 }} animate={{ opacity: 1, scale: 1 }} className="w-full max-w-md p-8 bg-white rounded-2xl shadow-xl border border-gp-ink/10">
-          <div className="text-center mb-8">
-            <LayoutDashboard className="h-12 w-12 text-gp-accent mx-auto mb-4" />
-            <h1 className="text-3xl font-display font-bold text-gp-ink">Admin Dashboard</h1>
-            <p className="text-gp-ink-muted mt-2">Sign in to manage your content</p>
-          </div>
-          <form onSubmit={handleLogin} className="space-y-5">
-            {loginError && <div className="p-4 bg-red-50 text-red-600 rounded-xl text-sm border border-red-100 flex items-center gap-2"><AlertCircle size={16} />{loginError}</div>}
-            <div className="space-y-2">
-              <label className="text-sm font-semibold text-gp-ink">Username</label>
-              <Input value={username} onChange={e => setUsername(e.target.value)} placeholder="admin" required className="bg-gp-surface/30 px-4 py-3" />
+      <>
+        <SEOHead title="Admin Dashboard" noindex />
+        <div className="min-h-screen flex items-center justify-center bg-gp-surface/5 pt-20">
+          <motion.div initial={{ opacity: 0, scale: 0.95 }} animate={{ opacity: 1, scale: 1 }} className="w-full max-w-md p-8 bg-white rounded-2xl shadow-xl border border-gp-ink/10">
+            <div className="text-center mb-8">
+              <LayoutDashboard className="h-12 w-12 text-gp-accent mx-auto mb-4" />
+              <h1 className="text-3xl font-display font-bold text-gp-ink">Admin Dashboard</h1>
+              <p className="text-gp-ink-muted mt-2">Sign in to manage your content</p>
             </div>
-            <div className="space-y-2">
-              <label className="text-sm font-semibold text-gp-ink">Password</label>
-              <Input type="password" value={password} onChange={e => setPassword(e.target.value)} placeholder="••••••••" required className="bg-gp-surface/30 px-4 py-3" />
-            </div>
-            <Button type="submit" disabled={loginLoading} className="w-full py-6 text-lg font-bold">
-              {loginLoading ? <Loader2 className="animate-spin" /> : 'Sign In'}
-            </Button>
-          </form>
-        </motion.div>
-      </div>
+            <form onSubmit={handleLogin} className="space-y-5">
+              {loginError && <div className="p-4 bg-red-50 text-red-600 rounded-xl text-sm border border-red-100 flex items-center gap-2"><AlertCircle size={16} />{loginError}</div>}
+              <div className="space-y-2">
+                <label className="text-sm font-semibold text-gp-ink">Username</label>
+                <Input value={username} onChange={e => setUsername(e.target.value)} placeholder="admin" required className="bg-gp-surface/30 px-4 py-3" />
+              </div>
+              <div className="space-y-2">
+                <label className="text-sm font-semibold text-gp-ink">Password</label>
+                <Input type="password" value={password} onChange={e => setPassword(e.target.value)} placeholder="••••••••" required className="bg-gp-surface/30 px-4 py-3" />
+              </div>
+              <Button type="submit" disabled={loginLoading} className="w-full py-6 text-lg font-bold">
+                {loginLoading ? <Loader2 className="animate-spin" /> : 'Sign In'}
+              </Button>
+            </form>
+          </motion.div>
+        </div>
+      </>
     );
   }
 
   return (
     <div className="min-h-screen bg-gp-surface/5 pt-32 pb-20">
+      <SEOHead title="Admin Dashboard" noindex />
       <div className="container mx-auto px-4 lg:px-6">
         {/* Header */}
         <div className="flex flex-col md:flex-row justify-between items-start md:items-center gap-6 mb-12">
@@ -437,16 +442,16 @@ export default function Dashboard() {
 
         {/* Tabs */}
         <div className="flex gap-2 p-1 bg-white/50 backdrop-blur-sm rounded-2xl border border-gp-ink/10 mb-8 w-fit">
-          <button onClick={() => setActiveTab('properties')} className={`px-6 py-2.5 rounded-xl font-bold transition-all flex items-center gap-2 ${activeTab === 'properties' ? 'bg-[#1A1A1A] text-white shadow-lg' : 'text-gp-ink-muted hover:text-gp-ink hover:bg-white/50'}`}>
+          <button onClick={() => setActiveTab('properties')} className={`px-6 py-2.5 rounded-xl font-bold transition-all flex items-center gap-2 ${activeTab === 'properties' ? 'bg-gp-ink text-white shadow-lg' : 'text-gp-ink-muted hover:text-gp-ink hover:bg-white/50'}`}>
             <Home size={18} /> Properties
           </button>
-          <button onClick={() => setActiveTab('careers')} className={`px-6 py-2.5 rounded-xl font-bold transition-all flex items-center gap-2 ${activeTab === 'careers' ? 'bg-[#1A1A1A] text-white shadow-lg' : 'text-gp-ink-muted hover:text-gp-ink hover:bg-white/50'}`}>
+          <button onClick={() => setActiveTab('careers')} className={`px-6 py-2.5 rounded-xl font-bold transition-all flex items-center gap-2 ${activeTab === 'careers' ? 'bg-gp-ink text-white shadow-lg' : 'text-gp-ink-muted hover:text-gp-ink hover:bg-white/50'}`}>
             <Briefcase size={18} /> Careers
           </button>
-          <button onClick={() => setActiveTab('leads')} className={`px-6 py-2.5 rounded-xl font-bold transition-all flex items-center gap-2 ${activeTab === 'leads' ? 'bg-[#1A1A1A] text-white shadow-lg' : 'text-gp-ink-muted hover:text-gp-ink hover:bg-white/50'}`}>
+          <button onClick={() => setActiveTab('leads')} className={`px-6 py-2.5 rounded-xl font-bold transition-all flex items-center gap-2 ${activeTab === 'leads' ? 'bg-gp-ink text-white shadow-lg' : 'text-gp-ink-muted hover:text-gp-ink hover:bg-white/50'}`}>
             <Mail size={18} /> Leads
           </button>
-          <button onClick={() => setActiveTab('settings')} className={`px-6 py-2.5 rounded-xl font-bold transition-all flex items-center gap-2 ${activeTab === 'settings' ? 'bg-[#1A1A1A] text-white shadow-lg' : 'text-gp-ink-muted hover:text-gp-ink hover:bg-white/50'}`}>
+          <button onClick={() => setActiveTab('settings')} className={`px-6 py-2.5 rounded-xl font-bold transition-all flex items-center gap-2 ${activeTab === 'settings' ? 'bg-gp-ink text-white shadow-lg' : 'text-gp-ink-muted hover:text-gp-ink hover:bg-white/50'}`}>
             <Settings size={18} /> Settings
           </button>
         </div>
@@ -875,7 +880,7 @@ export default function Dashboard() {
               </motion.div>
 
               <div className="flex items-center gap-3">
-                <Button type="submit" disabled={settingsSaving} className="bg-[#1A1A1A] text-white px-8">
+                <Button type="submit" disabled={settingsSaving} className="bg-gp-ink text-white px-8">
                   {settingsSaving ? <><Loader2 size={15} className="animate-spin mr-2" />Saving...</> : <><Save size={15} className="mr-2" />Save Settings</>}
                 </Button>
                 <p className="text-xs text-gp-ink-muted">Password is encrypted on the server. Leave blank to keep existing password.</p>

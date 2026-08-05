@@ -45,7 +45,7 @@ export default function Navbar() {
     // Check initial scroll position
     handleScroll();
     
-    window.addEventListener('scroll', handleScroll);
+    window.addEventListener('scroll', handleScroll, { passive: true });
     return () => window.removeEventListener('scroll', handleScroll);
   }, [isHomePage]);
 
@@ -205,7 +205,7 @@ export default function Navbar() {
                               >
                                 <Link
                                   to={subcategory.path}
-                                  className="block px-4 py-2 text-[#1A1A1A] hover:bg-black/5 hover:text-[#DD2B1C] transition-all duration-200 hover:pl-6 text-[10px] font-bold uppercase tracking-wider"
+                                  className="block px-4 py-2 text-gp-ink hover:bg-black/5 hover:text-gp-accent transition-all duration-200 hover:pl-6 text-[10px] font-bold uppercase tracking-wider"
                                   onClick={() => setDropdownOpen(false)}
                                 >
                                   {subcategory.label}
@@ -306,8 +306,8 @@ export default function Navbar() {
                       <Link
                         to={link.to}
                         className={cn(
-                          'block py-2 text-[#1A1A1A] hover:text-[#DD2B1C] transition-all duration-300 font-bold uppercase text-[10px] tracking-widest hover:pl-2',
-                          pathname === link.to && 'text-[#DD2B1C]'
+                          'block py-2 text-gp-ink hover:text-gp-accent transition-all duration-300 font-bold uppercase text-[10px] tracking-widest hover:pl-2',
+                          pathname === link.to && 'text-gp-accent'
                         )}
                         onClick={() => setIsOpen(false)}
                       >
@@ -324,7 +324,7 @@ export default function Navbar() {
                           >
                             <Link
                               to={subcategory.path}
-                              className="block py-2 text-black/40 hover:text-[#DD2B1C] transition-all duration-300 text-[10px] font-bold uppercase tracking-widest hover:pl-2"
+                              className="block py-2 text-black/40 hover:text-gp-accent transition-all duration-300 text-[10px] font-bold uppercase tracking-widest hover:pl-2"
                               onClick={() => setIsOpen(false)}
                             >
                               {subcategory.label}
@@ -346,8 +346,8 @@ export default function Navbar() {
                     <Link
                       to={link.to}
                       className={cn(
-                        'block py-2 text-[#1A1A1A] hover:text-[#DD2B1C] transition-all duration-300 font-bold uppercase text-[10px] tracking-widest hover:pl-2',
-                        pathname === link.to && 'text-[#DD2B1C]'
+                        'block py-2 text-gp-ink hover:text-gp-accent transition-all duration-300 font-bold uppercase text-[10px] tracking-widest hover:pl-2',
+                        pathname === link.to && 'text-gp-accent'
                       )}
                       onClick={() => setIsOpen(false)}
                     >

@@ -145,7 +145,7 @@ export default function HeroFullScreen() {
       {/* ── GANI PROPERTIES header ── */}
       <div className="absolute top-0 left-0 right-0 z-20 flex flex-col items-center pt-[calc(2vh+82px)]">
         <div className="flex items-center gap-3 mb-1">
-          <div className="h-px w-10 bg-[#DD2B1C]/80" />
+          <div className="h-px w-10 bg-gp-accent/80" />
           <motion.span
             initial={{ opacity: 0, y: -8 }}
             animate={{ opacity: 1, y: 0 }}
@@ -155,7 +155,7 @@ export default function HeroFullScreen() {
           >
             GANI PROPERTIES
           </motion.span>
-          <div className="h-px w-10 bg-[#DD2B1C]/80" />
+          <div className="h-px w-10 bg-gp-accent/80" />
         </div>
         <motion.div
           initial={{ opacity: 0 }}
@@ -163,7 +163,7 @@ export default function HeroFullScreen() {
           transition={{ duration: 0.8, delay: 0.5 }}
           className="flex items-center gap-1.5"
         >
-          <MapPin className="h-2.5 w-2.5 text-[#DD2B1C]" />
+          <MapPin className="h-2.5 w-2.5 text-gp-accent" />
           <span className="text-[9px] font-semibold uppercase tracking-[0.25em] text-white/50">
             Trusted Excellence in Real Estate
           </span>
@@ -174,61 +174,69 @@ export default function HeroFullScreen() {
       <div className="absolute inset-0 z-20 flex flex-col items-center justify-center text-center px-16 gap-4">
 
         {/* Category pill */}
-        <AnimatePresence mode="wait">
-          <motion.div
-            key={`tag-${current}`}
-            initial={{ opacity: 0, y: 10 }}
-            animate={{ opacity: 1, y: 0 }}
-            exit={{ opacity: 0, y: -10 }}
-            transition={{ duration: 0.45, ease: 'easeOut' }}
-            className="inline-flex items-center gap-2 px-3 py-1 border border-white/20 bg-white/5 backdrop-blur-sm"
-          >
-            <span className="w-1 h-1 rounded-full bg-[#DD2B1C]" />
-            <span className="text-[9px] font-black uppercase tracking-[0.3em] text-white/70">
-              {section.tag}
-            </span>
-          </motion.div>
-        </AnimatePresence>
-
-        {/* Main title — word-masked stagger */}
-        <div
-          className="text-white font-black uppercase text-center"
-          style={{
-            fontSize: 'clamp(2.4rem, 5.5vw, 5.5rem)',
-            letterSpacing: '-0.02em',
-            fontFamily: '"Rubik Wide", system-ui, sans-serif',
-            lineHeight: 0.9,
-            maxWidth: '700px',
-          }}
-        >
-          <AnimatePresence mode="wait" initial={false}>
-            <div key={`title-${current}`} className="inline">
-              <SplitTitle text={section.title} direction={direction} />
-            </div>
+        <div className="h-6 flex items-center justify-center">
+          <AnimatePresence mode="wait">
+            <motion.div
+              key={`tag-${current}`}
+              initial={{ opacity: 0, y: 10 }}
+              animate={{ opacity: 1, y: 0 }}
+              exit={{ opacity: 0, y: -10 }}
+              transition={{ duration: 0.45, ease: 'easeOut' }}
+              className="inline-flex items-center gap-2 px-3 py-1 border border-white/20 bg-white/5 backdrop-blur-sm"
+            >
+              <span className="w-1 h-1 rounded-full bg-gp-accent" />
+              <span className="text-[9px] font-black uppercase tracking-[0.3em] text-white/70">
+                {section.tag}
+              </span>
+            </motion.div>
           </AnimatePresence>
         </div>
 
-        {/* Sub-label */}
-        <AnimatePresence mode="wait">
-          <motion.p
-            key={`sub-${current}`}
-            initial={{ opacity: 0, y: 8 }}
-            animate={{ opacity: 1, y: 0 }}
-            exit={{ opacity: 0, y: -8 }}
-            transition={{ duration: 0.5, delay: 0.2 }}
-            className="text-[10px] uppercase tracking-[0.3em] text-white/45 font-semibold"
+        {/* Main title — word-masked stagger */}
+        <div className="h-[120px] md:h-[180px] flex items-center justify-center">
+          <div
+            className="text-white font-black uppercase text-center"
+            style={{
+              fontSize: 'clamp(2.4rem, 5.5vw, 5.5rem)',
+              letterSpacing: '-0.02em',
+              fontFamily: '"Rubik Wide", system-ui, sans-serif',
+              lineHeight: 0.9,
+              maxWidth: '700px',
+            }}
           >
-            {section.sub}
-          </motion.p>
-        </AnimatePresence>
+            <AnimatePresence mode="wait" initial={false}>
+              <div key={`title-${current}`} className="inline">
+                <SplitTitle text={section.title} direction={direction} />
+              </div>
+            </AnimatePresence>
+          </div>
+        </div>
+
+        {/* Sub-label */}
+        <div className="h-6 flex items-center justify-center">
+          <AnimatePresence mode="wait">
+            <motion.p
+              key={`sub-${current}`}
+              initial={{ opacity: 0, y: 8 }}
+              animate={{ opacity: 1, y: 0 }}
+              exit={{ opacity: 0, y: -8 }}
+              transition={{ duration: 0.5, delay: 0.2 }}
+              className="text-[10px] uppercase tracking-[0.3em] text-white/45 font-semibold"
+            >
+              {section.sub}
+            </motion.p>
+          </AnimatePresence>
+        </div>
 
         {/* Thin divider line */}
-        <motion.div
-          className="w-12 h-px bg-[#DD2B1C]/60"
-          initial={{ scaleX: 0 }}
-          animate={{ scaleX: 1 }}
-          transition={{ duration: 0.6, delay: 0.4 }}
-        />
+        <div className="h-4 flex items-center justify-center">
+          <motion.div
+            className="w-12 h-px bg-gp-accent/60"
+            initial={{ scaleX: 0 }}
+            animate={{ scaleX: 1 }}
+            transition={{ duration: 0.6, delay: 0.4 }}
+          />
+        </div>
 
         {/* CTA Buttons */}
         <motion.div
@@ -239,7 +247,7 @@ export default function HeroFullScreen() {
         >
           <Link
             to="/properties"
-            className="px-7 py-2.5 bg-[#DD2B1C] text-white text-[9px] font-black uppercase tracking-[0.25em] hover:bg-red-700 transition-all duration-300 hover:scale-105"
+            className="px-7 py-2.5 bg-gp-accent text-white text-[9px] font-black uppercase tracking-[0.25em] hover:bg-red-700 transition-all duration-300 hover:scale-105"
           >
             Explore Properties
           </Link>
@@ -266,7 +274,7 @@ export default function HeroFullScreen() {
             >
               {i === current && (
                 <div
-                  className="absolute inset-y-0 left-0 bg-[#DD2B1C]"
+                  className="absolute inset-y-0 left-0 bg-gp-accent"
                   style={{ width: `${progress}%` }}
                 />
               )}

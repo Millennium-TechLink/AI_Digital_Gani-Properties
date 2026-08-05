@@ -53,19 +53,13 @@ export default function HomePage() {
       <HeroFullScreen />
       
       {/* Story Journey - Narrative flow */}
-      <GSAPReveal direction="up" distance={30}>
-        <StoryJourney />
-      </GSAPReveal>
+      <StoryJourney />
 
       {/* Categories - Visual showcase */}
-      <GSAPReveal direction="up" distance={50} delay={0.2}>
-        <ImmersiveCategories />
-      </GSAPReveal>
+      <ImmersiveCategories />
 
       {/* Our Story with Animated Stats */}
-      <GSAPReveal direction="up" distance={50}>
-        <OurStory />
-      </GSAPReveal>
+      <OurStory />
 
       {/* Featured Properties - Immersive showcase */}
       <GSAPReveal direction="up" distance={50}>
@@ -75,9 +69,7 @@ export default function HomePage() {
       </GSAPReveal>
 
       {/* Management Team */}
-      <GSAPReveal direction="up" distance={50}>
-        <ManagementTeam />
-      </GSAPReveal>
+      <ManagementTeam />
 
       {/* Franchise Opportunity Highlight */}
       <GSAPReveal direction="up" distance={50}>

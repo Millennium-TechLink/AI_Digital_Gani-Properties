@@ -24,13 +24,7 @@ function AnimatedCounter({ targetValue, suffix, label, delay = 0 }: Stat & { del
   const animationRef = useRef<number | null>(null);
 
   useEffect(() => {
-    // Reset count when leaving viewport
     if (!isInView) {
-      setCount(0);
-      if (animationRef.current) {
-        cancelAnimationFrame(animationRef.current);
-        animationRef.current = null;
-      }
       return;
     }
 
@@ -80,9 +74,9 @@ function AnimatedCounter({ targetValue, suffix, label, delay = 0 }: Stat & { del
   return (
     <div
       ref={ref}
-      className="text-center"
+      className="text-center min-w-[80px]"
       style={{
-        willChange: 'contents',
+        willChange: 'transform, opacity',
         transform: 'translate3d(0, 0, 0)',
       }}
     >
@@ -107,7 +101,8 @@ export default function OurStory() {
             whileInView={{ opacity: 1, x: 0 }}
             viewport={{ once: true }}
             transition={{ duration: 0.5, ease: [0.25, 0.1, 0.25, 1] }}
-            className="relative h-[400px] lg:h-[500px] rounded-3xl overflow-hidden bg-gradient-to-br from-gp-surface to-gp-bg"
+            className="relative h-[400px] lg:h-[500px] rounded-3xl overflow-hidden bg-gradient-to-br from-gp-surface to-gp-bg transform-gpu"
+            style={{ willChange: 'transform, opacity' }}
           >
             <Image
               src="/images/Our Story.webp"
@@ -124,6 +119,8 @@ export default function OurStory() {
             whileInView={{ opacity: 1, x: 0 }}
             viewport={{ once: true }}
             transition={{ duration: 0.5, ease: [0.25, 0.1, 0.25, 1] }}
+            className="transform-gpu"
+            style={{ willChange: 'transform, opacity' }}
           >
             <div className="mb-4">
               <span className="text-sm font-medium text-gp-accent uppercase tracking-wider">

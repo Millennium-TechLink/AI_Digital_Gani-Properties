@@ -1,4 +1,6 @@
-@import url('https://fonts.googleapis.com/css2?family=Playfair+Display:wght@400;600&family=Inter:wght@400;500;600&family=Poppins:wght@400;500;600&display=swap');
+/* Google Fonts are loaded via a <link> in index.html, not @import here - an
+   @import inside a CSS file that itself only gets discovered after main.tsx
+   executes creates an avoidable extra round trip before fonts start loading. */
 @import "tailwindcss/base";
 @import "tailwindcss/components";
 @import "tailwindcss/utilities";
@@ -55,14 +57,14 @@
   }
 
   html {
-    scroll-behavior: smooth;
+    /* scroll-behavior: smooth; */ /* Disabled for Lenis */
     scroll-padding-top: 5rem;
   }
 
   /* Smooth scroll behavior */
   @media (prefers-reduced-motion: no-preference) {
     html {
-      scroll-behavior: smooth;
+      /* scroll-behavior: smooth; */ /* Disabled for Lenis */
       scroll-padding-top: 5rem;
     }
   }
@@ -126,11 +128,7 @@
   }
   
   /* Smooth transitions for all animatable properties */
-  @media (prefers-reduced-motion: no-preference) {
-    html {
-      scroll-behavior: smooth;
-    }
-  }
+
   html,
   body,
   #root {
@@ -153,7 +151,6 @@
   /* Buttery smooth transitions for interactive elements */
   a, button, input, select, textarea {
     transition: all var(--duration-normal) var(--ease-ultra-smooth);
-    will-change: transform, opacity, background-color, color;
   }
   
   /* Enhanced hover transitions */
@@ -189,9 +186,29 @@
     -webkit-tap-highlight-color: transparent;
   }
   
-  /* Smooth container transitions */
-  section, div, article, aside, main {
+  /* section, div, article, aside, main {
     transition: opacity var(--duration-normal) var(--ease-out-smooth);
+  } */
+
+  /* Lenis Support */
+  html.lenis {
+    height: auto;
+  }
+
+  .lenis.lenis-smooth {
+    scroll-behavior: auto !important;
+  }
+
+  .lenis.lenis-smooth [data-lenis-prevent] {
+    overscroll-behavior: contain;
+  }
+
+  .lenis.lenis-stopped {
+    overflow: hidden;
+  }
+
+  .lenis.lenis-scrolling iframe {
+    pointer-events: none;
   }
 }
 
@@ -207,6 +224,19 @@
   .smooth-scroll {
     scroll-behavior: smooth;
     -webkit-overflow-scrolling: touch;
+  }
+
+  .bg-blueprint {
+    background-image: 
+      linear-gradient(rgba(221, 43, 28, 0.05) 1px, transparent 1px),
+      linear-gradient(90deg, rgba(221, 43, 28, 0.05) 1px, transparent 1px);
+    background-size: 40px 40px;
+  }
+
+  .blueprint-section {
+    position: relative;
+    background-color: rgba(221, 43, 28, 0.01);
+    border: 1px solid rgba(221, 43, 28, 0.05);
   }
 }
 

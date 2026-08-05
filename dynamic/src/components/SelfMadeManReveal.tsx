@@ -1,5 +1,5 @@
 import { motion, AnimatePresence } from 'framer-motion';
-import { Sparkles, Hammer, HardHat, Ruler } from 'lucide-react';
+import { Sparkles, Hammer, HardHat, Ruler, Zap, X } from 'lucide-react';
 
 interface SelfMadeManRevealProps {
   isOpen: boolean;

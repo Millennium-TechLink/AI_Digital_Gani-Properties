@@ -46,7 +46,7 @@ export default function OfficeMap() {
               <Button 
                 asChild
                 size="sm"
-                className="w-full bg-[#1A1A1A] hover:bg-gp-accent border-none transition-colors"
+                className="w-full bg-gp-ink hover:bg-gp-accent border-none transition-colors"
               >
                 <a 
                   href={googleMapsUrl} 

@@ -17,7 +17,7 @@ export default function GSAPReveal({
   direction = 'up', 
   delay = 0, 
   duration = 0.8,
-  distance = 50 
+  distance = 30 
 }: GSAPRevealProps) {
   const elementRef = useRef<HTMLDivElement>(null);
 
@@ -35,33 +35,43 @@ export default function GSAPReveal({
       case 'right': x = -distance; break;
     }
 
-    gsap.fromTo(element, 
-      { 
-        opacity: 0, 
-        x, 
-        y 
-      }, 
-      {
-        opacity: 1,
-        x: 0,
-        y: 0,
-        duration,
-        delay,
-        ease: 'power3.out',
-        scrollTrigger: {
-          trigger: element,
-          start: 'top 85%',
-          toggleActions: 'play none none none',
+    const ctx = gsap.context(() => {
+      gsap.fromTo(element, 
+        { 
+          opacity: 0, 
+          x, 
+          y 
+        }, 
+        {
+          opacity: 1,
+          x: 0,
+          y: 0,
+          duration,
+          delay,
+          ease: 'power2.out',
+          force3D: true,
+          scrollTrigger: {
+            trigger: element,
+            start: 'top 85%',
+            toggleActions: 'play none none none',
+          }
         }
-      }
-    );
+      );
+    }, elementRef);
 
-    return () => {
-      ScrollTrigger.getAll().forEach(t => {
-        if (t.trigger === element) t.kill();
-      });
-    };
+    return () => ctx.revert();
   }, [direction, delay, duration, distance]);
 
-  return <div ref={elementRef}>{children}</div>;
+  return (
+    <div 
+      ref={elementRef} 
+      style={{ 
+        willChange: 'transform, opacity',
+        transform: 'translate3d(0, 0, 0)',
+        backfaceVisibility: 'hidden'
+      }}
+    >
+      {children}
+    </div>
+  );
 }

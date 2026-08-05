@@ -1,9 +1,7 @@
 import { motion } from 'framer-motion';
 import { Link } from 'react-router-dom';
 import { ArrowRight, Sparkles, Hammer, Ruler, HardHat, Pickaxe } from 'lucide-react';
-import { Button } from '@/components/ui/button';
 import { useState } from 'react';
-import SelfMadeManReveal from './SelfMadeManReveal';
 
 const franchiseModels = [
   {
@@ -30,12 +28,10 @@ const franchiseModels = [
 ];
 
 export default function FranchiseHighlight() {
-  const [isRevealOpen, setIsRevealOpen] = useState(false);
-  const [selectedModel, setSelectedModel] = useState<string>('Franchise');
+  const [selectedModel, setSelectedModel] = useState<string>(franchiseModels[0].name);
 
   const handleModelClick = (name: string) => {
     setSelectedModel(name);
-    setIsRevealOpen(true);
   };
 
   return (
@@ -82,9 +78,15 @@ export default function FranchiseHighlight() {
                     viewport={{ once: true }}
                     transition={{ duration: 0.5, delay: index * 0.1 }}
                     onClick={() => handleModelClick(model.name)}
-                    className={`p-6 rounded-none border-l-2 ${model.borderColor} bg-gp-light-grey/60 backdrop-blur-sm group hover:bg-gp-red/5 transition-all duration-300 shadow-sm cursor-pointer`}
+                    className={`p-6 rounded-none border-l-2 ${
+                      selectedModel === model.name 
+                        ? 'border-gp-red bg-gp-red/5 shadow-md' 
+                        : model.borderColor + ' bg-gp-light-grey/60'
+                    } backdrop-blur-sm group hover:bg-gp-red/5 transition-all duration-300 cursor-pointer`}
                   >
-                    <h4 className="text-sm font-black text-gp-ink tracking-widest uppercase mb-3 group-hover:text-gp-red transition-colors">{model.name}</h4>
+                    <h4 className={`text-sm font-black tracking-widest uppercase mb-3 transition-colors ${
+                      selectedModel === model.name ? 'text-gp-red' : 'text-gp-ink group-hover:text-gp-red'
+                    }`}>{model.name}</h4>
                     <div className="flex justify-between items-center">
                       <span className="text-xs text-gp-ink/40 uppercase tracking-tighter font-bold flex items-center gap-2">
                         <Pickaxe className="w-3 h-3" />
@@ -96,11 +98,13 @@ export default function FranchiseHighlight() {
                 ))}
               </div>
 
-              <Link to="/franchise">
-                <Button className="bg-gp-red hover:bg-red-700 text-white px-8 py-7 rounded-none group shadow-lg hover:shadow-red-600/20">
-                  <span className="font-black tracking-widest text-xs">EXPLORE FRANCHISE OPPORTUNITIES</span>
-                  <ArrowRight className="ml-3 w-4 h-4 group-hover:translate-x-1 transition-transform" />
-                </Button>
+              <Link to="/franchise" className="inline-block mt-8">
+                <div
+                  className="bg-gp-accent text-white px-10 py-5 font-black text-[11px] uppercase tracking-[0.2em] transition-all duration-300 shadow-xl shadow-gp-accent/20 active:scale-95 flex items-center gap-3 cursor-pointer"
+                >
+                  <span>EXPLORE FRANCHISE OPPORTUNITIES</span>
+                  <ArrowRight className="w-4 h-4" />
+                </div>
               </Link>
             </motion.div>
           </div>
@@ -116,8 +120,7 @@ export default function FranchiseHighlight() {
             >
               {/* Main Silhouette Container */}
               <div
-                className="relative group p-8 cursor-pointer"
-                onClick={() => handleModelClick('The Self-Made')}
+                className="relative group p-8"
               >
                 {/* Construction Scan Line */}
                 <motion.div
@@ -127,11 +130,11 @@ export default function FranchiseHighlight() {
                 />
 
                 <div className="relative">
-                  {/* The Silhouette Image */}
+                  {/* The Professional Image - Man in Black Suit */}
                   <img
                     src="/images/franchise_silhouette.png"
-                    alt="Self Made Man"
-                    className="w-full h-auto relative z-20 grayscale group-hover:grayscale-0 transition-all duration-1000 filter drop-shadow-[0_0_30px_rgba(221,43,28,0.1)]"
+                    alt="Professional Construction Leader"
+                    className="w-full h-auto relative z-20 transition-all duration-1000 filter drop-shadow-[0_0_30px_rgba(221,43,28,0.1)] rounded-2xl"
                   />
 
                   {/* Animated Construction Tools Overlays */}
@@ -209,11 +212,6 @@ export default function FranchiseHighlight() {
           </div>
         </div>
       </div>
-      <SelfMadeManReveal
-        isOpen={isRevealOpen}
-        onClose={() => setIsRevealOpen(false)}
-        title={selectedModel}
-      />
     </section>
   );
 }

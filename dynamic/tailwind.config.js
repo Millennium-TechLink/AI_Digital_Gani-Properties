@@ -7,14 +7,15 @@ export default {
   theme: {
     extend: {
       colors: {
-        'gp-bg': 'var(--gp-bg)',
-        'gp-surface': 'var(--gp-surface)',
-        'gp-accent': 'var(--gp-accent)',
-        'gp-gold': 'var(--gp-gold)',
-        'gp-ink': 'var(--gp-ink)',
-        'gp-ink-muted': 'var(--gp-ink-muted)',
-        background: 'var(--background)',
-        foreground: 'var(--foreground)',
+        'gp-bg': '#FFFFFF',
+        'gp-surface': '#F9F9F9',
+        'gp-accent': '#DD2B1C',
+        'gp-red': '#DD2B1C',
+        'gp-gold': '#D5B36A',
+        'gp-ink': '#1A1A1A',
+        'gp-ink-muted': '#666666',
+        background: '#ffffff',
+        foreground: '#1A1A1A',
       },
       fontFamily: {
         display: ['var(--font-display)', 'serif'],

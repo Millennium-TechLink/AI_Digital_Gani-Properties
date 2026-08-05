@@ -196,10 +196,10 @@
     -webkit-tap-highlight-color: transparent;
   }
   
-  /* Smooth container transitions */
-  section, div, article, aside, main {
+  /* Smooth container transitions - commented out to prevent massive scrolling/rendering jank on generic tags */
+  /* section, div, article, aside, main {
     transition: opacity var(--duration-normal) var(--ease-out-smooth);
-  }
+  } */
 }
 
 @layer utilities {

@@ -104,7 +104,7 @@ export default function ImmersiveCategories() {
               }}
             >
               <Link to={category.link || `/property-type/${category.slug}`}>
-                <div className="relative h-[500px] rounded-3xl overflow-hidden bg-gradient-to-br from-gp-surface to-gp-bg cursor-pointer shadow-xl hover:shadow-2xl transition-all duration-500">
+                <div className="relative h-[500px] rounded-3xl overflow-hidden bg-gradient-to-br from-gp-surface to-gp-bg cursor-pointer shadow-xl hover:shadow-2xl transition-all duration-500 transform-gpu">
                   {/* Background Image */}
                   <div className="absolute inset-0">
                     <Image
@@ -136,7 +136,7 @@ export default function ImmersiveCategories() {
                     </p>
                     <div className="flex items-center gap-2 text-white group-hover:text-white transition-colors font-black text-[10px] uppercase tracking-[0.2em]">
                       <span>Explore</span>
-                      <ArrowRight className="h-4 w-4 group-hover:translate-x-2 transition-transform text-[#DD2B1C]" />
+                      <ArrowRight className="h-4 w-4 group-hover:translate-x-2 transition-transform text-gp-accent" />
                     </div>
                   </div>
                 </div>

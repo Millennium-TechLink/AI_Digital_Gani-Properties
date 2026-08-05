@@ -17,7 +17,7 @@ export default function GSAPReveal({
   direction = 'up', 
   delay = 0, 
   duration = 0.8,
-  distance = 50 
+  distance = 30 
 }: GSAPRevealProps) {
   const elementRef = useRef<HTMLDivElement>(null);
 
@@ -63,5 +63,15 @@ export default function GSAPReveal({
     };
   }, [direction, delay, duration, distance]);
 
-  return <div ref={elementRef}>{children}</div>;
+  return (
+    <div 
+      ref={elementRef} 
+      style={{ 
+        willChange: 'transform, opacity',
+        backfaceVisibility: 'hidden'
+      }}
+    >
+      {children}
+    </div>
+  );
 }

@@ -91,7 +91,10 @@ export default function SEOHead({
         <script
           key={index}
           type="application/ld+json"
-          dangerouslySetInnerHTML={{ __html: JSON.stringify(schema) }}
+          // Escaping "<" prevents a "</script>" inside any field (e.g. a property
+          // title or description someone enters in the Dashboard) from closing
+          // this tag early and letting arbitrary markup run on the page.
+          dangerouslySetInnerHTML={{ __html: JSON.stringify(schema).replace(/</g, '\\u003c') }}
         />
       ))}
     </Helmet>
