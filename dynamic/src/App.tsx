@@ -16,44 +16,57 @@ import SmoothScroll from './components/SmoothScroll';
 // entry point, so it stays in the main bundle) loads on demand. This keeps the
 // initial JS a visitor downloads limited to what the landing page actually needs,
 // instead of shipping the entire site - including the admin Dashboard - up front.
-const PropertiesPage = lazy(() => import('./pages/Properties'));
-const PropertyPage = lazy(() => import('./pages/Property'));
-const CataloguePage = lazy(() => import('./pages/Catalogue'));
-const PropertyTypePage = lazy(() => import('./pages/PropertyType'));
-const AboutPage = lazy(() => import('./pages/About'));
-const ContactPage = lazy(() => import('./pages/Contact'));
-const FranchisePage = lazy(() => import('./pages/Franchise'));
-const PrivacyPage = lazy(() => import('./pages/Privacy'));
-const TermsPage = lazy(() => import('./pages/Terms'));
-const NotFoundPage = lazy(() => import('./pages/NotFound'));
-const Dashboard = lazy(() => import('./pages/Dashboard'));
-const CareersPage = lazy(() => import('./pages/Careers'));
-const DevelopersPage = lazy(() => import('./pages/Developers'));
+//
+// Each import is kept as a named function (not inlined into lazy() directly) so
+// the exact same function can be called again below to prefetch the chunk in
+// the background - that's what actually makes navigation feel smooth, rather
+// than a loading indicator that just hides the wait.
+const importProperties = () => import('./pages/Properties');
+const importProperty = () => import('./pages/Property');
+const importCatalogue = () => import('./pages/Catalogue');
+const importPropertyType = () => import('./pages/PropertyType');
+const importAbout = () => import('./pages/About');
+const importContact = () => import('./pages/Contact');
+const importFranchise = () => import('./pages/Franchise');
+const importPrivacy = () => import('./pages/Privacy');
+const importTerms = () => import('./pages/Terms');
+const importNotFound = () => import('./pages/NotFound');
+const importDashboard = () => import('./pages/Dashboard');
+const importCareers = () => import('./pages/Careers');
+const importDevelopers = () => import('./pages/Developers');
 
-function RouteFallback() {
-  // Only shown on a cold direct load of a non-home route (e.g. someone opens a
-  // shared /franchise link fresh) - normal in-app navigation keeps the previous
-  // page visible until the next one is ready, so this rarely appears in practice.
-  // No entrance animation on this one deliberately - a loading indicator has to
-  // be visible on the very first painted frame, not fade in after one. An
-  // opacity-from-0 animation here risks a stuck-invisible frame if anything
-  // delays the animation (backgrounded tab, reduced-motion, slow first paint).
-  return (
-    <div className="min-h-screen flex flex-col items-center justify-center gap-4">
-      <div className="relative h-12 w-12">
-        <div className="absolute inset-0 rounded-full border-2 border-gp-accent/15" />
-        <div className="absolute inset-0 rounded-full border-2 border-transparent border-t-gp-accent border-r-gp-gold animate-spin" />
-      </div>
-      <p className="text-[10px] font-bold uppercase tracking-[0.3em] text-gp-ink-muted">
-        Gani Properties
-      </p>
-    </div>
-  );
-}
+const PropertiesPage = lazy(importProperties);
+const PropertyPage = lazy(importProperty);
+const CataloguePage = lazy(importCatalogue);
+const PropertyTypePage = lazy(importPropertyType);
+const AboutPage = lazy(importAbout);
+const ContactPage = lazy(importContact);
+const FranchisePage = lazy(importFranchise);
+const PrivacyPage = lazy(importPrivacy);
+const TermsPage = lazy(importTerms);
+const NotFoundPage = lazy(importNotFound);
+const Dashboard = lazy(importDashboard);
+const CareersPage = lazy(importCareers);
+const DevelopersPage = lazy(importDevelopers);
+
+// requestIdleCallback isn't available in Safari - fall back to a short timeout.
+const onIdle = (cb: () => void) =>
+  'requestIdleCallback' in window ? window.requestIdleCallback(cb) : setTimeout(cb, 200);
 
 function App() {
   useEffect(() => {
     statsApi.logVisit();
+
+    // Prefetch every route's chunk shortly after the home page has painted,
+    // so by the time someone actually clicks a nav link, the code is already
+    // downloaded and cached - the navigation just mounts it, no visible wait.
+    onIdle(() => {
+      [
+        importProperties, importProperty, importCatalogue, importPropertyType,
+        importAbout, importContact, importFranchise, importPrivacy, importTerms,
+        importNotFound, importDashboard, importCareers, importDevelopers,
+      ].forEach((importFn) => importFn());
+    });
   }, []);
 
   return (
@@ -67,7 +80,12 @@ function App() {
       <div className="min-h-screen flex flex-col relative">
         <Navbar />
         <main className="flex-grow relative">
-          <Suspense fallback={<RouteFallback />}>
+          {/* No visible fallback - with the routes prefetched on idle above,
+              the lazy import almost always resolves before it's ever needed.
+              For the rare cold direct-load case where it hasn't resolved yet,
+              rendering nothing briefly reads as smoother than a spinner popping
+              in and back out. */}
+          <Suspense fallback={null}>
             <Routes>
               <Route path="/" element={<PageTransition><HomePage /></PageTransition>} />
               <Route path="/properties" element={<PageTransition><PropertiesPage /></PageTransition>} />

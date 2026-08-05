@@ -25,9 +25,14 @@ export default function OfficeMap() {
         scrollWheelZoom={false}
         style={{ height: '100%', width: '100%', zIndex: 0 }}
       >
+        {/* The standard OSM tile server only serves 256px tiles at 1x - on any
+            retina/high-DPI screen Leaflet has to upscale them, which is exactly
+            what reads as "blurry". CARTO's free tiles support a {r} placeholder
+            that resolves to "@2x" on high-DPI displays when detectRetina is on. */}
         <TileLayer
-          attribution='&copy; <a href="https://www.openstreetmap.org/copyright">OpenStreetMap</a> contributors'
-          url="https://{s}.tile.openstreetmap.org/{z}/{x}/{y}.png"
+          attribution='&copy; <a href="https://www.openstreetmap.org/copyright">OpenStreetMap</a> contributors &copy; <a href="https://carto.com/attributions">CARTO</a>'
+          url="https://{s}.basemaps.cartocdn.com/rastertiles/voyager/{z}/{x}/{y}{r}.png"
+          detectRetina
         />
         <Marker position={position}>
           <Popup minWidth={250}>

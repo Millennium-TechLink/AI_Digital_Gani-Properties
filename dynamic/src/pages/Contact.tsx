@@ -1,5 +1,5 @@
-import { motion, useInView } from 'framer-motion';
-import { useRef, lazy, Suspense } from 'react';
+import { motion } from 'framer-motion';
+import { lazy, Suspense } from 'react';
 import SEOHead from '@/components/SEOHead';
 import { MapPin, Phone, Mail, Clock, MessageCircle } from 'lucide-react';
 import { Button } from '@/components/ui/button';
@@ -8,9 +8,6 @@ const OfficeMap = lazy(() => import('@/components/OfficeMap'));
 import 'leaflet/dist/leaflet.css';
 
 export default function ContactPage() {
-  const ref = useRef(null);
-  const isInView = useInView(ref, { once: true, margin: '-100px' });
-
   return (
     <>
       <SEOHead
@@ -55,7 +52,7 @@ export default function ContactPage() {
       </div>
 
       {/* Contact Form & Info Section */}
-      <section ref={ref} className="py-20 bg-white relative overflow-hidden">
+      <section className="py-20 bg-white relative overflow-hidden">
         <div className="absolute inset-0 opacity-[0.02]">
           <div className="absolute inset-0 bg-[linear-gradient(45deg,transparent_25%,rgba(201,181,137,1)_25%,rgba(201,181,137,1)_50%,transparent_50%,transparent_75%,rgba(201,181,137,1)_75%,rgba(201,181,137,1)_100%)] bg-[length:60px_60px]" />
         </div>
@@ -66,7 +63,8 @@ export default function ContactPage() {
               {/* Contact Form */}
               <motion.div
                 initial={{ opacity: 0, x: -30 }}
-                animate={isInView ? { opacity: 1, x: 0 } : {}}
+                whileInView={{ opacity: 1, x: 0 }}
+                viewport={{ once: true, margin: '-100px' }}
                 transition={{ duration: 0.6, ease: [0.16, 1, 0.3, 1] }}
                 className="lg:col-span-7"
               >
@@ -78,7 +76,8 @@ export default function ContactPage() {
               {/* Contact Info */}
               <motion.div
                 initial={{ opacity: 0, x: 30 }}
-                animate={isInView ? { opacity: 1, x: 0 } : {}}
+                whileInView={{ opacity: 1, x: 0 }}
+                viewport={{ once: true, margin: '-100px' }}
                 transition={{ duration: 0.6, delay: 0.1, ease: [0.16, 1, 0.3, 1] }}
                 className="lg:col-span-5 space-y-8"
               >
@@ -119,7 +118,8 @@ export default function ContactPage() {
                         <motion.div
                           key={item.title}
                           initial={{ opacity: 0, y: 20 }}
-                          animate={isInView ? { opacity: 1, y: 0 } : {}}
+                          whileInView={{ opacity: 1, y: 0 }}
+                          viewport={{ once: true, margin: '-100px' }}
                           transition={{ duration: 0.5, delay: 0.2 + index * 0.1 }}
                           className="flex items-start gap-4 p-5 bg-white rounded-2xl border border-gp-ink/10 hover:border-gp-accent/30 hover:shadow-lg transition-all duration-300 group"
                         >
@@ -152,7 +152,8 @@ export default function ContactPage() {
                 {/* WhatsApp CTA */}
                 <motion.div
                   initial={{ opacity: 0, y: 20 }}
-                  animate={isInView ? { opacity: 1, y: 0 } : {}}
+                  whileInView={{ opacity: 1, y: 0 }}
+                  viewport={{ once: true, margin: '-100px' }}
                   transition={{ duration: 0.6, delay: 0.6 }}
                   className="pt-8 border-t border-gp-ink/10"
                 >

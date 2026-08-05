@@ -1,5 +1,4 @@
-import { motion, useInView } from 'framer-motion';
-import { useRef } from 'react';
+import { motion } from 'framer-motion';
 import { Home, Sprout, Trees, Award, Heart, Building } from 'lucide-react';
 
 const journeySteps = [
@@ -36,14 +35,8 @@ const journeySteps = [
 ];
 
 export default function StoryJourney() {
-  const ref = useRef(null);
-  const isInView = useInView(ref, { once: true, margin: '-50px' });
-
   return (
-    <section
-      ref={ref}
-      className="py-32 bg-white relative overflow-hidden"
-    >
+    <section className="py-32 bg-white relative overflow-hidden">
       {/* Subtle red accent glow */}
       <div className="absolute top-0 left-1/3 w-96 h-96 bg-gp-accent/5 rounded-full blur-3xl pointer-events-none" />
       <div className="absolute bottom-0 right-1/3 w-96 h-96 bg-gp-accent/5 rounded-full blur-3xl pointer-events-none" />
@@ -81,7 +74,8 @@ export default function StoryJourney() {
               <motion.div
                 key={step.title}
                 initial={{ opacity: 0, y: 30 }}
-                animate={isInView ? { opacity: 1, y: 0 } : {}}
+                whileInView={{ opacity: 1, y: 0 }}
+                viewport={{ once: true, margin: '-50px' }}
                 transition={{ duration: 0.6, delay: index * 0.08, ease: [0.16, 1, 0.3, 1] }}
                 className="group relative"
               >

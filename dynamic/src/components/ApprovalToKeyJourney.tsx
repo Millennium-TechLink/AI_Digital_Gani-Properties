@@ -1,5 +1,4 @@
-import { motion, useInView } from 'framer-motion';
-import { useRef } from 'react';
+import { motion } from 'framer-motion';
 import { FileText, PenTool, Calculator, HardHat, Palette, Key } from 'lucide-react';
 
 const constructionSteps = [
@@ -42,12 +41,8 @@ const constructionSteps = [
 ];
 
 export default function ApprovalToKeyJourney() {
-  const ref = useRef(null);
-  const isInView = useInView(ref, { once: true, margin: '-50px' });
-
   return (
-    <section 
-      ref={ref} 
+    <section
       className="py-32 bg-white relative overflow-hidden"
       style={{
         willChange: 'auto',
@@ -95,7 +90,8 @@ export default function ApprovalToKeyJourney() {
                 <motion.div
                   key={step.title}
                   initial={{ opacity: 0, y: 30 }}
-                  animate={isInView ? { opacity: 1, y: 0 } : {}}
+                  whileInView={{ opacity: 1, y: 0 }}
+                  viewport={{ once: true, margin: '-50px' }}
                   transition={{ duration: 0.5, delay, ease: [0.16, 1, 0.3, 1] }}
                   className="relative group pt-8 lg:pt-0"
                 >

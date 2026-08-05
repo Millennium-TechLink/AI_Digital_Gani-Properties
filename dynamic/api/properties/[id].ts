@@ -1,7 +1,7 @@
-import { supabase } from '../lib/supabase';
-import { authenticateToken } from '../lib/auth';
+import { supabase } from '../lib/supabase.js';
+import { authenticateToken } from '../lib/auth.js';
 import type { VercelRequest, VercelResponse } from '@vercel/node';
-import { extractCoordinatesFromGoogleMaps } from '../lib/googleMaps';
+import { extractCoordinatesFromGoogleMaps } from '../lib/googleMaps.js';
 
 function setCorsHeaders(res: VercelResponse) {
   res.setHeader('Access-Control-Allow-Credentials', 'true');

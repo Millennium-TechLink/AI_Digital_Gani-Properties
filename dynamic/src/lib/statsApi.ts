@@ -43,6 +43,12 @@ export const statsApi = {
     const response = await axios.get(`${API_BASE}/stats`, {
       headers: { Authorization: `Bearer ${token}` }
     });
+    // If /api/stats doesn't resolve to a real function, the SPA catch-all
+    // rewrite serves index.html (200, HTML) instead of a real stats object.
+    if (!response.data || typeof response.data !== 'object' || Array.isArray(response.data)) {
+      console.error('statsApi.getStats: expected an object, got', typeof response.data);
+      return { totalVisits: 0, totalLeads: 0, dailyHits: {} };
+    }
     return response.data;
   },
 
@@ -54,6 +60,12 @@ export const statsApi = {
     const response = await axios.get(`${API_BASE}/leads`, {
       headers: { Authorization: `Bearer ${token}` }
     });
+    // Same SPA-fallback guard as above - leads.filter(...) runs at render
+    // time in Dashboard, so a non-array here would crash the whole page.
+    if (!Array.isArray(response.data)) {
+      console.error('statsApi.getLeads: expected an array, got', typeof response.data);
+      return [];
+    }
     return response.data;
   },
 

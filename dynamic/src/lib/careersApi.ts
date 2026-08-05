@@ -57,7 +57,15 @@ export const careersApi = {
   getAll: async (): Promise<Career[]> => {
     try {
       const response = await api.get<Career[]>('/careers');
-      return response.data || [];
+      // If /api/careers doesn't resolve to a real function, the SPA catch-all
+      // rewrite serves index.html instead - a 200 response, but HTML, not an
+      // array. Guard against that shape instead of handing a raw string (or
+      // anything else non-array) to callers that assume an array.
+      if (!Array.isArray(response.data)) {
+        console.error('careersApi.getAll: expected an array, got', typeof response.data);
+        return [];
+      }
+      return response.data;
     } catch (error) {
       if (axios.isAxiosError(error)) {
         throw new CareersApiError(error.response?.data?.error || error.message, error.response?.status, error);

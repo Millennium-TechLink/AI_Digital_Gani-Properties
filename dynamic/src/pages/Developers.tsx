@@ -80,9 +80,9 @@ export default function DevelopersPage() {
       />
 
       {/* Hero Section */}
-      <section 
+      <section
         ref={heroRef}
-        className="relative min-h-[90vh] flex items-center justify-center overflow-hidden bg-gp-ink"
+        className="relative min-h-[90vh] flex items-center justify-center overflow-hidden bg-gp-ink pt-24"
       >
         <div className="absolute inset-0 z-0 opacity-40">
           <motion.div style={{ y: heroY }} className="h-full w-full">

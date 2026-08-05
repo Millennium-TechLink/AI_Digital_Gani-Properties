@@ -1,34 +1,66 @@
-import { useState, useEffect } from 'react';
+import { useState, useEffect, useRef } from 'react';
 import { ArrowUp } from 'lucide-react';
 import { motion, AnimatePresence } from 'framer-motion';
 import { useLenis } from 'lenis/react';
 
 export default function BackToTop() {
   const [isVisible, setIsVisible] = useState(false);
+  const isVisibleRef = useRef(false);
+  const debounceRef = useRef<ReturnType<typeof setTimeout> | null>(null);
   const lenis = useLenis();
 
   useEffect(() => {
-    const toggleVisibility = () => {
-      // Show button after scrolling down 200px
-      // Hide it when scrolled back to top
-      if (window.scrollY > 200) {
-        setIsVisible(true);
-      } else {
-        setIsVisible(false);
+    // Hysteresis (show above 200px, hide below 100px, hold steady in between)
+    // stops a single scroll gesture right at one threshold from flickering
+    // the button. The gap is kept small on purpose - a wide gap stops
+    // flicker too, but also delays the button noticeably (it previously
+    // took 300px of scroll to show up, which read as sluggish). A short
+    // 40ms debounce smooths over Lenis's momentum without being felt as lag.
+    const evaluate = (scrollY: number) => {
+      let next = isVisibleRef.current;
+      if (scrollY > 200) next = true;
+      else if (scrollY < 100) next = false;
+
+      if (next === isVisibleRef.current) {
+        if (debounceRef.current) {
+          clearTimeout(debounceRef.current);
+          debounceRef.current = null;
+        }
+        return;
       }
+
+      if (debounceRef.current) clearTimeout(debounceRef.current);
+      debounceRef.current = setTimeout(() => {
+        isVisibleRef.current = next;
+        setIsVisible(next);
+        debounceRef.current = null;
+      }, 40);
     };
+
+    const handleNativeScroll = () => evaluate(window.scrollY);
+    const handleLenisScroll = (e: { scroll: number }) => evaluate(e.scroll);
 
     // Check initial scroll position on mount
-    toggleVisibility();
+    evaluate(window.scrollY);
 
-    // Add scroll event listener with passive option for better performance
-    window.addEventListener('scroll', toggleVisibility, { passive: true });
-    
-    // Cleanup: remove event listener on unmount
+    // Lenis's own scroll event is a single consistent source of truth tied
+    // directly to its animation frames - prefer it over the native scroll
+    // event, which can report noisier intermediate values during momentum.
+    if (lenis) {
+      lenis.on('scroll', handleLenisScroll);
+    } else {
+      window.addEventListener('scroll', handleNativeScroll, { passive: true });
+    }
+
     return () => {
-      window.removeEventListener('scroll', toggleVisibility);
+      if (debounceRef.current) clearTimeout(debounceRef.current);
+      if (lenis) {
+        lenis.off('scroll', handleLenisScroll);
+      } else {
+        window.removeEventListener('scroll', handleNativeScroll);
+      }
     };
-  }, []);
+  }, [lenis]);
 
   const scrollToTop = () => {
     if (lenis) {
