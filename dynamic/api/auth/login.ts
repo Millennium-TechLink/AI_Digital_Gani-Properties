@@ -52,7 +52,11 @@ export default async function handler(
       const token = jwt.sign(
         { username, type: 'admin' },
         JWT_SECRET,
-        { expiresIn: JWT_EXPIRES_IN }
+        // @types/jsonwebtoken types expiresIn as a branded "StringValue" pattern
+        // (from the `ms` package), not a plain string - JWT_EXPIRES_IN is read
+        // from an env var so it's necessarily typed as `string`. Cast to the
+        // exact expected type rather than widening with `any`.
+        { expiresIn: JWT_EXPIRES_IN as jwt.SignOptions['expiresIn'] }
       );
 
       return res.json({

@@ -36,7 +36,7 @@ function urlEntry(loc: string, lastmod: string, changefreq: string, priority: st
   return `  <url>\n    <loc>${escapeXml(loc)}</loc>\n    <lastmod>${lastmod}</lastmod>\n    <changefreq>${changefreq}</changefreq>\n    <priority>${priority}</priority>\n  </url>`;
 }
 
-export default async function handler(req: VercelRequest, res: VercelResponse) {
+export default async function handler(_req: VercelRequest, res: VercelResponse) {
   const today = new Date().toISOString().split('T')[0];
 
   const entries: string[] = STATIC_ROUTES.map((route) =>

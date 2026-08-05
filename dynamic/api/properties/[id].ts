@@ -138,7 +138,7 @@ export default async function handler(
         return res.status(404).json({ error: 'Property not found' });
       }
       
-      return res.status(204).send();
+      return res.status(204).send('');
     } catch (error: any) {
       console.error('Error deleting property:', error);
       return res.status(500).json({ error: 'Failed to delete property' });
