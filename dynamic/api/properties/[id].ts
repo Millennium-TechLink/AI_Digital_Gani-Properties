@@ -41,8 +41,9 @@ export default async function handler(
         postedAt: data.posted_at,
         priceLabel: data.price_label,
         highlights: Array.isArray(data.highlights) ? data.highlights : JSON.parse(data.highlights || '[]'),
+        images: Array.isArray(data.images) ? data.images : JSON.parse(data.images || '[]'),
       };
-      
+
       return res.json(property);
     } catch (error: any) {
       console.error('Error fetching property:', error);
@@ -112,8 +113,9 @@ export default async function handler(
         postedAt: data.posted_at,
         priceLabel: data.price_label,
         highlights: Array.isArray(data.highlights) ? data.highlights : JSON.parse(data.highlights || '[]'),
+        images: Array.isArray(data.images) ? data.images : JSON.parse(data.images || '[]'),
       };
-      
+
       return res.json(property);
     } catch (error: any) {
       console.error('Error updating property:', error);

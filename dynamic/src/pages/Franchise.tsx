@@ -10,6 +10,7 @@ import {
 import { Button } from '@/components/ui/button';
 import { Link } from 'react-router-dom';
 import Image from '@/components/Image';
+import { useScrollLock } from '@/lib/useScrollLock';
 
 const franchiseModels = [
   {
@@ -128,6 +129,8 @@ export default function FranchisePage() {
   const [imageLoaded, setImageLoaded] = useState(false);
 
   const activeModel = franchiseModels.find(m => m.id === activeModelId);
+
+  useScrollLock(activeModelId !== null);
 
   return (
     <>

@@ -20,7 +20,7 @@ export default function PropertyCard({ property, variant = 'grid' }: PropertyCar
   };
 
   const Badge = ({ children, className }: { children: React.ReactNode; className?: string }) => (
-    <div className={cn("px-3 py-1 rounded-full text-[10px] font-bold tracking-widest uppercase border backdrop-blur-md transition-all duration-300 shadow-sm flex items-center justify-center", className)}>
+    <div className={cn("px-2 py-0.5 sm:px-3 sm:py-1 rounded-full text-[8px] sm:text-[10px] font-bold tracking-widest uppercase border backdrop-blur-md transition-all duration-300 shadow-sm flex items-center justify-center", className)}>
       {children}
     </div>
   );
@@ -78,9 +78,9 @@ export default function PropertyCard({ property, variant = 'grid' }: PropertyCar
                 <p className="text-sm text-gp-ink-muted mb-4">{property.size}</p>
               )}
               {property.highlights.length > 0 && (
-                <ul className="flex flex-wrap gap-2 mb-4">
+                <ul className="flex flex-nowrap gap-2 mb-4 overflow-x-auto scrollbar-hide">
                   {property.highlights.slice(0, 3).map((highlight, idx) => (
-                    <li key={idx} className="text-xs bg-gp-surface/10 text-gp-ink px-2 py-1 rounded-lg">
+                    <li key={idx} className="text-xs bg-gp-surface/10 text-gp-ink px-2 py-1 rounded-lg whitespace-nowrap flex-shrink-0">
                       {highlight}
                     </li>
                   ))}
@@ -108,17 +108,22 @@ export default function PropertyCard({ property, variant = 'grid' }: PropertyCar
       }}
     >
       {property.featured && (
-        <div className="absolute top-4 right-4 z-20">
-          <div className="px-3 py-1.5 bg-gp-ink/80 backdrop-blur-md border border-gp-red/30 rounded-full shadow-[0_0_15px_rgba(221,43,28,0.2)] flex items-center gap-2">
-            <span className="text-gp-gold text-xs">★</span>
-            <span className="text-[10px] font-black text-white uppercase tracking-[0.2em]">Featured</span>
+        // Stacked below the status badge on narrow screens instead of sharing
+        // its row - on a card squeezed down to ~250px (like this one inside
+        // the home carousel), a top-left status pill and a top-right featured
+        // pill collide in the middle. From sm: up there's enough width for
+        // the original side-by-side corners.
+        <div className="absolute top-9 left-3 sm:top-4 sm:left-auto sm:right-4 z-20">
+          <div className="px-2 py-0.5 sm:px-3 sm:py-1.5 bg-gp-ink/80 backdrop-blur-md border border-gp-red/30 rounded-full shadow-[0_0_15px_rgba(221,43,28,0.2)] flex items-center gap-1 sm:gap-2">
+            <span className="text-gp-gold text-[10px] sm:text-xs">★</span>
+            <span className="text-[8px] sm:text-[10px] font-black text-white uppercase tracking-[0.15em] sm:tracking-[0.2em]">Featured</span>
           </div>
         </div>
       )}
       <Link to={`/property/${property.slug}`}>
         <div className="group bg-white rounded-3xl overflow-hidden border border-gp-ink/10 hover:border-gp-accent/30 transition-all duration-500 hover:shadow-2xl cursor-pointer h-full flex flex-col">
           <motion.div
-            className="relative h-[280px] overflow-hidden bg-gp-surface/5"
+            className="relative h-[150px] sm:h-[280px] overflow-hidden bg-gp-surface/5"
             whileHover={{ scale: 1.02 }}
             transition={{ duration: 0.4 }}
           >
@@ -128,28 +133,41 @@ export default function PropertyCard({ property, variant = 'grid' }: PropertyCar
               fill
               className="object-cover transition-transform duration-700 group-hover:scale-110 z-0"
             />
-          <div className="absolute top-4 left-4 z-10">
+          <div className="absolute top-3 left-3 sm:top-4 sm:left-4 z-10">
             <Badge className={cn('', statusColors[property.status as keyof typeof statusColors])}>
               {property.status}
             </Badge>
           </div>
           </motion.div>
-        <div className="pt-10 px-8 pb-8 flex-1 flex flex-col min-h-[240px]">
-          <h3 className="text-2xl font-display font-semibold text-gp-ink mb-3 group-hover:text-gp-accent transition-colors leading-tight overflow-visible">
+        <div className="pt-6 px-4 pb-4 sm:pt-10 sm:px-8 sm:pb-8 flex-1 flex flex-col min-h-[150px] sm:min-h-[240px]">
+          <h3 className="text-lg sm:text-2xl font-display font-semibold text-gp-ink mb-1.5 sm:mb-3 group-hover:text-gp-accent transition-colors leading-tight overflow-visible">
             {property.title}
           </h3>
-          <div className="flex items-center gap-2 text-gp-ink-muted mb-4">
-            <MapPin className="h-4 w-4" />
+          <div className="flex items-center gap-2 text-gp-ink-muted mb-2 sm:mb-4">
+            <MapPin className="h-4 w-4 flex-shrink-0" />
             <span className="text-sm">{property.area}, {property.city}</span>
           </div>
           {property.priceLabel && (
-            <p className="text-xl font-semibold text-gp-accent mb-2">{property.priceLabel}</p>
+            <p className="text-base sm:text-xl font-semibold text-gp-accent mb-1.5 sm:mb-2">{property.priceLabel}</p>
           )}
           {property.size && (
-            <p className="text-sm text-gp-ink-muted mb-4">{property.size}</p>
+            <p className="text-sm text-gp-ink-muted mb-2 sm:mb-4">{property.size}</p>
           )}
           {property.highlights.length > 0 && (
-            <ul className="flex flex-wrap gap-2 mb-4 flex-1">
+            <ul
+              className="flex flex-nowrap gap-1.5 sm:gap-2 mb-4 overflow-x-auto scrollbar-hide"
+              // The row can hold more tags than a narrow mobile card is wide
+              // (e.g. inside the home carousel, ~200px of usable width) even
+              // after shrinking the pills, so it stays natively scrollable -
+              // but scrollbar-hide removes the one native hint that there's
+              // more to see. This mask fades the last ~24px to transparent
+              // as a lightweight "there's more this way" affordance instead
+              // of a hard, unindicated cut-off.
+              style={{
+                maskImage: 'linear-gradient(to right, black calc(100% - 24px), transparent 100%)',
+                WebkitMaskImage: 'linear-gradient(to right, black calc(100% - 24px), transparent 100%)',
+              }}
+            >
               {property.highlights.slice(0, 3).map((highlight, idx) => (
                 <motion.li
                   key={idx}
@@ -157,7 +175,7 @@ export default function PropertyCard({ property, variant = 'grid' }: PropertyCar
                   whileInView={{ opacity: 1, scale: 1 }}
                   viewport={{ once: true }}
                   transition={{ duration: 0.3, delay: idx * 0.1 }}
-                  className="text-xs bg-gp-surface/10 text-gp-ink px-2 py-1 rounded-lg transition-all duration-300 group-hover:bg-gp-accent/20"
+                  className="text-[10px] sm:text-xs bg-gp-surface/10 text-gp-ink px-1.5 py-0.5 sm:px-2 sm:py-1 rounded-lg transition-all duration-300 group-hover:bg-gp-accent/20 whitespace-nowrap flex-shrink-0"
                 >
                   {highlight}
                 </motion.li>

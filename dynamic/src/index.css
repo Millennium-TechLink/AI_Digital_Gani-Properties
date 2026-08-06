@@ -133,6 +133,17 @@
   body,
   #root {
     position: relative;
+    /* Several sections animate in with a horizontal whileInView offset
+       (e.g. initial={{ x: -30 }}) that sits applied, untransformed, on
+       whatever is still below the fold until the user scrolls it into
+       view. Nothing about that transform is clipped by default, so the
+       document briefly measures wider than the viewport and the page
+       allows a lateral scroll/swipe right after load - it only "heals"
+       section by section as each whileInView fires. Clipping the X axis
+       here is the one guard that neutralizes that for every current and
+       future section, regardless of any single component's animation. */
+    overflow-x: hidden;
+    max-width: 100vw;
   }
 
   body {
@@ -237,6 +248,17 @@
     position: relative;
     background-color: rgba(221, 43, 28, 0.01);
     border: 1px solid rgba(221, 43, 28, 0.05);
+  }
+
+  /* For single-row chip lists (e.g. property highlight tags) that scroll
+     horizontally instead of wrapping onto new lines - a visible scrollbar
+     there is more visual noise than it's worth for a short row of tags. */
+  .scrollbar-hide {
+    -ms-overflow-style: none;
+    scrollbar-width: none;
+  }
+  .scrollbar-hide::-webkit-scrollbar {
+    display: none;
   }
 }
 

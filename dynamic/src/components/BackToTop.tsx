@@ -87,15 +87,12 @@ export default function BackToTop() {
             ease: [0.16, 1, 0.3, 1]
           }}
           onClick={scrollToTop}
-          // Stacked above the Chatbot toggle (fixed bottom-6 right-6, 64px) so the
-          // two floating buttons never overlap - Chatbot renders at a higher z-index
-          // and was sitting on top of / intercepting clicks on this button otherwise.
-          className="fixed bottom-28 right-8 z-50 w-14 h-14 bg-gradient-to-br from-gp-accent to-gp-gold rounded-full shadow-2xl flex items-center justify-center text-white hover:shadow-gp-accent/50 transition-all duration-300 group cursor-pointer"
-          style={{
-            position: 'fixed',
-            bottom: '7rem',
-            right: '2rem',
-          }}
+          // Stacked above the Chatbot toggle (fixed bottom-4/bottom-6 right-4/right-6,
+          // 48px on mobile / 64px from sm:) so the two floating buttons never overlap -
+          // Chatbot renders at a higher z-index and was sitting on top of / intercepting
+          // clicks on this button otherwise. Sized down on mobile, along with the
+          // Chatbot toggle, so together they cover less of the page content while scrolling.
+          className="fixed bottom-20 right-4 sm:bottom-28 sm:right-8 z-50 w-11 h-11 sm:w-14 sm:h-14 bg-gradient-to-br from-gp-accent to-gp-gold rounded-full shadow-2xl flex items-center justify-center text-white hover:shadow-gp-accent/50 transition-all duration-300 group cursor-pointer"
           aria-label="Back to top"
         >
           {/* Animated Glow effect */}
@@ -123,7 +120,7 @@ export default function BackToTop() {
               ease: "easeInOut"
             }}
           >
-            <ArrowUp className="relative z-10 h-6 w-6 group-hover:-translate-y-1 transition-transform duration-300" />
+            <ArrowUp className="relative z-10 h-5 w-5 sm:h-6 sm:w-6 group-hover:-translate-y-1 transition-transform duration-300" />
           </motion.div>
         </motion.button>
       )}

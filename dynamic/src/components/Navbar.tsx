@@ -7,6 +7,7 @@ import { getActiveCategoryFromPath, getCategoryFromPropertyType } from '@/lib/ro
 import { getSubcategories } from '@/config/categories';
 import { PropertyType } from '@/types/property';
 import Image from '@/components/Image';
+import { useScrollLock } from '@/lib/useScrollLock';
 
 export default function Navbar() {
   const [isOpen, setIsOpen] = useState(false);
@@ -50,16 +51,7 @@ export default function Navbar() {
   }, [isHomePage]);
 
   // Lock scroll when mobile menu is open
-  useEffect(() => {
-    if (isOpen) {
-      document.body.style.overflow = 'hidden';
-    } else {
-      document.body.style.overflow = 'unset';
-    }
-    return () => {
-      document.body.style.overflow = 'unset';
-    };
-  }, [isOpen]);
+  useScrollLock(isOpen);
 
   // Close dropdown when clicking outside
   useEffect(() => {
@@ -103,14 +95,24 @@ export default function Navbar() {
   ];
 
   // Determine header styling based on page and scroll position
+  const isHeaderOpaque = isOpen || scrolled || !isHomePage;
+
   const getHeaderClasses = () => {
+    if (isOpen) {
+      // Mobile menu open: the logo row and the link list need to read as one
+      // continuous white surface. Rounding only the bottom corners here
+      // (not on the inner link list) and giving it the shadow avoids the
+      // two-white-layers look - a plain-cornered white bar (the header)
+      // peeking out from behind a separately-rounded white card (the old
+      // per-panel background) nested inside it.
+      return 'bg-white shadow-lg rounded-b-3xl';
+    }
     if (isHomePage && !scrolled) {
       // Homepage at top: fully transparent, no blur
       return '';
-    } else {
-      // Homepage scrolled or other pages: white with blur
-      return 'backdrop-blur-md shadow-lg';
     }
+    // Homepage scrolled or other pages: white with blur
+    return 'backdrop-blur-md shadow-lg';
   };
 
   return (
@@ -123,28 +125,26 @@ export default function Navbar() {
         getHeaderClasses()
       )}
       style={
-        isHomePage && !scrolled 
-          ? { backgroundColor: 'transparent', backdropFilter: 'none' } 
-          : { backgroundColor: '#FFFFFF' }
+        isHeaderOpaque
+          ? { backgroundColor: '#FFFFFF' }
+          : { backgroundColor: 'transparent', backdropFilter: 'none' }
       }
     >
-      <nav className="container mx-auto px-4 lg:px-6">
+      <nav className="container mx-auto pl-4 pr-4 lg:px-6">
         <div className="flex h-20 items-center justify-between">
-          <Link to="/" className="flex items-center group relative max-w-[180px] sm:max-w-none">
+          <Link to="/" className="flex items-center group relative">
             <motion.div
               whileHover={{ scale: 1.05 }}
               whileTap={{ scale: 0.95 }}
               transition={{ duration: 0.3, ease: [0.16, 1, 0.3, 1] }}
               className={cn(
-                "relative h-20 w-auto flex-shrink-1 flex items-center translate-y-1 transition-all duration-500",
-                isHomePage && !scrolled ? "brightness-0 invert opacity-90" : ""
+                "relative h-20 w-auto flex-shrink-1 flex items-center transition-all duration-500",
+                !isHeaderOpaque ? "brightness-0 invert opacity-90" : ""
               )}
             >
               <Image
                 src="/images/Logo.svg"
                 alt="Gani Properties"
-                width={180}
-                height={58}
                 className="h-12 sm:h-16 w-auto object-contain transition-transform group-hover:scale-105"
                 priority
               />
@@ -251,7 +251,7 @@ export default function Navbar() {
             whileTap={{ scale: 0.9 }}
             className={cn(
               'lg:hidden transition-colors',
-              scrolled || !isHomePage ? 'text-gp-ink' : 'text-white'
+              isHeaderOpaque ? 'text-gp-ink' : 'text-white'
             )}
             onClick={() => setIsOpen(!isOpen)}
             aria-label="Toggle menu"
@@ -290,7 +290,7 @@ export default function Navbar() {
               animate={{ opacity: 1, height: 'auto' }}
               exit={{ opacity: 0, height: 0 }}
               transition={{ duration: 0.3, ease: [0.16, 1, 0.3, 1] }}
-              className="lg:hidden pb-4 space-y-2 overflow-hidden bg-white px-4 rounded-b-2xl shadow-xl"
+              className="lg:hidden pb-4 space-y-2 overflow-hidden px-4"
             >
               {navLinks.map((link, index) => {
                 if (link.to === '/properties' && activeCategory && subcategories.length > 0) {

@@ -87,7 +87,7 @@ export default function ImmersivePropertyShowcase({ properties }: ImmersivePrope
         {totalSlides > 0 ? (
           <div className="max-w-4xl mx-auto">
             {/* Flex row: [Button] [Slide] [Button] — buttons sit OUTSIDE overflow-hidden so they never clip */}
-            <div className="flex items-center gap-5">
+            <div className="flex items-center gap-3 sm:gap-5">
 
               {/* Prev button — always in DOM flow, never clipped */}
               <button
@@ -96,10 +96,9 @@ export default function ImmersivePropertyShowcase({ properties }: ImmersivePrope
                   prevSlide();
                 }}
                 disabled={totalSlides <= 1}
+                className="w-10 h-10 sm:w-[52px] sm:h-[52px]"
                 style={{
                   flexShrink: 0,
-                  width: '52px',
-                  height: '52px',
                   borderRadius: '50%',
                   backgroundColor: '#0E1B1C',
                   color: '#C9B589',
@@ -114,20 +113,15 @@ export default function ImmersivePropertyShowcase({ properties }: ImmersivePrope
                 }}
                 aria-label="Previous slide"
               >
-                <ChevronLeft size={26} />
+                <ChevronLeft size={20} className="sm:hidden" />
+                <ChevronLeft size={26} className="hidden sm:block" />
               </button>
 
               {/* Slide viewport */}
               <div
                 onMouseEnter={() => setIsPaused(true)}
                 onMouseLeave={() => setIsPaused(false)}
-                style={{
-                  flex: 1,
-                  height: '520px',
-                  overflow: 'hidden',
-                  borderRadius: '24px',
-                  position: 'relative',
-                }}
+                className="flex-1 h-[380px] sm:h-[520px] overflow-hidden rounded-[24px] relative"
               >
                 <AnimatePresence initial={false} custom={direction} mode="popLayout">
                   <motion.div
@@ -195,10 +189,9 @@ export default function ImmersivePropertyShowcase({ properties }: ImmersivePrope
                   nextSlide();
                 }}
                 disabled={totalSlides <= 1}
+                className="w-10 h-10 sm:w-[52px] sm:h-[52px]"
                 style={{
                   flexShrink: 0,
-                  width: '52px',
-                  height: '52px',
                   borderRadius: '50%',
                   backgroundColor: '#0E1B1C',
                   color: '#C9B589',
@@ -213,7 +206,8 @@ export default function ImmersivePropertyShowcase({ properties }: ImmersivePrope
                 }}
                 aria-label="Next slide"
               >
-                <ChevronRight size={26} />
+                <ChevronRight size={20} className="sm:hidden" />
+                <ChevronRight size={26} className="hidden sm:block" />
               </button>
             </div>
 

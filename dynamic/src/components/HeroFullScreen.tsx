@@ -11,28 +11,28 @@ const sections = [
     tag: 'Residential',
     title: 'PREMIUM PLOTS',
     sub: 'Bengaluru North · Est. 2009',
-    background: 'https://images.pexels.com/photos/440731/pexels-photo-440731.jpeg?auto=compress&cs=tinysrgb&w=1920&h=1080&fit=crop',
+    background: 'https://images.pexels.com/photos/440731/pexels-photo-440731.jpeg?auto=compress&cs=tinysrgb&w=2560&q=85',
   },
   {
     id: 'fertile-farmlands',
     tag: 'Agricultural',
     title: 'FERTILE FARMLANDS',
     sub: 'Chikkaballapur · Organic Growth',
-    background: 'https://images.pexels.com/photos/974314/pexels-photo-974314.jpeg?auto=compress&cs=tinysrgb&w=1920&h=1080&fit=crop',
+    background: 'https://images.pexels.com/photos/974314/pexels-photo-974314.jpeg?auto=compress&cs=tinysrgb&w=2560&q=85',
   },
   {
     id: 'strategic-location',
     tag: 'Commercial',
     title: 'PRIME LOCATION',
     sub: 'Yelahanka Hub · High Returns',
-    background: 'https://images.pexels.com/photos/1105766/pexels-photo-1105766.jpeg?auto=compress&cs=tinysrgb&w=1920&h=1080&fit=crop',
+    background: 'https://images.pexels.com/photos/1105766/pexels-photo-1105766.jpeg?auto=compress&cs=tinysrgb&w=2560&q=85',
   },
   {
     id: 'future-legacy',
     tag: 'Legacy',
     title: 'BUILD YOUR LEGACY',
     sub: 'Trusted Partner · Since 2009',
-    background: 'https://images.pexels.com/photos/157811/pexels-photo-157811.jpeg?auto=compress&cs=tinysrgb&w=1920&h=1080&fit=crop',
+    background: 'https://images.pexels.com/photos/157811/pexels-photo-157811.jpeg?auto=compress&cs=tinysrgb&w=2560&q=85',
   },
 ];
 

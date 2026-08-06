@@ -39,6 +39,7 @@ export default async function handler(
         ...p,
         postedAt: p.posted_at,
         highlights: Array.isArray(p.highlights) ? p.highlights : JSON.parse(p.highlights || '[]'),
+        images: Array.isArray(p.images) ? p.images : JSON.parse(p.images || '[]'),
       }));
       
       return res.json(properties);
@@ -111,8 +112,9 @@ export default async function handler(
         postedAt: data.posted_at,
         priceLabel: data.price_label,
         highlights: Array.isArray(data.highlights) ? data.highlights : JSON.parse(data.highlights || '[]'),
+        images: Array.isArray(data.images) ? data.images : JSON.parse(data.images || '[]'),
       };
-      
+
       return res.status(201).json(property);
     } catch (error: any) {
       console.error('Error creating property:', error);

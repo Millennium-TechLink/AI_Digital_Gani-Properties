@@ -169,12 +169,18 @@ export default function Chatbot() {
         whileHover={{ scale: 1.1, rotate: 5 }}
         whileTap={{ scale: 0.9 }}
         onClick={() => setIsOpen(!isOpen)}
-        className="fixed bottom-6 right-6 z-[9999] w-16 h-16 bg-[#0D0D0D] text-white rounded-full shadow-[0_10px_30px_rgba(0,0,0,0.5)] flex items-center justify-center border border-gp-accent/40 overflow-hidden group"
+        className="fixed bottom-4 right-4 sm:bottom-6 sm:right-6 z-[9999] w-12 h-12 sm:w-16 sm:h-16 bg-[#0D0D0D] text-white rounded-full shadow-[0_10px_30px_rgba(0,0,0,0.5)] flex items-center justify-center border border-gp-accent/40 overflow-hidden group"
       >
         <div className="absolute inset-0 bg-gradient-to-tr from-gp-accent/10 to-transparent opacity-0 group-hover:opacity-100 transition-opacity" />
-        {isOpen ? <X size={28} /> : (
+        {isOpen ? (
+          <>
+            <X size={22} className="sm:hidden" />
+            <X size={28} className="hidden sm:block" />
+          </>
+        ) : (
           <div className="relative">
-            <MessageCircle size={30} className="relative z-10" />
+            <MessageCircle size={22} className="relative z-10 sm:hidden" />
+            <MessageCircle size={30} className="relative z-10 hidden sm:block" />
             <span className="absolute -top-1 -right-1 w-4 h-4 bg-gp-accent rounded-full border-2 border-[#0D0D0D] animate-ping" />
             <span className="absolute -top-1 -right-1 w-4 h-4 bg-gp-accent rounded-full border-2 border-[#0D0D0D]" />
           </div>
@@ -206,7 +212,17 @@ export default function Chatbot() {
             </div>
 
             {/* Messages Area */}
-            <div className="flex-1 overflow-y-auto p-5 bg-[#F9F9F9] space-y-4">
+            {/* overscroll-contain alone isn't enough: Lenis intercepts wheel
+                events at the document level before the browser's native
+                overscroll-behavior logic ever sees them per-element. Lenis's
+                own opt-out mechanism is the data-lenis-prevent attribute -
+                without it, scrolling this list to its edge and continuing
+                hands the wheel delta straight to Lenis, which scrolls the
+                page behind the chatbot instead of stopping here. */}
+            <div
+              data-lenis-prevent
+              className="flex-1 overflow-y-auto overscroll-contain p-5 bg-[#F9F9F9] space-y-4"
+            >
               {messages.map((msg) => (
                 <motion.div
                   key={msg.id}

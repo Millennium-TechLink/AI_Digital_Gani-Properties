@@ -169,19 +169,27 @@ export default function Footer() {
             <p className="text-white/80 text-sm mb-4 leading-relaxed">
               Subscribe to get notified about new properties and special offers.
             </p>
-            <form onSubmit={handleNewsletter} className="flex flex-col sm:flex-row gap-2">
+            <form onSubmit={handleNewsletter} className="flex flex-col sm:flex-row gap-3">
               <Input
                 type="email"
                 placeholder="Your email"
                 value={email}
                 onChange={(e) => setEmail(e.target.value)}
                 required
-                className="bg-white/10 border-white/30 text-white placeholder:text-white/70 focus:border-white/50 flex-1"
+                // flex-1 is deliberately sm:-only: its flex-basis:0% would
+                // otherwise make flexbox ignore h-14 entirely on the mobile
+                // flex-col layout, sizing the input off its min-content
+                // height (~22px) instead - w-full alone already gives it
+                // full width there, so flex-1 only needs to kick in once
+                // sm:flex-row turns it into "grow to fill the space next
+                // to the button".
+                className="bg-white border-transparent text-gp-ink placeholder:text-gp-ink-muted focus-visible:ring-offset-0 w-full sm:flex-1 h-14 px-5 text-base"
               />
               <Button
                 type="submit"
+                size="lg"
                 disabled={newsletterLoading}
-                className="bg-gp-accent text-white hover:bg-red-700 whitespace-nowrap"
+                className="bg-gp-accent text-white hover:bg-red-700 whitespace-nowrap w-full sm:w-auto"
               >
                 {newsletterLoading ? 'Subscribing...' : 'Subscribe'}
               </Button>

@@ -1,5 +1,6 @@
 import { motion, AnimatePresence } from 'framer-motion';
 import { Sparkles, Hammer, HardHat, Ruler, Zap, X } from 'lucide-react';
+import { useScrollLock } from '@/lib/useScrollLock';
 
 interface SelfMadeManRevealProps {
   isOpen: boolean;
@@ -8,6 +9,8 @@ interface SelfMadeManRevealProps {
 }
 
 export default function SelfMadeManReveal({ isOpen, onClose, title }: SelfMadeManRevealProps) {
+  useScrollLock(isOpen);
+
   return (
     <AnimatePresence>
       {isOpen && (

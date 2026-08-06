@@ -28,6 +28,7 @@ import {
   ChevronUp
 } from 'lucide-react';
 import SEOHead from '@/components/SEOHead';
+import { useScrollLock } from '@/lib/useScrollLock';
 
 interface ApplyFormData {
   name: string;
@@ -68,6 +69,8 @@ export default function CareersPage() {
   const [submitError, setSubmitError] = useState<string | null>(null);
   const fileInputRef = useRef<HTMLInputElement>(null);
 
+  useScrollLock(selectedJob !== null);
+
   useEffect(() => {
     const fetchJobs = async () => {
       try {
@@ -96,14 +99,12 @@ export default function CareersPage() {
     setResumeMode('file');
     setSubmitSuccess(false);
     setSubmitError(null);
-    document.body.style.overflow = 'hidden';
   };
 
   const closeModal = () => {
     setSelectedJob(null);
     setSubmitSuccess(false);
     setSubmitError(null);
-    document.body.style.overflow = '';
   };
 
   const handleFileChange = (e: React.ChangeEvent<HTMLInputElement>) => {

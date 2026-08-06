@@ -180,15 +180,15 @@ export default function FranchiseHighlight() {
               <motion.div
                 animate={{ y: [0, -10, 0] }}
                 transition={{ duration: 4, repeat: Infinity, ease: "easeInOut" }}
-                className="absolute -bottom-6 -left-6 bg-white border border-gp-red/20 p-5 shadow-2xl z-40"
+                className="absolute bottom-2 left-2 sm:-bottom-6 sm:-left-6 bg-white border border-gp-red/20 p-1.5 sm:p-5 shadow-2xl z-40 max-w-[calc(100%-1rem)] sm:max-w-none"
               >
-                <div className="flex items-center gap-4">
-                  <div className="w-12 h-12 bg-gp-red/10 flex items-center justify-center border border-gp-red/20">
-                    <Ruler className="w-6 h-6 text-gp-red" />
+                <div className="flex items-center gap-1.5 sm:gap-4">
+                  <div className="w-6 h-6 sm:w-12 sm:h-12 bg-gp-red/10 flex items-center justify-center border border-gp-red/20 flex-shrink-0">
+                    <Ruler className="w-3 h-3 sm:w-6 sm:h-6 text-gp-red" />
                   </div>
                   <div>
-                    <div className="text-[10px] font-black text-gp-ink/40 tracking-[0.2em] uppercase">Precision</div>
-                    <div className="text-sm font-black text-gp-ink uppercase tracking-tight">BUILDING SUCCESS</div>
+                    <div className="text-[7px] sm:text-[10px] font-black text-gp-ink/40 tracking-[0.15em] sm:tracking-[0.2em] uppercase">Precision</div>
+                    <div className="text-[10px] sm:text-sm font-black text-gp-ink uppercase tracking-tight">BUILDING SUCCESS</div>
                   </div>
                 </div>
               </motion.div>
@@ -196,15 +196,15 @@ export default function FranchiseHighlight() {
               <motion.div
                 animate={{ y: [0, 10, 0] }}
                 transition={{ duration: 5, repeat: Infinity, ease: "easeInOut", delay: 1 }}
-                className="absolute top-10 -right-6 bg-white border border-gp-red/20 p-5 shadow-2xl z-40"
+                className="absolute top-16 right-2 sm:top-10 sm:-right-6 bg-white border border-gp-red/20 p-1.5 sm:p-5 shadow-2xl z-40 max-w-[calc(100%-1rem)] sm:max-w-none"
               >
-                <div className="flex items-center gap-4">
-                  <div className="w-12 h-12 bg-gp-red/10 flex items-center justify-center border border-gp-red/20">
-                    <Hammer className="w-6 h-6 text-gp-red" />
+                <div className="flex items-center gap-1.5 sm:gap-4">
+                  <div className="w-6 h-6 sm:w-12 sm:h-12 bg-gp-red/10 flex items-center justify-center border border-gp-red/20 flex-shrink-0">
+                    <Hammer className="w-3 h-3 sm:w-6 sm:h-6 text-gp-red" />
                   </div>
                   <div>
-                    <div className="text-[10px] font-black text-gp-ink/40 tracking-[0.2em] uppercase">Empowerment</div>
-                    <div className="text-sm font-black text-gp-ink uppercase tracking-tight">SELF-MADE DREAMS</div>
+                    <div className="text-[7px] sm:text-[10px] font-black text-gp-ink/40 tracking-[0.15em] sm:tracking-[0.2em] uppercase">Empowerment</div>
+                    <div className="text-[10px] sm:text-sm font-black text-gp-ink uppercase tracking-tight">SELF-MADE DREAMS</div>
                   </div>
                 </div>
               </motion.div>
