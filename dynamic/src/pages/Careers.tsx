@@ -150,7 +150,7 @@ export default function CareersPage() {
       if (resumeMode === 'link' && formData.resumeLink) fd.append('resumeLink', formData.resumeLink);
       if (resumeMode === 'file' && resumeFile) fd.append('resumeFile', resumeFile);
 
-      const res = await fetch(`${API_URL}/careers/${selectedJob.id}/apply`, {
+      const res = await fetch(`${API_URL}/careers/apply?id=${encodeURIComponent(selectedJob.id)}`, {
         method: 'POST',
         body: fd,
       });
@@ -283,12 +283,11 @@ export default function CareersPage() {
                                         </ul>
                                       </div>
                                     )}
-                                    <button
-                                      onClick={() => openApply(job)}
-                                      className="flex items-center gap-2 px-6 py-2.5 bg-gp-accent text-white font-bold rounded-xl text-sm hover:bg-red-700 transition-all shadow-lg"
-                                    >
-                                      <Send size={14} /> Apply for this Position
-                                    </button>
+                                    {/* No CTA here on purpose - the header's "Apply Now"
+                                        button stays visible above this panel the whole
+                                        time it's expanded, so a second "Apply for this
+                                        Position" button here was just a duplicate doing
+                                        the exact same openApply(job) call. */}
                                   </div>
                                 </motion.div>
                               )}

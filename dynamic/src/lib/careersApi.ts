@@ -92,7 +92,7 @@ export const careersApi = {
     const token = localStorage.getItem('auth_token');
     if (!token) throw new CareersApiError('Authentication required. Please log in again.', 401);
     try {
-      const response = await api.put<Career>(`/careers/${id}`, updates);
+      const response = await api.put<Career>('/careers', updates, { params: { id } });
       return response.data;
     } catch (error) {
       if (axios.isAxiosError(error)) {
@@ -106,7 +106,7 @@ export const careersApi = {
     const token = localStorage.getItem('auth_token');
     if (!token) throw new CareersApiError('Authentication required. Please log in again.', 401);
     try {
-      await api.delete(`/careers/${id}`);
+      await api.delete('/careers', { params: { id } });
     } catch (error) {
       if (axios.isAxiosError(error)) {
         throw new CareersApiError(error.response?.data?.error || error.message, error.response?.status, error);

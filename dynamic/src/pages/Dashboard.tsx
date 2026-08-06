@@ -523,6 +523,23 @@ export default function Dashboard() {
                         {STATUS_OPTIONS.map(s => <option key={s.value} value={s.value}>{s.label}</option>)}
                       </Select>
                     </div>
+                    {/* propertyFormData.featured was already tracked in state and
+                        round-tripped on edit, but nothing in this form let you set
+                        it - the home page carousel only shows featured properties,
+                        so with no way to check this box, it silently stayed empty
+                        for every property and the carousel had nothing to show. */}
+                    <div className="flex items-center space-x-2 pt-6">
+                      <input
+                        type="checkbox"
+                        id="featured"
+                        checked={propertyFormData.featured}
+                        onChange={e => setPropertyFormData({...propertyFormData, featured: e.target.checked})}
+                        className="h-5 w-5 rounded border-gp-ink/20 text-gp-accent focus:ring-gp-accent"
+                      />
+                      <label htmlFor="featured" className="text-sm font-medium text-gp-ink">
+                        Featured Property (show on Home carousel)
+                      </label>
+                    </div>
                     <div className="md:col-span-2 space-y-2"><label className="text-sm font-semibold">Description</label><Textarea value={propertyFormData.description} onChange={e => setPropertyFormData({...propertyFormData, description: e.target.value})} rows={4} required /></div>
                     <div className="md:col-span-2 flex justify-end gap-3 mt-4">
                       <Button variant="outline" type="button" onClick={() => setShowPropertyForm(false)}>Cancel</Button>

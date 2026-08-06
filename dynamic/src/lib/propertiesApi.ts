@@ -73,7 +73,7 @@ export const propertiesApi = {
    */
   getById: async (id: string): Promise<Property | null> => {
     try {
-      const response = await api.get<Property>(`/properties/${id}`);
+      const response = await api.get<Property>('/properties', { params: { id } });
       
       if (!response.data) {
         return null;
@@ -183,7 +183,8 @@ export const propertiesApi = {
         throw new PropertiesApiError('Authentication required', 401);
       }
 
-      const response = await api.put<Property>(`/properties/${id}`, updates, {
+      const response = await api.put<Property>('/properties', updates, {
+        params: { id },
         headers: {
           Authorization: `Bearer ${token}`,
         },
@@ -229,7 +230,8 @@ export const propertiesApi = {
         throw new PropertiesApiError('Authentication required', 401);
       }
 
-      await api.delete(`/properties/${id}`, {
+      await api.delete('/properties', {
+        params: { id },
         headers: {
           Authorization: `Bearer ${token}`,
         },
