@@ -378,7 +378,13 @@ export default function CareersPage() {
                 </div>
 
                 {/* Body - Scrollable */}
-                <div className="flex-1 overflow-y-auto px-6 py-6 pb-8">
+                {/* data-lenis-prevent: Lenis intercepts touch/wheel at the
+                    document level before this element's own overflow-y-auto
+                    ever gets a chance to scroll - without opting out, touches
+                    here either fall through to the (locked) page behind the
+                    modal or just don't move anything on mobile. Same fix as
+                    Chatbot's message list. */}
+                <div data-lenis-prevent className="flex-1 overflow-y-auto overscroll-contain px-6 py-6 pb-8">
                   {submitSuccess ? (
                     <motion.div initial={{ opacity: 0, scale: 0.9 }} animate={{ opacity: 1, scale: 1 }} className="text-center py-12">
                       <div className="w-20 h-20 bg-green-50 rounded-full flex items-center justify-center mx-auto mb-5">
