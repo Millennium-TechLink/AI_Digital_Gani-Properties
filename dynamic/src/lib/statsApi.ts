@@ -74,7 +74,12 @@ export const statsApi = {
    */
   deleteLead: async (id: string): Promise<void> => {
     const token = localStorage.getItem('auth_token');
-    await axios.delete(`${API_BASE}/leads/${id}`, {
+    // ?id= instead of a path segment - this Vercel project doesn't resolve
+    // bracket-dynamic function files (see properties/index.ts on the API
+    // side for the full explanation), so every single-record route here
+    // takes its id as a query param instead.
+    await axios.delete(`${API_BASE}/leads`, {
+      params: { id },
       headers: { Authorization: `Bearer ${token}` }
     });
   }
