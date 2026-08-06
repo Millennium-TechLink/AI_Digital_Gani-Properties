@@ -16,34 +16,36 @@ export default function SmoothScroll({ children }: SmoothScrollProps) {
     // Connect Lenis to ScrollTrigger
     lenis.on('scroll', ScrollTrigger.update);
 
-    const update = (time: number) => {
-      lenis.raf(time * 1000);
+    // gsap.ticker.add still buys us frame-order coordination with
+    // ScrollTrigger (Lenis updates before GSAP reads the new scroll
+    // position, same tick) - but the callback's own `time` argument is
+    // deliberately ignored here. That argument is GSAP's own cumulative
+    // ticker clock, a *different* time base than the performance.now()
+    // used below to resync after a backgrounded tab. Feeding Lenis one
+    // clock on every regular tick and a different one only on resync
+    // means every tick is computing its delta against a slightly-off
+    // reference - individually invisible, but it compounds over a
+    // session and spikes right after any tab-switch pause, which reads
+    // exactly as "gets laggier over time, worse after switching back".
+    // performance.now() is the real wall clock Lenis's own raf() docs
+    // expect either way, so there's no reason to route through GSAP's
+    // derived value at all.
+    const update = () => {
+      lenis.raf(performance.now());
     };
 
     gsap.ticker.add(update);
     gsap.ticker.lagSmoothing(0);
 
-    // When a tab is backgrounded (switching to another app/window), browsers
-    // throttle or fully pause requestAnimationFrame - which GSAP's ticker is
-    // built on. gsap.ticker.time keeps counting real elapsed wall-clock time
-    // regardless, so the very next tick after the tab becomes visible again
-    // reports a huge jump (however long it was hidden for). Lenis computes
-    // its own internal delta from that jump and feeds it straight into its
-    // scroll physics as if one enormous frame had elapsed, which is exactly
-    // what corrupts its smoothing state until a refresh resets everything.
-    // Resyncing Lenis's clock to "now" the instant the tab regains focus -
-    // before the next ticker call can hand it that stale delta - avoids it.
-    const handleVisibilityChange = () => {
-      if (document.visibilityState === 'visible') {
-        lenis.raf(performance.now());
-      }
-    };
-    document.addEventListener('visibilitychange', handleVisibilityChange);
+    // No separate visibilitychange resync needed anymore: since every tick
+    // above already feeds Lenis performance.now() rather than GSAP's own
+    // cumulative clock, the very first tick after a backgrounded tab
+    // regains focus is already correct on its own - there's no stale delta
+    // left for a resync to fix.
 
     return () => {
       lenis.off('scroll', ScrollTrigger.update);
       gsap.ticker.remove(update);
-      document.removeEventListener('visibilitychange', handleVisibilityChange);
     };
   }, [lenis]);
 
