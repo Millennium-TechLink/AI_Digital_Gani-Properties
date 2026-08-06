@@ -1,5 +1,5 @@
-import { supabase } from './lib/supabase.js';
-import { authenticateToken } from './lib/auth.js';
+import { supabase } from './_lib/supabase.js';
+import { authenticateToken } from './_lib/auth.js';
 import type { VercelRequest, VercelResponse } from '@vercel/node';
 
 function setCorsHeaders(res: VercelResponse) {

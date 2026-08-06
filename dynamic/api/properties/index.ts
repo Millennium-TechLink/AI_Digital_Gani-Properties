@@ -1,7 +1,7 @@
-import { supabase } from '../lib/supabase.js';
-import { authenticateToken } from '../lib/auth.js';
+import { supabase } from '../_lib/supabase.js';
+import { authenticateToken } from '../_lib/auth.js';
 import type { VercelRequest, VercelResponse } from '@vercel/node';
-import { extractCoordinatesFromGoogleMaps } from '../lib/googleMaps.js';
+import { extractCoordinatesFromGoogleMaps } from '../_lib/googleMaps.js';
 
 // Enable CORS
 function setCorsHeaders(res: VercelResponse) {

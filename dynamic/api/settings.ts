@@ -1,5 +1,5 @@
-import { authenticateToken } from './lib/auth.js';
-import { readSettings, writeSettings } from './lib/settings.js';
+import { authenticateToken } from './_lib/auth.js';
+import { readSettings, writeSettings } from './_lib/settings.js';
 import type { VercelRequest, VercelResponse } from '@vercel/node';
 
 function setCorsHeaders(res: VercelResponse) {

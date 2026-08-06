@@ -1,4 +1,4 @@
-import { recordVisit } from '../lib/stats.js';
+import { recordVisit } from '../_lib/stats.js';
 import type { VercelRequest, VercelResponse } from '@vercel/node';
 
 function setCorsHeaders(res: VercelResponse) {

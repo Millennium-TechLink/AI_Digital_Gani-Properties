@@ -1,8 +1,8 @@
 import nodemailer from 'nodemailer';
-import { authenticateToken } from './lib/auth.js';
-import { readSettings, DEFAULT_SETTINGS } from './lib/settings.js';
-import { createLead, getLeads, deleteLead } from './lib/leads.js';
-import { incrementLeadCount } from './lib/stats.js';
+import { authenticateToken } from './_lib/auth.js';
+import { readSettings, DEFAULT_SETTINGS } from './_lib/settings.js';
+import { createLead, getLeads, deleteLead } from './_lib/leads.js';
+import { incrementLeadCount } from './_lib/stats.js';
 import type { VercelRequest, VercelResponse } from '@vercel/node';
 
 function setCorsHeaders(res: VercelResponse) {

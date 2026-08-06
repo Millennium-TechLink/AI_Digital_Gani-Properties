@@ -1,7 +1,7 @@
 import multer from 'multer';
 import nodemailer from 'nodemailer';
-import { supabase } from '../lib/supabase.js';
-import { readSettings, DEFAULT_SETTINGS } from '../lib/settings.js';
+import { supabase } from '../_lib/supabase.js';
+import { readSettings, DEFAULT_SETTINGS } from '../_lib/settings.js';
 import type { VercelRequest, VercelResponse } from '@vercel/node';
 
 // Not api/careers/[id]/apply.ts on purpose: Vercel wasn't resolving bracket-
