@@ -5,34 +5,44 @@ import { MapPin } from 'lucide-react';
 
 const INTERVAL = 5000;
 
+// Self-hosted (public/images/hero-*.png - actually JPEGs, see file comment
+// below) instead of hotlinking images.pexels.com. That third-party origin
+// was: (a) not discoverable by the browser's preload scanner since nothing
+// about it exists until React mounts and renders the <img>, so it couldn't
+// be prioritized or preloaded from the static HTML, and (b) sitting behind
+// Cloudflare bot management, which set third-party cookies (_cfuvid,
+// __cf_bm) on every hero load - both flagged by Lighthouse. Serving these
+// same-origin lets index.html preload the first slide before the JS bundle
+// even runs, which is what actually moves LCP for a client-rendered SPA
+// with no server-side render.
 const sections = [
   {
     id: 'premium-plots',
     tag: 'Residential',
     title: 'PREMIUM PLOTS',
     sub: 'Bengaluru North · Est. 2009',
-    background: 'https://images.pexels.com/photos/440731/pexels-photo-440731.jpeg?auto=compress&cs=tinysrgb&w=2560&q=85',
+    background: '/images/hero-residential.png',
   },
   {
     id: 'fertile-farmlands',
     tag: 'Agricultural',
     title: 'FERTILE FARMLANDS',
     sub: 'Chikkaballapur · Organic Growth',
-    background: 'https://images.pexels.com/photos/974314/pexels-photo-974314.jpeg?auto=compress&cs=tinysrgb&w=2560&q=85',
+    background: '/images/hero-agricultural.png',
   },
   {
     id: 'strategic-location',
     tag: 'Commercial',
     title: 'PRIME LOCATION',
     sub: 'Yelahanka Hub · High Returns',
-    background: 'https://images.pexels.com/photos/1105766/pexels-photo-1105766.jpeg?auto=compress&cs=tinysrgb&w=2560&q=85',
+    background: '/images/hero-commercial.png',
   },
   {
     id: 'future-legacy',
     tag: 'Legacy',
     title: 'BUILD YOUR LEGACY',
     sub: 'Trusted Partner · Since 2009',
-    background: 'https://images.pexels.com/photos/157811/pexels-photo-157811.jpeg?auto=compress&cs=tinysrgb&w=2560&q=85',
+    background: '/images/hero-legacy.png',
   },
 ];
 
@@ -114,12 +124,20 @@ export default function HeroFullScreen() {
           exit={{ opacity: 0 }}
           transition={{ duration: 1.2, ease: 'easeInOut' }}
         >
-          {/* Ken Burns subtle zoom */}
+          {/* Ken Burns subtle zoom.
+              fetchPriority is only "high" on the very first slide - that's
+              the actual LCP candidate (it's the only one in the DOM before
+              any user interaction or the 5s auto-advance), and it matches
+              the <link rel="preload"> for the same file in index.html.
+              Marking every later slide "high" too would just have them
+              compete with each other and with in-flight API calls for no
+              benefit, since none of them block first paint. */}
           <motion.img
             src={section.background}
             alt=""
             className="absolute inset-0 w-full h-full object-cover"
             loading="eager"
+            fetchPriority={section.id === sections[0].id ? 'high' : 'auto'}
             initial={{ scale: 1.08 }}
             animate={{ scale: 1.0 }}
             transition={{ duration: 7, ease: 'easeOut' }}

@@ -84,9 +84,12 @@ export default function FranchiseHighlight() {
                         : model.borderColor + ' bg-gp-light-grey/60'
                     } backdrop-blur-sm group hover:bg-gp-red/5 transition-all duration-300 cursor-pointer`}
                   >
-                    <h4 className={`text-sm font-black tracking-widest uppercase mb-3 transition-colors ${
+                    {/* h3, not h4: this sits directly under the h2 above with
+                        nothing at h3 in between - Lighthouse's heading-order
+                        audit flags the skipped level. */}
+                    <h3 className={`text-sm font-black tracking-widest uppercase mb-3 transition-colors ${
                       selectedModel === model.name ? 'text-gp-red' : 'text-gp-ink group-hover:text-gp-red'
-                    }`}>{model.name}</h4>
+                    }`}>{model.name}</h3>
                     <div className="flex justify-between items-center">
                       <span className="text-xs text-gp-ink/40 uppercase tracking-tighter font-bold flex items-center gap-2">
                         <Pickaxe className="w-3 h-3" />

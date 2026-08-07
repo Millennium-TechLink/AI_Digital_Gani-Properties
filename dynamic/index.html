@@ -8,6 +8,14 @@
     <link rel="preconnect" href="https://fonts.googleapis.com" />
     <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
     <link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Playfair+Display:wght@400;600&family=Inter:wght@400;500;600&family=Poppins:wght@400;500;600&display=swap" />
+    <!-- Home is the main-bundle, most-visited entry point (see App.tsx), and
+         this is its hero's first slide / LCP element (HeroFullScreen.tsx).
+         Without this, nothing about the image exists in the document until
+         React mounts and renders it, so the browser's preload scanner can't
+         start fetching it until the JS bundle has downloaded and run -
+         putting the preload tag here instead lets that fetch start in
+         parallel with, rather than after, the JS bundle. -->
+    <link rel="preload" as="image" href="/images/hero-residential.png" fetchpriority="high" />
     <title>Gani Properties - Premium Property Providers in Bangalore</title>
   </head>
   <body>

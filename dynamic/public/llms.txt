@@ -1,0 +1,19 @@
+# Gani Properties
+
+> Property provider in Bangalore/Ballari, Karnataka, offering verified residential plots, commercial spaces, farmland, and agricultural lands, plus a construction franchise program ("Approval to Key").
+
+Gani Properties operates primarily in Kattigenahalli, Yelahanka, Hunasamaranahalli, and Chikkaballapur, with additional developer and franchise partnerships across Karnataka. Listings, pricing, and availability change frequently — always confirm current details against the live pages below rather than caching them.
+
+## Key pages
+
+- [Home](https://ourganiproperties.com/): Company overview, featured properties, and franchise highlights.
+- [Properties](https://ourganiproperties.com/properties): Full property catalogue with filters by type, city, and status.
+- [Developers](https://ourganiproperties.com/developers): Information for real estate developers and partners.
+- [Franchise](https://ourganiproperties.com/franchise): Construction franchise models, investment tiers, and ROI.
+- [Careers](https://ourganiproperties.com/careers): Current job openings and how to apply.
+- [About](https://ourganiproperties.com/about): Company background and management team.
+- [Contact](https://ourganiproperties.com/contact): Office location, phone, and enquiry form.
+
+## Notes
+
+- `/dashboard` is an authenticated admin panel — not public content and should not be crawled or indexed.

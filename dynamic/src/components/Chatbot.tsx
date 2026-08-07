@@ -169,6 +169,7 @@ export default function Chatbot() {
         whileHover={{ scale: 1.1, rotate: 5 }}
         whileTap={{ scale: 0.9 }}
         onClick={() => setIsOpen(!isOpen)}
+        aria-label={isOpen ? 'Close chat' : 'Open chat'}
         className="fixed bottom-4 right-4 sm:bottom-6 sm:right-6 z-[9999] w-12 h-12 sm:w-16 sm:h-16 bg-[#0D0D0D] text-white rounded-full shadow-[0_10px_30px_rgba(0,0,0,0.5)] flex items-center justify-center border border-gp-accent/40 overflow-hidden group"
       >
         <div className="absolute inset-0 bg-gradient-to-tr from-gp-accent/10 to-transparent opacity-0 group-hover:opacity-100 transition-opacity" />
