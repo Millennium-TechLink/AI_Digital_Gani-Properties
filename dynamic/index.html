@@ -9,17 +9,14 @@
     <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
     <link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Playfair+Display:wght@400;600&family=Inter:wght@400;500;600&family=Poppins:wght@400;500;600&display=swap" />
     <!-- Home is the main-bundle, most-visited entry point (see App.tsx), and
-         this is its hero's first slide / LCP element (HeroFullScreen.tsx).
-         Without this, nothing about the image exists in the document until
-         React mounts and renders it, so the browser's preload scanner can't
-         start fetching it until the JS bundle has downloaded and run -
-         putting the preload tag here instead lets that fetch start in
-         parallel with, rather than after, the JS bundle. preconnect first
-         since this is a cross-origin Pexels URL - it gets the DNS/TLS
-         handshake with images.pexels.com out of the way before the preload
-         request itself even goes out. -->
-    <link rel="preconnect" href="https://images.pexels.com" />
-    <link rel="preload" as="image" href="https://images.pexels.com/photos/440731/pexels-photo-440731.jpeg?auto=compress&cs=tinysrgb&w=2560&q=85" fetchpriority="high" />
+         this is its hero's first slide / LCP element (HeroFullScreen.tsx,
+         now self-hosted - see that file's comment). Without this, nothing
+         about the image exists in the document until React mounts and
+         renders it, so the browser's preload scanner can't start fetching
+         it until the JS bundle has downloaded and run - putting the preload
+         tag here instead lets that fetch start in parallel with, rather
+         than after, the JS bundle. -->
+    <link rel="preload" as="image" href="/images/hero-premium-plots.jpg" fetchpriority="high" />
     <title>Gani Properties - Premium Property Providers in Bangalore</title>
   </head>
   <body>

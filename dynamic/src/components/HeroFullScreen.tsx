@@ -5,34 +5,41 @@ import { MapPin } from 'lucide-react';
 
 const INTERVAL = 5000;
 
+// Same four Pexels photos as before, just self-hosted now instead of
+// hotlinked - fetched from the exact original images.pexels.com URLs
+// (same width/quality params, byte-for-byte the same images) and saved
+// into public/images/. Pexels' CDN sits behind Cloudflare bot management,
+// which was setting third-party cookies on every hero load and tripping
+// Lighthouse's third-party-cookies/inspector-issues checks; serving these
+// same-origin removes that without changing which photos are shown.
 const sections = [
   {
     id: 'premium-plots',
     tag: 'Residential',
     title: 'PREMIUM PLOTS',
     sub: 'Bengaluru North · Est. 2009',
-    background: 'https://images.pexels.com/photos/440731/pexels-photo-440731.jpeg?auto=compress&cs=tinysrgb&w=2560&q=85',
+    background: '/images/hero-premium-plots.jpg',
   },
   {
     id: 'fertile-farmlands',
     tag: 'Agricultural',
     title: 'FERTILE FARMLANDS',
     sub: 'Chikkaballapur · Organic Growth',
-    background: 'https://images.pexels.com/photos/974314/pexels-photo-974314.jpeg?auto=compress&cs=tinysrgb&w=2560&q=85',
+    background: '/images/hero-fertile-farmlands.jpg',
   },
   {
     id: 'strategic-location',
     tag: 'Commercial',
     title: 'PRIME LOCATION',
     sub: 'Yelahanka Hub · High Returns',
-    background: 'https://images.pexels.com/photos/1105766/pexels-photo-1105766.jpeg?auto=compress&cs=tinysrgb&w=2560&q=85',
+    background: '/images/hero-strategic-location.jpg',
   },
   {
     id: 'future-legacy',
     tag: 'Legacy',
     title: 'BUILD YOUR LEGACY',
     sub: 'Trusted Partner · Since 2009',
-    background: 'https://images.pexels.com/photos/157811/pexels-photo-157811.jpeg?auto=compress&cs=tinysrgb&w=2560&q=85',
+    background: '/images/hero-future-legacy.jpg',
   },
 ];
 
