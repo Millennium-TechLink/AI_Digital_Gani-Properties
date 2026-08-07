@@ -137,6 +137,7 @@ export default function FranchiseHighlight() {
                   <img
                     src="/images/franchise_silhouette.png"
                     alt="Professional Construction Leader"
+                    loading="lazy"
                     className="w-full h-auto relative z-20 transition-all duration-1000 filter drop-shadow-[0_0_30px_rgba(221,43,28,0.1)] rounded-2xl"
                   />
 

@@ -7,7 +7,26 @@
     <meta name="theme-color" content="#0F3A3D" />
     <link rel="preconnect" href="https://fonts.googleapis.com" />
     <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
-    <link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Playfair+Display:wght@400;600&family=Inter:wght@400;500;600&family=Poppins:wght@400;500;600&display=swap" />
+    <!-- Loaded as media="print" then swapped to "all" on load instead of a
+         plain rel="stylesheet": a synchronous stylesheet link blocks CSSOM
+         construction (and therefore first paint) until the round trip to
+         fonts.googleapis.com finishes - Lighthouse's mobile run measured
+         839ms of blocking time on this one request alone, on top of the
+         extra RTT to fonts.gstatic.com for the actual .woff2 files behind
+         it. media="print" makes the browser fetch it without it ever being
+         "the stylesheet that applies to this render", so first paint isn't
+         waiting on it; the onload swap then applies it the moment it's
+         actually ready. noscript covers the no-JS case, where onload never
+         fires. -->
+    <link
+      rel="stylesheet"
+      href="https://fonts.googleapis.com/css2?family=Playfair+Display:wght@400;600&family=Inter:wght@400;500;600&family=Poppins:wght@400;500;600&display=swap"
+      media="print"
+      onload="this.media='all'"
+    />
+    <noscript>
+      <link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Playfair+Display:wght@400;600&family=Inter:wght@400;500;600&family=Poppins:wght@400;500;600&display=swap" />
+    </noscript>
     <!-- Home is the main-bundle, most-visited entry point (see App.tsx), and
          this is its hero's first slide / LCP element (HeroFullScreen.tsx,
          now self-hosted - see that file's comment). Without this, nothing
