@@ -440,18 +440,25 @@ export default function Dashboard() {
           )}
         </AnimatePresence>
 
-        {/* Tabs */}
-        <div className="flex gap-2 p-1 bg-white/50 backdrop-blur-sm rounded-2xl border border-gp-ink/10 mb-8 w-fit">
-          <button onClick={() => setActiveTab('properties')} className={`px-6 py-2.5 rounded-xl font-bold transition-all flex items-center gap-2 ${activeTab === 'properties' ? 'bg-gp-ink text-white shadow-lg' : 'text-gp-ink-muted hover:text-gp-ink hover:bg-white/50'}`}>
+        {/* Tabs
+            data-lenis-prevent + overflow-x-auto: on narrow screens the four
+            tabs are wider than the viewport. Without an explicit scroller
+            here, html/body's `overflow-x: hidden` (index.css) just clips
+            "Settings" off-screen instead of letting you reach it, and even
+            with overflow-x-auto, Lenis intercepts touch/wheel at the
+            document level before this element's own scroll ever gets a
+            chance to run (same fix as the Careers modal / Chatbot). */}
+        <div data-lenis-prevent className="flex gap-2 p-1 bg-white/50 backdrop-blur-sm rounded-2xl border border-gp-ink/10 mb-8 w-full sm:w-fit overflow-x-auto scrollbar-hide">
+          <button onClick={() => setActiveTab('properties')} className={`shrink-0 px-6 py-2.5 rounded-xl font-bold transition-all flex items-center gap-2 whitespace-nowrap ${activeTab === 'properties' ? 'bg-gp-ink text-white shadow-lg' : 'text-gp-ink-muted hover:text-gp-ink hover:bg-white/50'}`}>
             <Home size={18} /> Properties
           </button>
-          <button onClick={() => setActiveTab('careers')} className={`px-6 py-2.5 rounded-xl font-bold transition-all flex items-center gap-2 ${activeTab === 'careers' ? 'bg-gp-ink text-white shadow-lg' : 'text-gp-ink-muted hover:text-gp-ink hover:bg-white/50'}`}>
+          <button onClick={() => setActiveTab('careers')} className={`shrink-0 px-6 py-2.5 rounded-xl font-bold transition-all flex items-center gap-2 whitespace-nowrap ${activeTab === 'careers' ? 'bg-gp-ink text-white shadow-lg' : 'text-gp-ink-muted hover:text-gp-ink hover:bg-white/50'}`}>
             <Briefcase size={18} /> Careers
           </button>
-          <button onClick={() => setActiveTab('leads')} className={`px-6 py-2.5 rounded-xl font-bold transition-all flex items-center gap-2 ${activeTab === 'leads' ? 'bg-gp-ink text-white shadow-lg' : 'text-gp-ink-muted hover:text-gp-ink hover:bg-white/50'}`}>
+          <button onClick={() => setActiveTab('leads')} className={`shrink-0 px-6 py-2.5 rounded-xl font-bold transition-all flex items-center gap-2 whitespace-nowrap ${activeTab === 'leads' ? 'bg-gp-ink text-white shadow-lg' : 'text-gp-ink-muted hover:text-gp-ink hover:bg-white/50'}`}>
             <Mail size={18} /> Leads
           </button>
-          <button onClick={() => setActiveTab('settings')} className={`px-6 py-2.5 rounded-xl font-bold transition-all flex items-center gap-2 ${activeTab === 'settings' ? 'bg-gp-ink text-white shadow-lg' : 'text-gp-ink-muted hover:text-gp-ink hover:bg-white/50'}`}>
+          <button onClick={() => setActiveTab('settings')} className={`shrink-0 px-6 py-2.5 rounded-xl font-bold transition-all flex items-center gap-2 whitespace-nowrap ${activeTab === 'settings' ? 'bg-gp-ink text-white shadow-lg' : 'text-gp-ink-muted hover:text-gp-ink hover:bg-white/50'}`}>
             <Settings size={18} /> Settings
           </button>
         </div>
@@ -493,9 +500,9 @@ export default function Dashboard() {
         {activeTab === 'properties' ? (
           /* PROPERTIES SECTION */
           <div className="space-y-8">
-            <div className="flex justify-between items-center">
+            <div className="flex flex-col sm:flex-row justify-between sm:items-center gap-4">
               <h2 className="text-2xl font-display font-bold text-gp-ink">Property Listings</h2>
-              <Button onClick={() => { setShowPropertyForm(true); setEditingProperty(null); }} className="bg-gp-accent hover:bg-gp-accent-dark">
+              <Button onClick={() => { setShowPropertyForm(true); setEditingProperty(null); }} className="bg-gp-accent hover:bg-gp-accent-dark w-full sm:w-auto">
                 <Plus className="mr-2 h-4 w-4" /> Add Property
               </Button>
             </div>
@@ -549,9 +556,14 @@ export default function Dashboard() {
               </motion.div>
             )}
 
-            {/* Properties List */}
+            {/* Properties List
+                overflow-x-auto + data-lenis-prevent: same fix as the Leads
+                table below - without it the table is either clipped by
+                index.css's overflow-x: hidden or, once scrollable, Lenis
+                still eats the touch drag before this element sees it. */}
             <div className="bg-white rounded-3xl border border-gp-ink/10 shadow-lg overflow-hidden">
-               <table className="w-full text-left">
+               <div data-lenis-prevent className="overflow-x-auto">
+               <table className="w-full text-left min-w-[640px]">
                   <thead className="bg-gp-surface/50 border-b border-gp-ink/10">
                     <tr>
                       <th className="px-6 py-4 font-bold text-sm text-gp-ink">Property</th>
@@ -570,18 +582,18 @@ export default function Dashboard() {
                         <td className="px-6 py-5 text-sm text-gp-ink-muted">{p.area}, {p.city}</td>
                         <td className="px-6 py-5 text-sm uppercase font-semibold text-gp-accent">{p.type.replace('-', ' ')}</td>
                         <td className="px-6 py-5 text-right space-x-2">
-                           <Button variant="outline" size="sm" onClick={() => { 
-                             setEditingProperty(p); 
+                           <Button variant="outline" size="sm" onClick={() => {
+                             setEditingProperty(p);
                              setPropertyFormData({
-                               ...p, 
-                               priceLabel: p.priceLabel || '', 
-                               size: p.size || '', 
-                               lat: p.lat?.toString() || '', 
+                               ...p,
+                               priceLabel: p.priceLabel || '',
+                               size: p.size || '',
+                               lat: p.lat?.toString() || '',
                                lon: p.lon?.toString() || '',
                                googleMapsUrl: p.googleMapsUrl || '',
                                featured: !!p.featured
-                             }); 
-                             setShowPropertyForm(true); 
+                             });
+                             setShowPropertyForm(true);
                            }}><Edit2 size={14}/></Button>
                            <Button variant="outline" size="sm" className="text-red-500" onClick={() => deleteProperty(p.id)}><Trash2 size={14}/></Button>
                         </td>
@@ -589,6 +601,7 @@ export default function Dashboard() {
                     ))}
                   </tbody>
                </table>
+               </div>
             </div>
           </div>
         ) : activeTab === 'careers' ? (
@@ -729,8 +742,11 @@ export default function Dashboard() {
             </div>
 
             <div className="bg-white rounded-3xl border border-gp-ink/10 shadow-lg overflow-hidden">
-              <div className="overflow-x-auto">
-                <table className="w-full text-left">
+              {/* data-lenis-prevent: same fix as the Properties table above -
+                  Lenis intercepts touch/wheel at the document level before
+                  overflow-x-auto here ever gets a chance to scroll. */}
+              <div data-lenis-prevent className="overflow-x-auto">
+                <table className="w-full text-left min-w-[720px]">
                   <thead className="bg-gp-surface/50 border-b border-gp-ink/10 text-xs text-gp-ink-muted uppercase tracking-wider">
                     <tr>
                       <th className="px-6 py-4 font-bold">Inquirer</th>

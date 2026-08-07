@@ -11,6 +11,15 @@ import { useScrollLock } from '@/lib/useScrollLock';
 
 export default function Navbar() {
   const [isOpen, setIsOpen] = useState(false);
+  // Separate from `isOpen`: `isOpen` flipping to false immediately tells
+  // AnimatePresence to start the ~0.3s collapse animation below, but the
+  // page shouldn't actually unlock (un-fix the body, restart Lenis, jump
+  // scroll back) until that animation has actually finished playing out -
+  // doing both in the same commit un-freezes the page mid-collapse and the
+  // scroll-position snap collides visually with the still-animating panel,
+  // which is what reads as a jerky, un-fluid close. This stays true through
+  // the whole close animation and only flips via onExitComplete below.
+  const [scrollLocked, setScrollLocked] = useState(false);
   const [scrolled, setScrolled] = useState(false);
   const [dropdownOpen, setDropdownOpen] = useState(false);
   const location = useLocation();
@@ -50,8 +59,21 @@ export default function Navbar() {
     return () => window.removeEventListener('scroll', handleScroll);
   }, [isHomePage]);
 
-  // Lock scroll when mobile menu is open
-  useScrollLock(isOpen);
+  // Lock scroll when mobile menu is open (see scrollLocked comment above for
+  // why this tracks scrollLocked rather than isOpen directly)
+  useScrollLock(scrollLocked);
+
+  const openMenu = () => {
+    setIsOpen(true);
+    setScrollLocked(true);
+  };
+
+  const closeMenu = () => {
+    setIsOpen(false);
+    // scrollLocked is intentionally left true here - the AnimatePresence
+    // below clears it via onExitComplete once the panel has actually
+    // finished collapsing.
+  };
 
   // Close dropdown when clicking outside
   useEffect(() => {
@@ -253,7 +275,7 @@ export default function Navbar() {
               'lg:hidden transition-colors',
               isHeaderOpaque ? 'text-gp-ink' : 'text-white'
             )}
-            onClick={() => setIsOpen(!isOpen)}
+            onClick={() => (isOpen ? closeMenu() : openMenu())}
             aria-label="Toggle menu"
           >
             <AnimatePresence mode="wait">
@@ -282,8 +304,13 @@ export default function Navbar() {
           </motion.button>
         </div>
 
-        {/* Mobile Navigation */}
-        <AnimatePresence>
+        {/* Mobile Navigation
+            onExitComplete: this is what actually unlocks scroll (see the
+            scrollLocked comment near the top) - only once framer-motion has
+            finished playing the collapse below does the body get un-fixed
+            and Lenis restarted, instead of both happening in the same tick
+            the close was triggered. */}
+        <AnimatePresence onExitComplete={() => setScrollLocked(false)}>
           {isOpen && (
             <motion.div
               initial={{ opacity: 0, height: 0 }}
@@ -309,7 +336,7 @@ export default function Navbar() {
                           'block py-2 text-gp-ink hover:text-gp-accent transition-all duration-300 font-bold uppercase text-[10px] tracking-widest hover:pl-2',
                           pathname === link.to && 'text-gp-accent'
                         )}
-                        onClick={() => setIsOpen(false)}
+                        onClick={closeMenu}
                       >
                         {link.label}
                       </Link>
@@ -325,7 +352,7 @@ export default function Navbar() {
                             <Link
                               to={subcategory.path}
                               className="block py-2 text-black/40 hover:text-gp-accent transition-all duration-300 text-[10px] font-bold uppercase tracking-widest hover:pl-2"
-                              onClick={() => setIsOpen(false)}
+                              onClick={closeMenu}
                             >
                               {subcategory.label}
                             </Link>
@@ -349,7 +376,7 @@ export default function Navbar() {
                         'block py-2 text-gp-ink hover:text-gp-accent transition-all duration-300 font-bold uppercase text-[10px] tracking-widest hover:pl-2',
                         pathname === link.to && 'text-gp-accent'
                       )}
-                      onClick={() => setIsOpen(false)}
+                      onClick={closeMenu}
                     >
                       {link.label}
                     </Link>
