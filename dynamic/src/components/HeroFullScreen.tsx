@@ -139,14 +139,26 @@ export default function HeroFullScreen() {
             animate={{ scale: 1.0 }}
             transition={{ duration: 7, ease: 'easeOut' }}
           />
-          {/* Vignette + dark gradient */}
+          {/* Vignette + dark gradient.
+              Both were lightest exactly where the readability complaints
+              were: the radial vignette went from 10% black at dead-center
+              up to 55% only toward the edges, and the linear gradient's
+              middle stop was fully transparent - but the tag pill, title,
+              and sub-label all sit in that same center band. Against a
+              busy/bright frame (the Yelahanka skyline slide especially)
+              there wasn't enough darkening there to guarantee contrast
+              regardless of what the photo underneath happens to look like.
+              Raised both floors so the center always has a baseline of
+              darkening no matter which of the 4 slides is showing; text
+              opacity/shadow on the actual copy below is the second layer
+              of defense on top of this. */}
           <div
             className="absolute inset-0"
             style={{
-              background: 'radial-gradient(ellipse at center, rgba(0,0,0,0.10) 0%, rgba(0,0,0,0.55) 100%)',
+              background: 'radial-gradient(ellipse at center, rgba(0,0,0,0.28) 0%, rgba(0,0,0,0.6) 100%)',
             }}
           />
-          <div className="absolute inset-0 bg-gradient-to-b from-black/60 via-transparent to-black/70" />
+          <div className="absolute inset-0 bg-gradient-to-b from-black/60 via-black/25 to-black/70" />
           {/* Top-left corner darkener so the logo is always readable */}
           <div
             className="absolute inset-0"
@@ -178,15 +190,32 @@ export default function HeroFullScreen() {
           transition={{ duration: 0.8, delay: 0.5 }}
           className="flex items-center gap-1.5"
         >
-          <MapPin className="h-2.5 w-2.5 text-gp-accent" />
-          <span className="text-[9px] font-semibold uppercase tracking-[0.25em] text-white/50">
+          <MapPin className="h-2.5 w-2.5 text-gp-accent drop-shadow-[0_1px_4px_rgba(0,0,0,0.7)]" />
+          {/* Was text-white/50 with no shadow - fine against the darkest
+              parts of a frame, but this sits over 4 different rotating
+              photos and some (the Yelahanka skyline slide especially) are
+              bright enough behind this exact spot that 50%-opacity text
+              nearly disappeared. Raised opacity and added a shadow so
+              legibility doesn't depend on which slide happens to be
+              showing - same treatment applied to the sub-label and tag
+              below. */}
+          <span
+            className="text-[9px] font-semibold uppercase tracking-[0.25em] text-white/85"
+            style={{ textShadow: '0 1px 6px rgba(0,0,0,0.8)' }}
+          >
             Trusted Excellence in Real Estate
           </span>
         </motion.div>
       </div>
 
-      {/* ── Center content ── */}
-      <div className="absolute inset-0 z-20 flex flex-col items-center justify-center text-center px-16 gap-4">
+      {/* ── Center content ──
+          pointer-events-none: this div spans the full hero (inset-0) at a
+          higher z-index than the prev/next edge-zone buttons below, so
+          without this it silently intercepted every click across the
+          entire slide, including over those buttons - they were rendered
+          but never actually clickable. pointer-events-auto is restored
+          just on the CTA buttons, the only real interactive children here. */}
+      <div className="absolute inset-0 z-20 flex flex-col items-center justify-center text-center px-16 gap-4 pointer-events-none">
 
         {/* Category pill */}
         <div className="h-6 flex items-center justify-center">
@@ -200,7 +229,10 @@ export default function HeroFullScreen() {
               className="inline-flex items-center gap-2 px-3 py-1 border border-white/20 bg-white/5 backdrop-blur-sm"
             >
               <span className="w-1 h-1 rounded-full bg-gp-accent" />
-              <span className="text-[9px] font-black uppercase tracking-[0.3em] text-white/70">
+              <span
+                className="text-[9px] font-black uppercase tracking-[0.3em] text-white/90"
+                style={{ textShadow: '0 1px 6px rgba(0,0,0,0.8)' }}
+              >
                 {section.tag}
               </span>
             </motion.div>
@@ -236,7 +268,8 @@ export default function HeroFullScreen() {
               animate={{ opacity: 1, y: 0 }}
               exit={{ opacity: 0, y: -8 }}
               transition={{ duration: 0.5, delay: 0.2 }}
-              className="text-[10px] uppercase tracking-[0.3em] text-white/45 font-semibold"
+              className="text-[10px] uppercase tracking-[0.3em] text-white/85 font-semibold"
+              style={{ textShadow: '0 1px 6px rgba(0,0,0,0.8)' }}
             >
               {section.sub}
             </motion.p>
@@ -255,7 +288,7 @@ export default function HeroFullScreen() {
 
         {/* CTA Buttons */}
         <motion.div
-          className="flex gap-4 mt-1"
+          className="flex gap-4 mt-1 pointer-events-auto"
           initial={{ opacity: 0, y: 12 }}
           animate={{ opacity: 1, y: 0 }}
           transition={{ duration: 0.6, delay: 0.5 }}

@@ -20,7 +20,9 @@ import {
   Search,
   ArrowUpRight,
   LayoutDashboard,
-  Users
+  Users,
+  Eye,
+  EyeOff
 } from 'lucide-react';
 import { Button } from '@/components/ui/button';
 import { Input } from '@/components/ui/input';
@@ -103,6 +105,7 @@ export default function Dashboard() {
   const [loginError, setLoginError] = useState<string | null>(null);
   const [username, setUsername] = useState('');
   const [password, setPassword] = useState('');
+  const [showLoginPassword, setShowLoginPassword] = useState(false);
 
   // Global UI state
   const [loading, setLoading] = useState(false);
@@ -397,7 +400,25 @@ export default function Dashboard() {
               </div>
               <div className="space-y-2">
                 <label className="text-sm font-semibold text-gp-ink">Password</label>
-                <Input type="password" value={password} onChange={e => setPassword(e.target.value)} placeholder="••••••••" required className="bg-gp-surface/30 px-4 py-3" />
+                <div className="relative">
+                  <Input
+                    type={showLoginPassword ? 'text' : 'password'}
+                    value={password}
+                    onChange={e => setPassword(e.target.value)}
+                    placeholder="••••••••"
+                    required
+                    className="bg-gp-surface/30 px-4 py-3 pr-11"
+                  />
+                  <button
+                    type="button"
+                    onClick={() => setShowLoginPassword(v => !v)}
+                    className="absolute right-3 top-1/2 -translate-y-1/2 text-gp-ink-muted hover:text-gp-ink transition-colors"
+                    aria-label={showLoginPassword ? 'Hide password' : 'Show password'}
+                    tabIndex={-1}
+                  >
+                    {showLoginPassword ? <EyeOff size={18} /> : <Eye size={18} />}
+                  </button>
+                </div>
               </div>
               <Button type="submit" disabled={loginLoading} className="w-full py-6 text-lg font-bold">
                 {loginLoading ? <Loader2 className="animate-spin" /> : 'Sign In'}
@@ -893,9 +914,16 @@ export default function Dashboard() {
                         value={settingsSmtpPass}
                         onChange={e => setSettingsSmtpPass(e.target.value)}
                         placeholder={settingsSmtpUser ? '••••••••••••••••' : 'Enter password'}
+                        className="pr-11"
                       />
-                      <button type="button" onClick={() => setShowSmtpPass(v => !v)} className="absolute right-3 top-1/2 -translate-y-1/2 text-xs text-gp-ink-muted hover:text-gp-ink px-1">
-                        {showSmtpPass ? 'Hide' : 'Show'}
+                      <button
+                        type="button"
+                        onClick={() => setShowSmtpPass(v => !v)}
+                        className="absolute right-3 top-1/2 -translate-y-1/2 text-gp-ink-muted hover:text-gp-ink transition-colors"
+                        aria-label={showSmtpPass ? 'Hide password' : 'Show password'}
+                        tabIndex={-1}
+                      >
+                        {showSmtpPass ? <EyeOff size={18} /> : <Eye size={18} />}
                       </button>
                     </div>
                     {settingsSmtpHost === 'smtp.gmail.com' && (

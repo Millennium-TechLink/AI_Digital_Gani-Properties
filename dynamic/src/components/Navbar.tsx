@@ -75,6 +75,23 @@ export default function Navbar() {
     // finished collapsing.
   };
 
+  // Used by the nav links specifically, not the X button. A plain
+  // closeMenu() here would leave scrollLocked (and therefore Lenis) frozen
+  // for the ~300ms it takes the panel to collapse - but ScrollToTop's
+  // route-change effect fires immediately on click, in the same tick as the
+  // navigation. Calling lenis.scrollTo() while Lenis is still stopped is a
+  // no-op, so that reset-to-top silently did nothing, and by the time
+  // onExitComplete finally unlocked scroll, useScrollLock's own cleanup
+  // restored the *old* page's pre-open scroll offset instead - the new page
+  // loaded already scrolled down. Unlocking immediately here means Lenis is
+  // already running again by the time ScrollToTop's effect fires, so its
+  // reset actually takes effect. The panel still visually collapses over
+  // the new page exactly as before - only the scroll lock timing changes.
+  const closeMenuForNavigation = () => {
+    setIsOpen(false);
+    setScrollLocked(false);
+  };
+
   // Close dropdown when clicking outside
   useEffect(() => {
     const handleClickOutside = (event: MouseEvent) => {
@@ -336,7 +353,7 @@ export default function Navbar() {
                           'block py-2 text-gp-ink hover:text-gp-accent transition-all duration-300 font-bold uppercase text-[10px] tracking-widest hover:pl-2',
                           pathname === link.to && 'text-gp-accent'
                         )}
-                        onClick={closeMenu}
+                        onClick={closeMenuForNavigation}
                       >
                         {link.label}
                       </Link>
@@ -352,7 +369,7 @@ export default function Navbar() {
                             <Link
                               to={subcategory.path}
                               className="block py-2 text-black/40 hover:text-gp-accent transition-all duration-300 text-[10px] font-bold uppercase tracking-widest hover:pl-2"
-                              onClick={closeMenu}
+                              onClick={closeMenuForNavigation}
                             >
                               {subcategory.label}
                             </Link>
@@ -376,7 +393,7 @@ export default function Navbar() {
                         'block py-2 text-gp-ink hover:text-gp-accent transition-all duration-300 font-bold uppercase text-[10px] tracking-widest hover:pl-2',
                         pathname === link.to && 'text-gp-accent'
                       )}
-                      onClick={closeMenu}
+                      onClick={closeMenuForNavigation}
                     >
                       {link.label}
                     </Link>
