@@ -5,44 +5,34 @@ import { MapPin } from 'lucide-react';
 
 const INTERVAL = 5000;
 
-// Self-hosted (public/images/hero-*.png - actually JPEGs, see file comment
-// below) instead of hotlinking images.pexels.com. That third-party origin
-// was: (a) not discoverable by the browser's preload scanner since nothing
-// about it exists until React mounts and renders the <img>, so it couldn't
-// be prioritized or preloaded from the static HTML, and (b) sitting behind
-// Cloudflare bot management, which set third-party cookies (_cfuvid,
-// __cf_bm) on every hero load - both flagged by Lighthouse. Serving these
-// same-origin lets index.html preload the first slide before the JS bundle
-// even runs, which is what actually moves LCP for a client-rendered SPA
-// with no server-side render.
 const sections = [
   {
     id: 'premium-plots',
     tag: 'Residential',
     title: 'PREMIUM PLOTS',
     sub: 'Bengaluru North · Est. 2009',
-    background: '/images/hero-residential.png',
+    background: 'https://images.pexels.com/photos/440731/pexels-photo-440731.jpeg?auto=compress&cs=tinysrgb&w=2560&q=85',
   },
   {
     id: 'fertile-farmlands',
     tag: 'Agricultural',
     title: 'FERTILE FARMLANDS',
     sub: 'Chikkaballapur · Organic Growth',
-    background: '/images/hero-agricultural.png',
+    background: 'https://images.pexels.com/photos/974314/pexels-photo-974314.jpeg?auto=compress&cs=tinysrgb&w=2560&q=85',
   },
   {
     id: 'strategic-location',
     tag: 'Commercial',
     title: 'PRIME LOCATION',
     sub: 'Yelahanka Hub · High Returns',
-    background: '/images/hero-commercial.png',
+    background: 'https://images.pexels.com/photos/1105766/pexels-photo-1105766.jpeg?auto=compress&cs=tinysrgb&w=2560&q=85',
   },
   {
     id: 'future-legacy',
     tag: 'Legacy',
     title: 'BUILD YOUR LEGACY',
     sub: 'Trusted Partner · Since 2009',
-    background: '/images/hero-legacy.png',
+    background: 'https://images.pexels.com/photos/157811/pexels-photo-157811.jpeg?auto=compress&cs=tinysrgb&w=2560&q=85',
   },
 ];
 
