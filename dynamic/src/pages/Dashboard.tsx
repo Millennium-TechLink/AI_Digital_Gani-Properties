@@ -31,7 +31,7 @@ import { Select } from '@/components/ui/select';
 import { propertiesApi } from '@/lib/propertiesApi';
 import { careersApi, Career } from '@/lib/careersApi';
 import { statsApi, Lead, SiteStats } from '@/lib/statsApi';
-import { login, logout, isAuthenticated } from '@/lib/auth';
+import { login, logout, isAuthenticated, verifyToken } from '@/lib/auth';
 import { Property, PropertyType } from '@/types/property';
 import SEOHead from '@/components/SEOHead';
 
@@ -101,6 +101,14 @@ type Tab = 'properties' | 'careers' | 'leads' | 'settings';
 export default function Dashboard() {
   const [activeTab, setActiveTab] = useState<Tab>('properties');
   const [authenticated, setAuthenticated] = useState(false);
+  // Separate from `authenticated`: a token sitting in localStorage doesn't
+  // mean it's still valid (isAuthenticated() only checks presence). Gating
+  // on that alone briefly rendered the full dashboard for anyone whose
+  // token had expired, until the first API call 401'd and kicked them back
+  // to the login screen - visible as "opens the dashboard, then throws you
+  // to login". This stays true until verifyToken() actually confirms the
+  // token against the server, so neither view renders on a guess.
+  const [checkingAuth, setCheckingAuth] = useState(true);
   const [loginLoading, setLoginLoading] = useState(false);
   const [loginError, setLoginError] = useState<string | null>(null);
   const [username, setUsername] = useState('');
@@ -172,11 +180,21 @@ export default function Dashboard() {
   const [leadFilter] = useState('all');
 
   useEffect(() => {
-    setAuthenticated(isAuthenticated());
-    if (isAuthenticated()) {
-      loadData();
-      loadSettings();
-    }
+    (async () => {
+      if (!isAuthenticated()) {
+        setCheckingAuth(false);
+        return;
+      }
+      const valid = await verifyToken();
+      if (valid) {
+        setAuthenticated(true);
+        loadData();
+        loadSettings();
+      } else {
+        logout();
+      }
+      setCheckingAuth(false);
+    })();
   }, []);
 
   const loadData = async () => {
@@ -380,6 +398,20 @@ export default function Dashboard() {
     if (leadFilter === 'all') return matchesSearch;
     return matchesSearch && l.interest.toLowerCase() === leadFilter.toLowerCase();
   });
+
+  if (checkingAuth) {
+    // Neither the login form nor the dashboard - rendering either here on
+    // a stale/expired token is exactly the flash this state exists to
+    // avoid (see the checkingAuth comment above).
+    return (
+      <>
+        <SEOHead title="Admin Dashboard" noindex />
+        <div className="min-h-screen flex items-center justify-center bg-gp-surface/5 pt-20">
+          <Loader2 className="h-8 w-8 animate-spin text-gp-accent" />
+        </div>
+      </>
+    );
+  }
 
   if (!authenticated) {
     return (

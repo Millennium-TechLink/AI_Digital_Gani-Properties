@@ -59,10 +59,35 @@ export function logout(): void {
 }
 
 /**
- * Check if user is authenticated
+ * Check if a token is present. This does NOT mean the token is still
+ * valid - localStorage happily holds onto an expired JWT until something
+ * clears it. Use verifyToken() before trusting this for anything that
+ * gates rendering (e.g. the Dashboard), or you get an authenticated view
+ * flashing briefly before the first real API call 401s and kicks the user
+ * back to the login screen.
  */
 export function isAuthenticated(): boolean {
   return !!localStorage.getItem('auth_token');
+}
+
+/**
+ * Actually confirms the stored token is still valid against the server
+ * (GET /api/auth/verify), rather than just checking that one exists.
+ */
+export async function verifyToken(): Promise<boolean> {
+  const token = getToken();
+  if (!token) return false;
+
+  try {
+    const response = await fetch(`${API_BASE_URL}/auth/verify`, {
+      headers: { Authorization: `Bearer ${token}` },
+    });
+    return response.ok;
+  } catch {
+    // Network error, not an auth failure - don't punish the user for a
+    // flaky connection by logging them out.
+    return true;
+  }
 }
 
 /**
