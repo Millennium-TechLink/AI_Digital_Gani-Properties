@@ -121,7 +121,7 @@ export default function ContactPage() {
                           whileInView={{ opacity: 1, y: 0 }}
                           viewport={{ once: true, margin: '-100px' }}
                           transition={{ duration: 0.5, delay: 0.2 + index * 0.1 }}
-                          className="flex items-start gap-4 p-5 bg-white rounded-2xl border border-gp-ink/10 hover:border-gp-accent/30 hover:shadow-lg transition-all duration-300 group"
+                          className="flex items-start gap-4 p-5 bg-white rounded-2xl border border-gp-ink/10 hover:border-gp-accent/30 hover:shadow-lg transition-[border-color,box-shadow] duration-300 group"
                         >
                           <div className="w-14 h-14 bg-gradient-to-br from-gp-accent/20 to-gp-gold/20 rounded-2xl flex items-center justify-center flex-shrink-0 group-hover:scale-110 transition-transform duration-300">
                             <Icon className="h-7 w-7 text-gp-accent" />

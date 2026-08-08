@@ -161,7 +161,12 @@ export default function Navbar() {
       animate={{ y: 0 }}
       transition={{ duration: 0.6, ease: [0.16, 1, 0.3, 1] }}
       className={cn(
-        'fixed top-0 left-0 right-0 z-50 transition-all duration-500',
+        // transition-[...] not transition-all: initial/animate above own
+        // the header's y (transform) on mount - a CSS transition-all would
+        // also try to transition that same property. Scoped to what
+        // getHeaderClasses() actually swaps between states (background,
+        // shadow, corner rounding, the backdrop blur toggle).
+        'fixed top-0 left-0 right-0 z-50 transition-[background-color,box-shadow,border-radius,backdrop-filter] duration-500',
         getHeaderClasses()
       )}
       style={
@@ -178,7 +183,9 @@ export default function Navbar() {
               whileTap={{ scale: 0.95 }}
               transition={{ duration: 0.3, ease: [0.16, 1, 0.3, 1] }}
               className={cn(
-                "relative h-20 w-auto flex-shrink-1 flex items-center transition-all duration-500",
+                // transition-[filter,opacity], not transition-all: whileHover/
+                // whileTap above own this element's scale (transform).
+                "relative h-20 w-auto flex-shrink-1 flex items-center transition-[filter,opacity] duration-500",
                 !isHeaderOpaque ? "brightness-0 invert opacity-90" : ""
               )}
             >

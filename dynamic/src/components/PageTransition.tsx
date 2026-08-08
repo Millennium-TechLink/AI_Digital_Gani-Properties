@@ -1,7 +1,7 @@
 import { motion, AnimatePresence } from 'framer-motion';
 import { useLocation } from 'react-router-dom';
 import { useLenis } from 'lenis/react';
-import { ReactNode, useLayoutEffect } from 'react';
+import { ReactNode, useRef } from 'react';
 
 interface PageTransitionProps {
   children: ReactNode;
@@ -10,29 +10,39 @@ interface PageTransitionProps {
 export default function PageTransition({ children }: PageTransitionProps) {
   const location = useLocation();
   const lenis = useLenis();
-
-  // Scroll-to-top lives here, not in a standalone component listening to
-  // useLocation() from outside <Suspense> (that was ScrollToTop.tsx, now
-  // removed) - this component sits *inside* the Suspense boundary that
-  // wraps <Routes>, so unlike resetting from outside it, this can only
-  // ever fire once the real content for this route has actually
-  // committed. Confirmed via a deliberate repro (delayed a lazy page's
-  // chunk and navigated before it was prefetched): resetting from outside
-  // Suspense fired the instant the URL changed, while the *old* page's
-  // content was still what was mounted (the target chunk hadn't loaded
-  // yet) - visible as the old page's top-of-page content sitting at
-  // scroll 0 for however long the chunk took, before the real new page
-  // finally swapped in. Keyed on pathname+search rather than an empty
-  // array so it still fires for in-place param changes on an already-
-  // mounted route too (e.g. /property/a -> /property/b never unmounts
-  // this component, since React Router matches the same <Route>).
-  useLayoutEffect(() => {
-    window.scrollTo(0, 0);
-    lenis?.scrollTo(0, { immediate: true });
-  }, [location.pathname, location.search, lenis]);
+  // onExitComplete's closure is created once and doesn't refresh on every
+  // re-render, so it can't just close over `lenis` directly - a ref is
+  // what lets it always read the current instance when it actually fires.
+  const lenisRef = useRef(lenis);
+  lenisRef.current = lenis;
 
   return (
-    <AnimatePresence mode="wait">
+    // mode="wait" + this component persisting across route changes
+    // (confirmed empirically - React Router reuses this same
+    // PageTransition instance rather than remounting it fresh per route,
+    // since it's the same component type at the same tree position every
+    // time) means the *previous* page's exit animation genuinely plays out
+    // in full before the next page enters - this is not a no-op. A
+    // scroll-to-top that fires the instant the URL changes (this used to
+    // be a useLayoutEffect keyed on location) resets scroll while that
+    // exit animation is still showing the *old* page, so for the whole
+    // ~0.5s of the fade-out you'd see the old page sitting at scroll 0 -
+    // its top-of-page content revealed - before the real new page swapped
+    // in. Confirmed via frame-by-frame sampling: Home's own heading
+    // stayed on screen at scroll 0 under the /about URL for ~540ms,
+    // matching this transition's exact duration.
+    // onExitComplete fires once that fade-out has actually finished, right
+    // as the incoming page is about to render - resetting scroll there
+    // instead means the old page never visibly sits at the wrong scroll
+    // position; by the time anything is visible at scroll 0, it's already
+    // the new page.
+    <AnimatePresence
+      mode="wait"
+      onExitComplete={() => {
+        window.scrollTo(0, 0);
+        lenisRef.current?.scrollTo(0, { immediate: true });
+      }}
+    >
       <motion.div
         key={location.pathname}
         initial={{ opacity: 0, y: 4 }}

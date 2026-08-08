@@ -158,7 +158,7 @@ export default function DevelopersPage() {
                   whileInView={{ opacity: 1, y: 0 }}
                   viewport={{ once: true }}
                   transition={{ duration: 0.5, delay: index * 0.1 }}
-                  className="p-8 rounded-3xl bg-gp-surface/5 border border-gp-ink/5 hover:border-gp-accent/30 transition-all duration-300 group"
+                  className="p-8 rounded-3xl bg-gp-surface/5 border border-gp-ink/5 hover:border-gp-accent/30 transition-colors duration-300 group"
                 >
                   <div className="w-14 h-14 rounded-2xl bg-gp-accent/10 flex items-center justify-center mb-6 group-hover:bg-gp-accent group-hover:text-white transition-colors duration-300">
                     <Icon className="w-7 h-7" />

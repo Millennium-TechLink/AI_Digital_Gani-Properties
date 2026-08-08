@@ -269,7 +269,7 @@ export default function Chatbot() {
                       whileHover={{ scale: 1.05 }}
                       whileTap={{ scale: 0.95 }}
                       onClick={() => handleSend(s)}
-                      className="px-4 py-2 bg-white hover:bg-gp-accent hover:text-white text-gp-ink/70 border border-black/10 rounded-full text-xs font-bold transition-all shadow-sm"
+                      className="px-4 py-2 bg-white hover:bg-gp-accent hover:text-white text-gp-ink/70 border border-black/10 rounded-full text-xs font-bold transition-colors shadow-sm"
                     >
                       {s}
                     </motion.button>

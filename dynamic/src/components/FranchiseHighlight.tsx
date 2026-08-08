@@ -82,7 +82,7 @@ export default function FranchiseHighlight() {
                       selectedModel === model.name 
                         ? 'border-gp-red bg-gp-red/5 shadow-md' 
                         : model.borderColor + ' bg-gp-light-grey/60'
-                    } backdrop-blur-sm group hover:bg-gp-red/5 transition-all duration-300 cursor-pointer`}
+                    } backdrop-blur-sm group hover:bg-gp-red/5 transition-[background-color,border-color,box-shadow] duration-300 cursor-pointer`}
                   >
                     {/* h3, not h4: this sits directly under the h2 above with
                         nothing at h3 in between - Lighthouse's heading-order

@@ -334,7 +334,7 @@ export default function AboutPage() {
                 whileInView={{ opacity: 1, x: 0 }}
                 viewport={{ once: true }}
                 transition={{ duration: 0.6 }}
-                className="bg-white rounded-[2.5rem] p-10 border border-gp-ink/5 shadow-xl relative overflow-hidden group hover:shadow-2xl transition-all duration-500"
+                className="bg-white rounded-[2.5rem] p-10 border border-gp-ink/5 shadow-xl relative overflow-hidden group hover:shadow-2xl transition-shadow duration-500"
               >
                 <div className="absolute top-0 right-0 p-10 opacity-[0.03] group-hover:opacity-[0.08] transition-opacity duration-500">
                   <MapPin className="w-48 h-48 text-gp-ink" />
@@ -365,7 +365,7 @@ export default function AboutPage() {
                 whileInView={{ opacity: 1, x: 0 }}
                 viewport={{ once: true }}
                 transition={{ duration: 0.6, delay: 0.2 }}
-                className="bg-gp-surface/30 rounded-[2.5rem] p-10 border border-gp-gold/20 shadow-xl relative overflow-hidden group hover:shadow-2xl hover:border-gp-gold/40 transition-all duration-500"
+                className="bg-gp-surface/30 rounded-[2.5rem] p-10 border border-gp-gold/20 shadow-xl relative overflow-hidden group hover:shadow-2xl hover:border-gp-gold/40 transition-[border-color,box-shadow] duration-500"
               >
                 <div className="absolute top-0 right-0 p-10 opacity-[0.03] group-hover:opacity-[0.08] transition-opacity duration-500">
                   <Globe className="w-48 h-48 text-gp-gold" />
@@ -562,7 +562,7 @@ export default function AboutPage() {
                 whileInView={{ opacity: 1, y: 0 }}
                 viewport={{ once: true }}
                 transition={{ duration: 0.6, delay: index * 0.1 }}
-                className="bg-white rounded-[2.5rem] p-10 border border-gp-ink/5 hover:border-gp-accent/20 transition-all duration-500 hover:shadow-2xl flex flex-col justify-between"
+                className="bg-white rounded-[2.5rem] p-10 border border-gp-ink/5 hover:border-gp-accent/20 transition-[border-color,box-shadow] duration-500 hover:shadow-2xl flex flex-col justify-between"
               >
                 <div>
                   <div className="flex gap-1 mb-6">

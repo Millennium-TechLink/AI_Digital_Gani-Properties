@@ -92,7 +92,16 @@ export default function BackToTop() {
           // Chatbot renders at a higher z-index and was sitting on top of / intercepting
           // clicks on this button otherwise. Sized down on mobile, along with the
           // Chatbot toggle, so together they cover less of the page content while scrolling.
-          className="fixed bottom-20 right-4 sm:bottom-28 sm:right-8 z-50 w-11 h-11 sm:w-14 sm:h-14 bg-gradient-to-br from-gp-accent to-gp-gold rounded-full shadow-2xl flex items-center justify-center text-white hover:shadow-gp-accent/50 transition-all duration-300 group cursor-pointer"
+          // transition-shadow, not transition-all: initial/animate/exit/
+          // whileHover/whileTap above already control opacity/scale/y via
+          // Framer Motion's own engine. A CSS transition-all on the same
+          // element also tries to transition those same properties on every
+          // change, so two independent animation systems fight over them -
+          // the classic cause of stutter/flicker on Framer Motion elements
+          // (see SmoothScroll.tsx's autoRaf fix for the scroll-engine half
+          // of this same class of bug). Scoping to just the one CSS-only
+          // property (the hover shadow color) removes the conflict.
+          className="fixed bottom-20 right-4 sm:bottom-28 sm:right-8 z-50 w-11 h-11 sm:w-14 sm:h-14 bg-gradient-to-br from-gp-accent to-gp-gold rounded-full shadow-2xl flex items-center justify-center text-white hover:shadow-gp-accent/50 transition-shadow duration-300 group cursor-pointer"
           aria-label="Back to top"
         >
           {/* Animated Glow effect */}

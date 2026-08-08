@@ -341,7 +341,7 @@ export default function FranchisePage() {
                   const el = document.getElementById('comparison');
                   el?.scrollIntoView({ behavior: 'smooth' });
                 }}
-                className="group px-10 py-5 border border-white/20 text-white backdrop-blur-md hover:bg-white/5 transition-all"
+                className="group px-10 py-5 border border-white/20 text-white backdrop-blur-md hover:bg-white/5 transition-colors"
               >
                 <span className="text-[11px] font-black uppercase tracking-[0.3em] flex items-center gap-3">
                   View Models
@@ -427,8 +427,12 @@ export default function FranchisePage() {
                   onHoverEnd={() => setSelectedModel(null)}
                   className="group cursor-pointer w-full md:w-[calc(50%-2rem)] lg:w-[calc(33.333%-2rem)] max-w-sm"
                 >
+                  {/* transition-[background-color,border-color], not
+                      transition-all: whileHover below already owns
+                      boxShadow via Framer Motion - a CSS transition-all
+                      would also try to transition that same property. */}
                   <motion.div
-                    className={`bg-gradient-to-br ${isSelected ? model.hoverGradient : model.gradient} rounded-3xl p-8 border-2 ${model.borderColor} transition-all duration-500 h-full flex flex-col relative overflow-hidden shadow-sm`}
+                    className={`bg-gradient-to-br ${isSelected ? model.hoverGradient : model.gradient} rounded-3xl p-8 border-2 ${model.borderColor} transition-[background-color,border-color] duration-500 h-full flex flex-col relative overflow-hidden shadow-sm`}
                     whileHover={{
                       boxShadow: '0 20px 40px rgba(0,0,0,0.15)',
                     }}
@@ -695,7 +699,7 @@ export default function FranchisePage() {
                   viewport={{ once: true }}
                   transition={{ duration: 0.8, delay: item.delay }}
                   whileHover={{ y: -8, scale: 1.02 }}
-                  className={`bg-gradient-to-br ${item.gradient} rounded-3xl p-10 border-2 ${item.border} shadow-xl transition-all duration-300`}
+                  className={`bg-gradient-to-br ${item.gradient} rounded-3xl p-10 border-2 ${item.border} shadow-xl transition-colors duration-300`}
                 >
                   <div className="flex items-center gap-4 mb-6">
                     <div className="w-16 h-16 rounded-xl bg-white/80 flex items-center justify-center">
@@ -786,7 +790,7 @@ export default function FranchisePage() {
                     rotateY: 5,
                     transition: { duration: 0.3 }
                   }}
-                  className="bg-white rounded-3xl p-10 border border-gp-ink/10 hover:border-gp-accent/30 transition-all duration-500 hover:shadow-2xl perspective-1000"
+                  className="bg-white rounded-3xl p-10 border border-gp-ink/10 hover:border-gp-accent/30 transition-[border-color,box-shadow] duration-500 hover:shadow-2xl perspective-1000"
                 >
                   <motion.div
                     whileHover={{ scale: 1.1, rotate: 5 }}
@@ -861,7 +865,7 @@ export default function FranchisePage() {
                       rotateY: 5,
                       transition: { duration: 0.3 }
                     }}
-                    className="bg-white/10 backdrop-blur-md rounded-3xl p-10 border border-white/20 hover:border-white/40 transition-all duration-500 hover:bg-white/15"
+                    className="bg-white/10 backdrop-blur-md rounded-3xl p-10 border border-white/20 hover:border-white/40 transition-[background-color,border-color] duration-500 hover:bg-white/15"
                   >
                     <motion.div
                       whileHover={{ scale: 1.2, rotate: 360 }}
@@ -997,7 +1001,7 @@ export default function FranchisePage() {
                   whileInView={{ opacity: 1, y: 0 }}
                   viewport={{ once: true }}
                   transition={{ duration: 0.5, delay: index * 0.1 }}
-                  className="bg-white p-8 rounded-3xl border border-black/5 hover:border-gp-red/20 transition-all group shadow-sm"
+                  className="bg-white p-8 rounded-3xl border border-black/5 hover:border-gp-red/20 transition-colors group shadow-sm"
                 >
                   <div className="w-14 h-14 rounded-2xl bg-gp-red/10 flex items-center justify-center mb-6 group-hover:bg-gp-red transition-colors">
                     <Icon className="w-7 h-7 text-gp-red group-hover:text-white" />

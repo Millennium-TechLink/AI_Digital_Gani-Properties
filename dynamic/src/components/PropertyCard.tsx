@@ -175,7 +175,7 @@ export default function PropertyCard({ property, variant = 'grid' }: PropertyCar
                   whileInView={{ opacity: 1, scale: 1 }}
                   viewport={{ once: true }}
                   transition={{ duration: 0.3, delay: idx * 0.1 }}
-                  className="text-[10px] sm:text-xs bg-gp-surface/10 text-gp-ink px-1.5 py-0.5 sm:px-2 sm:py-1 rounded-lg transition-all duration-300 group-hover:bg-gp-accent/20 whitespace-nowrap flex-shrink-0"
+                  className="text-[10px] sm:text-xs bg-gp-surface/10 text-gp-ink px-1.5 py-0.5 sm:px-2 sm:py-1 rounded-lg transition-colors duration-300 group-hover:bg-gp-accent/20 whitespace-nowrap flex-shrink-0"
                 >
                   {highlight}
                 </motion.li>
