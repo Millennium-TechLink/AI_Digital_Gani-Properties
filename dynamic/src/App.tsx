@@ -5,7 +5,6 @@ import SEOHead from './components/SEOHead';
 import Navbar from './components/Navbar';
 import Footer from './components/Footer';
 import BackToTop from './components/BackToTop';
-import ScrollToTop from './components/ScrollToTop';
 import PageTransition from './components/PageTransition';
 import HomePage from './pages/Home';
 import Chatbot from './components/Chatbot';
@@ -71,7 +70,6 @@ function App() {
 
   return (
     <SmoothScroll>
-      <ScrollToTop />
       <SEOHead
         title="Gani Properties - Premium Property Providers in Bangalore"
         description="Leading property providers in Bangalore offering verified residential plots, farmland, and agricultural lands. Trusted real estate dealer with transparent pricing in Kattigenahalli, Yelahanka, Hunasamaranahalli, and Chikkaballapur."
@@ -98,7 +96,7 @@ function App() {
               <Route path="/franchise" element={<PageTransition><FranchisePage /></PageTransition>} />
               <Route path="/privacy" element={<PageTransition><PrivacyPage /></PageTransition>} />
               <Route path="/terms" element={<PageTransition><TermsPage /></PageTransition>} />
-              <Route path="/dashboard" element={<Dashboard />} />
+              <Route path="/dashboard" element={<PageTransition><Dashboard /></PageTransition>} />
               <Route path="/careers" element={<PageTransition><CareersPage /></PageTransition>} />
               <Route path="*" element={<PageTransition><NotFoundPage /></PageTransition>} />
             </Routes>

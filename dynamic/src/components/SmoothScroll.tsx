@@ -53,6 +53,19 @@ export default function SmoothScroll({ children }: SmoothScrollProps) {
     <ReactLenis
       root
       options={{
+        // autoRaf: false - this is the fix for the "smooth scroll gets
+        // rough/janky over time" bug. lenis/react defaults autoRaf to true
+        // (its own internal requestAnimationFrame loop driving lenis.raf()
+        // automatically) *unless* told otherwise - but the effect below
+        // ALSO manually drives lenis.raf() every tick via gsap.ticker, to
+        // stay frame-order-coordinated with ScrollTrigger. Without this
+        // flag both loops were running simultaneously, each computing its
+        // own delta-time from a different timing source and calling
+        // lenis.raf() twice per visual frame. That's not just redundant -
+        // the two rAF schedulers aren't phase-locked, so the drift between
+        // them compounds over a session, which is exactly why this read as
+        // "fine at first, rough after a while, for no obvious reason."
+        autoRaf: false,
         duration: 1.2,
         easing: (t: number) => Math.min(1, 1.001 - Math.pow(2, -10 * t)),
         orientation: 'vertical',

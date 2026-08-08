@@ -77,16 +77,17 @@ export default function Navbar() {
 
   // Used by the nav links specifically, not the X button. A plain
   // closeMenu() here would leave scrollLocked (and therefore Lenis) frozen
-  // for the ~300ms it takes the panel to collapse - but ScrollToTop's
-  // route-change effect fires immediately on click, in the same tick as the
-  // navigation. Calling lenis.scrollTo() while Lenis is still stopped is a
-  // no-op, so that reset-to-top silently did nothing, and by the time
-  // onExitComplete finally unlocked scroll, useScrollLock's own cleanup
-  // restored the *old* page's pre-open scroll offset instead - the new page
-  // loaded already scrolled down. Unlocking immediately here means Lenis is
-  // already running again by the time ScrollToTop's effect fires, so its
-  // reset actually takes effect. The panel still visually collapses over
-  // the new page exactly as before - only the scroll lock timing changes.
+  // for the ~300ms it takes the panel to collapse - but PageTransition's
+  // route-change scroll reset fires as soon as the new page actually
+  // mounts, which can be well within that window. Calling lenis.scrollTo()
+  // while Lenis is still stopped is a no-op, so that reset-to-top silently
+  // did nothing, and by the time onExitComplete finally unlocked scroll,
+  // useScrollLock's own cleanup restored the *old* page's pre-open scroll
+  // offset instead - the new page loaded already scrolled down. Unlocking
+  // immediately here means Lenis is already running again by the time
+  // PageTransition's reset fires, so it actually takes effect. The panel
+  // still visually collapses over the new page exactly as before - only
+  // the scroll lock timing changes.
   const closeMenuForNavigation = () => {
     setIsOpen(false);
     setScrollLocked(false);
