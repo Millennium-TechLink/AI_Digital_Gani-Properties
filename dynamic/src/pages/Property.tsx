@@ -5,6 +5,7 @@ import { MapPin, Calendar, ArrowLeft, Phone, Mail, ExternalLink } from 'lucide-r
 import SEOHead from '@/components/SEOHead';
 import Image from '@/components/Image';
 import LeadForm from '@/components/LeadForm';
+import PropertyDetailSkeleton from '@/components/PropertyDetailSkeleton';
 import { propertiesApi, PropertiesApiError } from '@/lib/propertiesApi';
 import { Property } from '@/types/property';
 import { generatePropertySchema, generateBreadcrumbSchema } from '@/lib/seo';
@@ -56,12 +57,7 @@ export default function PropertyPage() {
     return (
       <>
         <SEOHead title="Loading Property..." />
-        <div className="min-h-screen pt-20 flex items-center justify-center">
-          <div className="text-center">
-            <div className="animate-spin rounded-full h-12 w-12 border-b-2 border-gp-accent mx-auto mb-4"></div>
-            <p className="text-gp-ink-muted">Loading property details...</p>
-          </div>
-        </div>
+        <PropertyDetailSkeleton />
       </>
     );
   }

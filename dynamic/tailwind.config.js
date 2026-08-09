@@ -32,6 +32,14 @@ export default {
         lg: 'var(--shadow-lg)',
         xl: 'var(--shadow-xl)',
       },
+      keyframes: {
+        shimmer: {
+          '100%': { transform: 'translateX(100%)' },
+        },
+      },
+      animation: {
+        shimmer: 'shimmer 1.6s ease-in-out infinite',
+      },
     },
   },
   plugins: [],

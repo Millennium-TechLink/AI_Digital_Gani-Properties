@@ -3,6 +3,7 @@ import { useSearchParams } from 'react-router-dom';
 import { motion } from 'framer-motion';
 import SEOHead from '@/components/SEOHead';
 import PropertyCard from '@/components/PropertyCard';
+import PropertyCardSkeleton from '@/components/PropertyCardSkeleton';
 import FiltersBar from '@/components/FiltersBar';
 import MapToggle from '@/components/MapToggle';
 import { LayoutGrid, Map as MapIcon, AlertCircle } from 'lucide-react';
@@ -255,10 +256,15 @@ export default function PropertiesPage() {
       <FiltersBar />
 
       <div className="container mx-auto px-4 lg:px-6 py-12">
+        {/* Card-shaped skeleton, not a spinner: the grid this fills in for
+            is a known, fixed shape (6 cards, same size every time), so
+            previewing that shape reads faster than an unrelated spinner and
+            avoids the layout "pop" of the real grid appearing all at once. */}
         {loading && (
-          <div className="text-center py-20">
-            <div className="animate-spin rounded-full h-12 w-12 border-b-2 border-gp-accent mx-auto mb-4"></div>
-            <p className="text-gp-ink-muted">Loading properties...</p>
+          <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-8">
+            {Array.from({ length: 6 }).map((_, i) => (
+              <PropertyCardSkeleton key={i} />
+            ))}
           </div>
         )}
 

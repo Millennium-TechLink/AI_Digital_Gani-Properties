@@ -28,6 +28,7 @@ import { Button } from '@/components/ui/button';
 import { Input } from '@/components/ui/input';
 import { Textarea } from '@/components/ui/textarea';
 import { Select } from '@/components/ui/select';
+import { Skeleton } from '@/components/ui/skeleton';
 import { propertiesApi } from '@/lib/propertiesApi';
 import { careersApi, Career } from '@/lib/careersApi';
 import { statsApi, Lead, SiteStats } from '@/lib/statsApi';
@@ -626,7 +627,22 @@ export default function Dashboard() {
                     </tr>
                   </thead>
                   <tbody className="divide-y divide-gp-ink/10">
-                    {properties.map(p => (
+                    {/* Row-shaped skeleton, not a spinner: this table had no
+                        loading affordance at all before - properties starts
+                        as an empty array, so the table was just blank until
+                        loadData() resolved. Rows preview the real shape
+                        (title+status, location, type, action buttons)
+                        instead of an unexplained empty table. */}
+                    {loading ? (
+                      Array.from({ length: 5 }).map((_, i) => (
+                        <tr key={i}>
+                          <td className="px-6 py-5"><Skeleton className="h-5 w-40 mb-2" /><Skeleton className="h-3 w-16" /></td>
+                          <td className="px-6 py-5"><Skeleton className="h-4 w-32" /></td>
+                          <td className="px-6 py-5"><Skeleton className="h-4 w-24" /></td>
+                          <td className="px-6 py-5 text-right"><Skeleton className="h-8 w-20 ml-auto" /></td>
+                        </tr>
+                      ))
+                    ) : properties.map(p => (
                       <tr key={p.id} className="hover:bg-gp-surface/30 transition-colors">
                         <td className="px-6 py-5">
                           <div className="font-bold text-gp-ink">{p.title}</div>
@@ -811,7 +827,24 @@ export default function Dashboard() {
                     </tr>
                   </thead>
                   <tbody className="divide-y divide-gp-ink/10">
-                    {filteredLeads.length === 0 ? (
+                    {/* loading is checked before the "no leads found" empty
+                        state below - leads starts as an empty array until
+                        loadData() resolves, so without this the table
+                        showed "No leads found matching your search" while
+                        still loading, which reads as a real (and wrong)
+                        search result rather than a loading state. */}
+                    {loading ? (
+                      Array.from({ length: 5 }).map((_, i) => (
+                        <tr key={i}>
+                          <td className="px-6 py-5"><Skeleton className="h-4 w-28" /></td>
+                          <td className="px-6 py-5"><Skeleton className="h-4 w-24 mb-2" /><Skeleton className="h-3 w-32" /></td>
+                          <td className="px-6 py-5"><Skeleton className="h-6 w-24 rounded-full" /></td>
+                          <td className="px-6 py-5"><Skeleton className="h-4 w-full max-w-xs" /></td>
+                          <td className="px-6 py-5"><Skeleton className="h-4 w-20" /></td>
+                          <td className="px-6 py-5 text-right"><Skeleton className="h-8 w-8 ml-auto" /></td>
+                        </tr>
+                      ))
+                    ) : filteredLeads.length === 0 ? (
                       <tr>
                         <td colSpan={6} className="px-6 py-20 text-center text-gp-ink-muted italic">
                           No leads found matching your search.
