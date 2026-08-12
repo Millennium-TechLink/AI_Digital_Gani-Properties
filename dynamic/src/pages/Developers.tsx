@@ -1,13 +1,19 @@
-import { motion, useScroll, useTransform } from 'framer-motion';
-import { useRef } from 'react';
+import { motion, useScroll, useTransform, AnimatePresence } from 'framer-motion';
+import { useRef, useState } from 'react';
+import { useLenis } from 'lenis/react';
+import axios from 'axios';
 import SEOHead from '@/components/SEOHead';
-import { 
-  HardHat, Ruler, ShieldCheck, 
-  Lightbulb, ArrowRight,
+import {
+  HardHat, Ruler, ShieldCheck,
+  Lightbulb, ArrowRight, Loader2,
   Target, Zap, Users2, Building
 } from 'lucide-react';
 import { Button } from '@/components/ui/button';
 import Image from '@/components/Image';
+
+// Same API_BASE pattern as LeadForm.tsx/statsApi.ts - no shared axios
+// client exists to import in this codebase, each call site inlines it.
+const API_BASE = import.meta.env.VITE_API_URL || (import.meta.env.DEV ? 'http://localhost:3000/api' : '/api');
 
 const capabilities = [
   {
@@ -57,10 +63,52 @@ const expertiseAreas = [
 
 export default function DevelopersPage() {
   const heroRef = useRef<HTMLElement>(null);
+  const lenis = useLenis();
   const { scrollYProgress } = useScroll({
     target: heroRef,
     offset: ['start start', 'end start'],
   });
+
+  // Partnership inquiry form - was previously an uncontrolled <form> with no
+  // onSubmit and a submit button with no onClick, so clicking it just did a
+  // native form submission with no handler/action: a page reload that
+  // silently discarded whatever the visitor typed.
+  const [form, setForm] = useState({ name: '', phone: '', location: '', message: '' });
+  const [status, setStatus] = useState<'idle' | 'loading' | 'success' | 'error'>('idle');
+
+  const handleFormSubmit = async (e: React.FormEvent) => {
+    e.preventDefault();
+    if (!form.name.trim() || !form.phone.trim()) {
+      setStatus('error');
+      return;
+    }
+    setStatus('loading');
+    try {
+      // No dedicated "land location" field on the /api/leads schema (see
+      // api/leads.ts) - folded into `message` rather than dropped, same as
+      // every other field this form collects that the API doesn't have a
+      // named slot for.
+      const message = form.location
+        ? `Land Location / Project Type: ${form.location}\n\n${form.message}`.trim()
+        : form.message;
+      const response = await axios.post(`${API_BASE}/leads`, {
+        name: form.name,
+        phone: form.phone,
+        interest: 'Land Development Partnership',
+        message,
+        page: 'developers',
+      });
+      if (response.data.success) {
+        setStatus('success');
+        setForm({ name: '', phone: '', location: '', message: '' });
+      } else {
+        setStatus('error');
+      }
+    } catch (err) {
+      console.error('Partnership inquiry submission error:', err);
+      setStatus('error');
+    }
+  };
 
   const heroY = useTransform(scrollYProgress, [0, 1], ['0%', '30%']);
 
@@ -118,7 +166,13 @@ export default function DevelopersPage() {
               <Button
                 size="lg"
                 className="bg-gp-accent hover:bg-gp-gold text-white px-8 py-6 text-lg font-medium group"
-                onClick={() => document.getElementById('partnership-form')?.scrollIntoView({ behavior: 'smooth' })}
+                // lenis.scrollTo, not scrollIntoView: Lenis owns scrolling at
+                // the root (see SmoothScroll.tsx) and re-asserts its own
+                // virtual scroll position every rAF tick, which fights and
+                // immediately undoes a native scrollIntoView call. offset
+                // matches the 5rem/80px scroll-padding-top convention
+                // (index.css) so the fixed header doesn't cover the section.
+                onClick={() => lenis?.scrollTo('#partnership-form', { offset: -80 })}
               >
                 Partner With Us
                 <ArrowRight className="ml-2 w-5 h-5 group-hover:translate-x-1 transition-transform" />
@@ -127,7 +181,7 @@ export default function DevelopersPage() {
                 size="lg"
                 variant="outline"
                 className="border-white/30 text-white hover:bg-white/10 px-8 py-6 text-lg font-medium"
-                onClick={() => document.getElementById('capabilities')?.scrollIntoView({ behavior: 'smooth' })}
+                onClick={() => lenis?.scrollTo('#capabilities', { offset: -80 })}
               >
                 Our Expertise
               </Button>
@@ -257,27 +311,93 @@ export default function DevelopersPage() {
               <div id="partnership-form" className="bg-white rounded-[2rem] p-8 text-gp-ink shadow-xl">
                  <h3 className="text-2xl font-bold mb-2">Discuss Your Project</h3>
                  <p className="text-sm text-gp-ink-muted mb-6">Let's explore how we can maximize your property's potential.</p>
-                 <form className="space-y-4">
+                 <form className="space-y-4" onSubmit={handleFormSubmit}>
                     <div className="grid grid-cols-1 sm:grid-cols-2 gap-4">
                         <div className="space-y-2">
-                            <label className="text-xs font-bold uppercase tracking-wider text-gp-ink/60">Full Name</label>
-                            <input type="text" className="w-full bg-gp-surface/30 border-none rounded-xl px-4 py-3 focus:ring-2 ring-gp-accent/20" placeholder="John Doe" />
+                            <label htmlFor="dev-name" className="text-xs font-bold uppercase tracking-wider text-gp-ink/60">Full Name</label>
+                            <input
+                              id="dev-name"
+                              type="text"
+                              required
+                              value={form.name}
+                              onChange={(e) => setForm((f) => ({ ...f, name: e.target.value }))}
+                              className="w-full bg-gp-surface/30 border-none rounded-xl px-4 py-3 focus:ring-2 ring-gp-accent/20"
+                              placeholder="John Doe"
+                            />
                         </div>
                         <div className="space-y-2">
-                            <label className="text-xs font-bold uppercase tracking-wider text-gp-ink/60">Phone</label>
-                            <input type="tel" className="w-full bg-gp-surface/30 border-none rounded-xl px-4 py-3 focus:ring-2 ring-gp-accent/20" placeholder="+91 00000 00000" />
+                            <label htmlFor="dev-phone" className="text-xs font-bold uppercase tracking-wider text-gp-ink/60">Phone</label>
+                            <input
+                              id="dev-phone"
+                              type="tel"
+                              required
+                              value={form.phone}
+                              onChange={(e) => setForm((f) => ({ ...f, phone: e.target.value }))}
+                              className="w-full bg-gp-surface/30 border-none rounded-xl px-4 py-3 focus:ring-2 ring-gp-accent/20"
+                              placeholder="+91 00000 00000"
+                            />
                         </div>
                     </div>
                     <div className="space-y-2">
-                        <label className="text-xs font-bold uppercase tracking-wider text-gp-ink/60">Land Location / Project Type</label>
-                        <input type="text" className="w-full bg-gp-surface/30 border-none rounded-xl px-4 py-3 focus:ring-2 ring-gp-accent/20" placeholder="e.g. 5 Acres in Devanahalli" />
+                        <label htmlFor="dev-location" className="text-xs font-bold uppercase tracking-wider text-gp-ink/60">Land Location / Project Type</label>
+                        <input
+                          id="dev-location"
+                          type="text"
+                          value={form.location}
+                          onChange={(e) => setForm((f) => ({ ...f, location: e.target.value }))}
+                          className="w-full bg-gp-surface/30 border-none rounded-xl px-4 py-3 focus:ring-2 ring-gp-accent/20"
+                          placeholder="e.g. 5 Acres in Devanahalli"
+                        />
                     </div>
                     <div className="space-y-2">
-                        <label className="text-xs font-bold uppercase tracking-wider text-gp-ink/60">Brief Message</label>
-                        <textarea className="w-full bg-gp-surface/30 border-none rounded-xl px-4 py-3 focus:ring-2 ring-gp-accent/20 min-h-[100px]" placeholder="Tell us about your proposal..."></textarea>
+                        <label htmlFor="dev-message" className="text-xs font-bold uppercase tracking-wider text-gp-ink/60">Brief Message</label>
+                        <textarea
+                          id="dev-message"
+                          value={form.message}
+                          onChange={(e) => setForm((f) => ({ ...f, message: e.target.value }))}
+                          className="w-full bg-gp-surface/30 border-none rounded-xl px-4 py-3 focus:ring-2 ring-gp-accent/20 min-h-[100px]"
+                          placeholder="Tell us about your proposal..."
+                        />
                     </div>
-                    <Button className="w-full bg-gp-accent hover:bg-gp-gold text-white py-6 font-bold text-lg shadow-lg">
-                        Submit
+
+                    <AnimatePresence>
+                      {status === 'success' && (
+                        <motion.p
+                          initial={{ opacity: 0, y: -8 }}
+                          animate={{ opacity: 1, y: 0 }}
+                          exit={{ opacity: 0, y: -8 }}
+                          className="rounded-xl bg-green-50 border border-green-200 px-4 py-3 text-sm text-green-800"
+                          role="alert"
+                        >
+                          Thank you! We&apos;ll get back to you soon.
+                        </motion.p>
+                      )}
+                      {status === 'error' && (
+                        <motion.p
+                          initial={{ opacity: 0, y: -8 }}
+                          animate={{ opacity: 1, y: 0 }}
+                          exit={{ opacity: 0, y: -8 }}
+                          className="rounded-xl bg-red-50 border border-red-200 px-4 py-3 text-sm text-red-800"
+                          role="alert"
+                        >
+                          Please fill in your name and phone, then try again.
+                        </motion.p>
+                      )}
+                    </AnimatePresence>
+
+                    <Button
+                      type="submit"
+                      disabled={status === 'loading'}
+                      className="w-full bg-gp-accent hover:bg-gp-gold text-white py-6 font-bold text-lg shadow-lg"
+                    >
+                        {status === 'loading' ? (
+                          <>
+                            <Loader2 className="h-5 w-5 animate-spin" />
+                            Sending...
+                          </>
+                        ) : (
+                          'Submit'
+                        )}
                     </Button>
                  </form>
               </div>

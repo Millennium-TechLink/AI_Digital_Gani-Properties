@@ -1,5 +1,6 @@
 import { motion, useScroll, useTransform, AnimatePresence } from 'framer-motion';
 import { useRef, useState } from 'react';
+import { useLenis } from 'lenis/react';
 import SEOHead from '@/components/SEOHead';
 import {
   TrendingUp, Award, Zap, Clock,
@@ -118,6 +119,7 @@ const responsibilities = {
 
 export default function FranchisePage() {
   const heroRef = useRef<HTMLElement>(null);
+  const lenis = useLenis();
   const { scrollYProgress } = useScroll({
     target: heroRef,
     offset: ['start start', 'end start'],
@@ -321,10 +323,14 @@ export default function FranchisePage() {
               <motion.button
                 whileHover={{ scale: 1.02, y: -2 }}
                 whileTap={{ scale: 0.98 }}
-                onClick={() => {
-                  const el = document.getElementById('models');
-                  el?.scrollIntoView({ behavior: 'smooth' });
-                }}
+                // lenis.scrollTo, not scrollIntoView: Lenis owns scrolling
+                // at the root (see SmoothScroll.tsx) and re-asserts its own
+                // virtual scroll position every rAF tick, which fights and
+                // immediately undoes a native scrollIntoView call - it never
+                // visibly moved. offset matches the 5rem/80px
+                // scroll-padding-top convention (index.css) so the fixed
+                // header doesn't cover the section's heading.
+                onClick={() => lenis?.scrollTo('#models', { offset: -80 })}
                 className="group relative px-10 py-5 bg-gp-accent text-white overflow-hidden shadow-[0_20px_50px_-10px_rgba(221,43,28,0.4)]"
               >
                 <div className="absolute inset-0 bg-white/10 translate-x-[-100%] group-hover:translate-x-0 transition-transform duration-500" />
@@ -337,10 +343,7 @@ export default function FranchisePage() {
               <motion.button
                 whileHover={{ scale: 1.02, y: -2 }}
                 whileTap={{ scale: 0.98 }}
-                onClick={() => {
-                  const el = document.getElementById('comparison');
-                  el?.scrollIntoView({ behavior: 'smooth' });
-                }}
+                onClick={() => lenis?.scrollTo('#comparison', { offset: -80 })}
                 className="group px-10 py-5 border border-white/20 text-white backdrop-blur-md hover:bg-white/5 transition-colors"
               >
                 <span className="text-[11px] font-black uppercase tracking-[0.3em] flex items-center gap-3">
@@ -500,7 +503,7 @@ export default function FranchisePage() {
         </div>
       </section>
 
-      <section className="py-32 bg-white relative overflow-hidden border-t border-gp-ink/5">
+      <section id="comparison" className="py-32 bg-white relative overflow-hidden border-t border-gp-ink/5">
         <div className="container mx-auto px-4 lg:px-6 relative z-10">
           <motion.div
             initial={{ opacity: 0, y: 20 }}
