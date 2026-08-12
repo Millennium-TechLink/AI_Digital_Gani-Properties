@@ -170,7 +170,11 @@ export default function Chatbot() {
         whileTap={{ scale: 0.9 }}
         onClick={() => setIsOpen(!isOpen)}
         aria-label={isOpen ? 'Close chat' : 'Open chat'}
-        className="fixed bottom-4 right-4 sm:bottom-6 sm:right-6 z-[9999] w-12 h-12 sm:w-16 sm:h-16 bg-[#0D0D0D] text-white rounded-full shadow-[0_10px_30px_rgba(0,0,0,0.5)] flex items-center justify-center border border-gp-accent/40 overflow-hidden group"
+        // chatbot-fab: stable hook for body.mobile-menu-open in index.css
+        // to hide this while the mobile nav's full-screen panel is open -
+        // that panel now reaches the bottom of the viewport where this
+        // bubble lives, which the old short dropdown never did.
+        className="chatbot-fab fixed bottom-4 right-4 sm:bottom-6 sm:right-6 z-[9999] w-12 h-12 sm:w-16 sm:h-16 bg-[#0D0D0D] text-white rounded-full shadow-[0_10px_30px_rgba(0,0,0,0.5)] flex items-center justify-center border border-gp-accent/40 overflow-hidden group"
       >
         <div className="absolute inset-0 bg-gradient-to-tr from-gp-accent/10 to-transparent opacity-0 group-hover:opacity-100 transition-opacity" />
         {isOpen ? (
@@ -195,7 +199,7 @@ export default function Chatbot() {
             initial={{ opacity: 0, y: 100, scale: 0.8, transformOrigin: 'bottom right' }}
             animate={{ opacity: 1, y: 0, scale: 1 }}
             exit={{ opacity: 0, y: 100, scale: 0.8 }}
-            className="fixed bottom-24 right-6 z-[9998] w-[90vw] max-w-[400px] h-[600px] bg-white rounded-3xl shadow-[0_25px_80px_-15px_rgba(0,0,0,0.2)] border border-black/10 overflow-hidden flex flex-col"
+            className="chatbot-window fixed bottom-24 right-6 z-[9998] w-[90vw] max-w-[400px] h-[600px] bg-white rounded-3xl shadow-[0_25px_80px_-15px_rgba(0,0,0,0.2)] border border-black/10 overflow-hidden flex flex-col"
           >
             {/* Header */}
             <div className="bg-white p-6 text-gp-ink flex items-center gap-4 relative overflow-hidden border-b border-black/5">

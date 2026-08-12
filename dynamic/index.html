@@ -4,7 +4,13 @@
     <meta charset="UTF-8" />
     <link rel="icon" type="image/svg+xml" href="/images/Logo.svg" />
     <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-    <meta name="theme-color" content="#0F3A3D" />
+    <!-- Matches the header's opaque state (#FFFFFF in Navbar.tsx), which is
+         what's actually on screen behind the safe-area/notch strip for
+         every page except the homepage's first screenful before scrolling.
+         A mismatched theme-color there reads as a colored frame around the
+         page - most visible once the mobile menu opens and forces a stark
+         white panel against it. -->
+    <meta name="theme-color" content="#FFFFFF" />
     <link rel="preconnect" href="https://fonts.googleapis.com" />
     <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
     <!-- Loaded as media="print" then swapped to "all" on load instead of a

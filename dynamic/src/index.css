@@ -196,6 +196,15 @@
     text-rendering: optimizeLegibility;
     -webkit-tap-highlight-color: transparent;
   }
+
+  /* Set by Navbar.tsx while the mobile menu's full-screen panel is open.
+     That panel now reaches the bottom of the viewport where the Chatbot's
+     floating bubble lives (the old short dropdown never did), so it's
+     hidden outright rather than just padded around. */
+  body.mobile-menu-open .chatbot-fab,
+  body.mobile-menu-open .chatbot-window {
+    display: none;
+  }
   
   /* section, div, article, aside, main {
     transition: opacity var(--duration-normal) var(--ease-out-smooth);

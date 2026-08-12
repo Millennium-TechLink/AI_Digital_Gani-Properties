@@ -73,6 +73,26 @@ export default function HeroFullScreen() {
   const intervalRef = useRef<ReturnType<typeof setInterval> | null>(null);
   const progressRef = useRef<ReturnType<typeof setInterval> | null>(null);
   const startTimeRef = useRef<number>(Date.now());
+  // Mirrors Navbar's body.mobile-menu-open class (already the hook the
+  // Chatbot widget uses to hide itself while the mobile menu's full-screen
+  // panel is open). A MutationObserver, not a prop, because this component
+  // and Navbar aren't parent/child - same decoupling reason as the
+  // Chatbot's. This slideshow auto-advancing behind an opaque panel the
+  // user can't see is pointless on its own, but it's also actively
+  // unhelpful: if the 5s auto-advance happens to land in the same instant
+  // as someone opening the menu, the crossfade and the menu's own open
+  // animation compete for attention and the whole thing reads as busier/
+  // glitchier than either actually is.
+  const [menuOpen, setMenuOpen] = useState(false);
+
+  useEffect(() => {
+    setMenuOpen(document.body.classList.contains('mobile-menu-open'));
+    const observer = new MutationObserver(() => {
+      setMenuOpen(document.body.classList.contains('mobile-menu-open'));
+    });
+    observer.observe(document.body, { attributes: true, attributeFilter: ['class'] });
+    return () => observer.disconnect();
+  }, []);
 
   const goTo = useCallback((idx: number, dir = 1) => {
     setDirection(dir);
@@ -87,6 +107,15 @@ export default function HeroFullScreen() {
   useEffect(() => {
     if (intervalRef.current) clearInterval(intervalRef.current);
     if (progressRef.current) clearInterval(progressRef.current);
+
+    // Paused, not just stopped: intentionally leaves current/progress
+    // exactly where they were rather than resetting - resuming should
+    // continue from the same slide, not jump. (Restarting a fresh 5s
+    // window on resume rather than accounting for elapsed pause time is a
+    // deliberate simplification - nobody's watching a paused slideshow's
+    // countdown behind an opaque menu panel closely enough to notice.)
+    if (menuOpen) return;
+
     startTimeRef.current = Date.now();
 
     progressRef.current = setInterval(() => {
@@ -104,7 +133,7 @@ export default function HeroFullScreen() {
       if (intervalRef.current) clearInterval(intervalRef.current);
       if (progressRef.current) clearInterval(progressRef.current);
     };
-  }, [current]);
+  }, [current, menuOpen]);
 
   const section = sections[current];
 
@@ -134,7 +163,7 @@ export default function HeroFullScreen() {
             alt=""
             className="absolute inset-0 w-full h-full object-cover"
             loading="eager"
-            fetchPriority={section.id === sections[0].id ? 'high' : 'auto'}
+            {...({ fetchpriority: section.id === sections[0].id ? 'high' : 'auto' } as Record<string, string>)}
             initial={{ scale: 1.08 }}
             animate={{ scale: 1.0 }}
             transition={{ duration: 7, ease: 'easeOut' }}
